@@ -51,7 +51,7 @@ spec:
                 server: https://acme-v02.api.letsencrypt.org/directory
                 email: vicsufer@gmail.com
                 privateKeySecretRef:
-                  name: letsencrypt-staging
+                  name: letsencrypt-prod
                 solvers:
                   - dns01:
                       cloudflare:
