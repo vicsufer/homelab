@@ -1,7 +1,7 @@
 repos:
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.21.1
+    rev: v8.21.2
     hooks:
+      - id: gitleaks
       # - id: gitleaks-docker
       #   entry: zricethezav/gitleaks git --pre-commit --redact --staged --verbose
-      - id: gitleaks
