@@ -1,0 +1,91 @@
+---
+#helm upgrade argocd argo/argo-cd -f argocd.values.yaml --install --namespace argocd --create-namespace
+global:
+  domain: argocd.vicsufer.xyz
+
+
+configs:
+  params:
+    server.insecure: true
+
+controller:
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1536Mi
+    requests:
+      cpu: 500m
+      memory: 1536Mi
+
+dex:
+  resources:
+    limits:
+      cpu: 50m
+      memory: 64Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
+server:
+  ingress:
+    # -- Enable an ingress resource for the Argo CD server
+    enabled: true
+    ingressClassName: "traefik"
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    tls: true
+  # certificate:
+  #   enabled: true
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+repoServer:
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 200m
+      memory: 1024Mi
+
+applicationSet:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+notifications:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+extraObjects:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: applications
+    spec:
+      source:
+        # repoURL: github.com:vicsufer/homelab.git
+        repoURL: https://github.com/vicsufer/homelab
+        path: kluster-manifests/argocd-apps
+      destination:
+        namespace: argocd
+        server: https://kubernetes.default.svc
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
