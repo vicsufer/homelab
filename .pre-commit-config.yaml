@@ -5,3 +5,7 @@ repos:
       - id: gitleaks
       # - id: gitleaks-docker
       #   entry: zricethezav/gitleaks git --pre-commit --redact --staged --verbose
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
