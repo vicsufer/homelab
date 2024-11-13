@@ -1,0 +1,26 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - name: Install packages
+      apt:
+        pkg: "{{ apt_installed_packages }}"
+        state: present
+        update_cache: true
+    - name: Set up multiple authorized keys
+      ansible.posix.authorized_key:
+        user: "{{ item.user}}"
+        state: "{{ item.state }}"
+        key: "{{ item.key }}"
+      with_items: "{{ ssh_authorized_keys }}"
+  roles:
+    - role: hifis.toolkit.unattended_upgrades
+    - role: sshd
+
+- name: Kubernetes
+  hosts: kubernetes
+  roles:
+    - role: k3s
+  #TODO
+  # - Autoregister k3s nodes to NAS NFS shared drive

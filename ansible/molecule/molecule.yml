@@ -1,0 +1,13 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yaml
+
+lint: |
+  yamllint .
+  ansible-lint .
+
+verifier:
+  name: ansible
+  directory: ../common/tests

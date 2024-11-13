@@ -1,0 +1,82 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: nas
+    image: debian:bookworm-slim
+    privileged: false
+    # exposed_ports:
+    #   - 80/tcp
+    #   - 443/tcp
+    # published_ports:
+    #   - 0.0.0.0:80:80/tcp
+    #   - 0.0.0.0:443:433/tcp
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    groups:
+      - storage
+    tmpfs:
+      - '/run'
+      - '/run/lock'
+    command: '/lib/systemd/systemd'
+  - name: k3s-cp0
+    image: debian:bookworm-slim
+    privileged: false
+    # exposed_ports:
+    #   - 80/tcp
+    #   - 443/tcp
+    # published_ports:
+    #   - 0.0.0.0:80:80/tcp
+    #   - 0.0.0.0:443:433/tcp
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    groups:
+      - kubernetes
+      - kubernetes_control_plane
+    tmpfs:
+      - '/run'
+      - '/run/lock'
+    command: '/lib/systemd/systemd'
+  - name: k3s-node0
+    image: debian:bookworm-slim
+    privileged: false
+    # exposed_ports:
+    #   - 80/tcp
+    #   - 443/tcp
+    # published_ports:
+    #   - 0.0.0.0:80:80/tcp
+    #   - 0.0.0.0:443:433/tcp
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    groups:
+      - kubernetes
+      - kubernetes_node
+    tmpfs:
+      - '/run'
+      - '/run/lock'
+    command: '/lib/systemd/systemd'
+
+provisioner:
+  name: ansible
+  log: true
+  inventory:
+    links:
+      hosts: ../../inventory/local
+      group_vars: ../../group_vars/
+  env:
+    ANSIBLE_VAULT_PASSWORD_FILE: ../common/vault/get_passwd.py
+  playbooks:
+    converge: ../../main.yml
+  # options:
+  #   skip-tags: ddclient, certbot
+  config_options:
+    defaults:
+      stdout_callback: yaml
+      bin_ansible_callbacks: True

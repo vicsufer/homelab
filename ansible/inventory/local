@@ -1,0 +1,21 @@
+[storage_local]
+nas ansible_connection=docker ansible_ssh_user=root
+
+[kubernetes_control_plane_local]
+k3s-cp0 ansible_connection=docker ansible_ssh_user=root
+
+[kubernetes_node_local]
+k3s-node0 ansible_connection=docker ansible_ssh_user=root
+
+[storage:children]
+storage_local
+
+[kubernetes]
+kubernetes_control_plane
+kubernetes_node
+
+[kubernetes_control_plane:children]
+kubernetes_control_plane_local
+
+[kubernetes_node:children]
+kubernetes_node_local

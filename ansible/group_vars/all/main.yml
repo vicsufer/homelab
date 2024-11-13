@@ -1,0 +1,15 @@
+---
+ansible_python_interpreter: /usr/bin/python3
+
+apt_installed_packages: []
+
+###
+ssh_authorized_keys:
+  - user: victor
+    state: present
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDh7Ebkk3l05s+mSRP9V2lCNtpO/s/EIdinIGknUQCjr
+
+### SSHD
+sshd_config:
+  # Disable password authentication, use SSH Certificates and configure authorized principals
+  PasswordAuthentication: false

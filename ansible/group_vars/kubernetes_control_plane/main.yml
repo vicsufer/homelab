@@ -1,0 +1,11 @@
+---
+k3s_control_node: true
+# k3s_etcd_datastore: true
+k3s_server:
+  # datastore-endpoint: /postgres?sslmode=disable
+  cluster-cidr: 10.42.0.0/16
+  service-cidr: 10.43.0.0/16
+  flannel-backend: 'vxlan'  # This needs to be in quotes
+  disable: []
+    # - traefik
+    # - coredns

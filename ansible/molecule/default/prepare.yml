@@ -1,0 +1,11 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Add DNS search domains
+      shell: "echo 'search {{ dns_search_domains }}' >> /etc/resolv.conf"
+      when: dns_search_domains is defined
+# If you need adding search domains, workaround for https://github.com/ansible/molecule/issues/2153
+#  vars:
+#    dns_search_domains: local sys.local.

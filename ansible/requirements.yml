@@ -1,0 +1,14 @@
+---
+roles:
+  - src: http://github.com/PyratLabs/ansible-role-k3s
+    scm: git
+    version: v3.4.4
+    name: k3s
+  - src: http://github.com/willshersystems/ansible-sshd
+    scm: git
+    version: v0.25.0
+    name: sshd
+
+collections:
+  - name: hifis.toolkit
+    type: galaxy
