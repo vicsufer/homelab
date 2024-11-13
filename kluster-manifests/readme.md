@@ -10,3 +10,5 @@ To manage all the applications an apps-in-app pattern is followed, the seed for 
 ```bash
 helm upgrade argocd argo/argo-cd -f argocd.values.yaml --install --namespace argocd --create-namespace
 ```
+
+:warning: Ingress controller won't be able to use TLS right away since cert-manager & letsencrypto are deployed as gitops apps, therefore certificate wont be present. (Circular dependency) :warning:
