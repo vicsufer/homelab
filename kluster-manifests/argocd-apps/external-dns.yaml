@@ -28,15 +28,15 @@ spec:
           apiVersion: bitnami.com/v1alpha1
           kind: SealedSecret
           metadata:
-            name: phiole-secret
+            name: pihole-secret
             namespace: external-dns
           spec:
             encryptedData:
-              EXTERNAL_DNS_PIHOLE_PASSWORD: AgA3G25FvXwvznWkfhduvrC0n8LO5siJ5+8axu8sZ1+NnHN9Hjoc3ymuj7ENfaH2hEPuRlyMhyJd73pscFz1jl+XdSg4/whamCiUQXUU/B9C7XWV8i993GiJYubCxeraXB1GCIBoRJlwyOI/5RGXWShldYCCPaSSFCMVqPcUmQoEfs+gY2v2WWGnAUm57f2e78IU6wRfCo5Q42dx6zzjWuZH0AzNQz46ohAlE35mKfIl373rSSfcpsjH3VXAlIh4ZDo9PCbxQs+FJSFplWbOlh6iSmFcOPnmKNzo2VtWsI3BtsA+w4ykPNaORRYsJlPulcqy6UeAY8RY5orskFD6yM6FnlaR1YwD5v3vy9R2Z3ZgAmA6SyqcVApumrrIpfvvPMZ5dFba1AZx+EqOMhhdTWo+BwnJKH80oqk6EAN8xTmqaXs5CPcr3vVNTAOw0KVN6TswdltI9NfjzgG7U6BMPW9G+7/MDG/x0tSRhIBChoQjXrmaEfBvA9JzEOvpXMAEexwmXrcjN+8h8KECdcrOruJsl9xKTk0emS9d0+7N3D0VQkxGfJ6ezYwRgcQe1b9pKgYkG4tqwyDvOsvqN+bD4baWInBwKHH/mm+/Ze1TMn7fV8wFvFzXPckvio82Qi5jqBo91K7iL0Hv8RFK5Xz8GOyVH6RBJJ7cLSvHyAdAb3soOdnHDbu4vP15YUnyFaJufhwvKcmnHgKS2gxtAp8=
-              EXTERNAL_DNS_PIHOLE_SERVER: AgCQVr+AU00oFV//69+SIka0zNvxbchrMuIEdiNCsQPOYMj98R+ouNFtXjbuG5B1Ow0g40WRbJNEA8UP7PbyoJzb2hfd4zVDHy9gRdES6oThOObrtxFyjfDQ9KoKjemRMARDIh5eqbTNusF9T4y1cCBt8LngIuwUVkbT9ZF4NfMdlu66EelTZafpmAkPwhGDhnhG52KUsiVS9cY9wh0ajD5sOtFxTYJwXIJC3oSGgJ6L8K2FDjWBdW9OnjUG8mhtYSDiD7BKY3oshfZCfa47nzdlb9inOacZcDonT533fXyjBzhOzcPMaNSajfCD7j9gGb119n8Cc/t4fi0oi3Gi0bT0v5cC39iQWUDRfP9czdvYae9VPyS0RubQ6hec3IlJwig/ULF3qhKkVZyqyBSpUkvwWmM/UBmx+VyWPitGrnph2hLliMocTDBDWJrQo3E2CPjptEvcypF/8M3hggoaIWTRndp+DRIyDKkj/wKDZPI5BYPPa5pGsEquYAS/abZBmtOv2nu8kewdhXaUBDhlaq05WkjKWFy/6/u8/ULW9MqoyxPw/hEm6C9DPdXyWBig/QLmYFJXH4ijgFiW6tU9N7nGEd6fBwBIaLD1o4VirMW0zcQkFZmr/BFFXi+ps/1sUj5lHeehkLYosTYbet+gAp5PwPWxh02sra6eoLbqYZO4Do0NU8R4+hvX7KcpAFXzK8gBIim4uW/IbhqGV0RTPXh8QblQV2grC4r1XTaLobHTyw==
+              EXTERNAL_DNS_PIHOLE_PASSWORD: AgCGkpARm5UNnjutJHaGzBmaj0SRHZcA3XRhqkQk88LkjXlipQLEQIsMDiofKRc/7Vdvz+FDgWHs9nVg8c0A1BLbSGTVxxZDKi+yVhfZA9M3Xjv6Uw7W3ReSRkppQlNP2TeMFbsa2lDv8MBqfssERH8aYpPzHZZ8nP06zLSi1P05XjVwsO7O7QmOlw5YbxmN4fIdLNucbIeNaN/O5kcUGq3WPIavQimFIeJmzGHuU+hdgkdDzmTGgBH9vJtJBjlqPfA09cWEjASy+qLz98SJw/HKn04uyaymV6+WGTpGzcW8+6XB339l3eytxarwVa4QrLQIAxCjlG4enhFQ9lmS/MUX+GjHmG+slipVv53wh7lYBsShEBDPsIUvFzOE0dAUuWN3oCaSY1+YX7rMLrYp4VXDTHv+Qcpm0G7tAt6HgucPp1W/FgTOqqt4mM+syu9nXr7VzqMRZW0NWvWlve7hSU9nDxnO6VE6xLxmHBCDjJ5W6diRfSZbphHbtnNHZATcrJBjSBuXNtYTjO7D2opDA/LfHBHStI00DZPZunW3JNfvUjkifsNgwEd8UibHq1U5baJaN4aNXjio/5B8Dh0Npvc0WGkI8m8W7MOlo33eciSsK6QjFAbe/IYjsDoZcn1pZBVDZwv+kTcbJGmUReZT/sWaAd1ahxIsSKV5qX134ldS6D1h454FjGm4+RlEFIH9AqHExkvnerov4sm7Wq8=
+              EXTERNAL_DNS_PIHOLE_SERVER: AgBAIC95fABziCs+IP0rLT62tJMq29w2WFYXO5OALtONZDhAEjfPH2BT/ab5vLavtvbLn6nToTc+yfYpG5E5Hx5yFqVt9XxTmFHs26vEaxDwK8G/sjURr0cyibzPnU8is5uz+1TzzZKigDnBf3qy2XMEaz0PDB0PBqhc/7eMofVpVRirHZlOErEbsQSs75OhVY7zOkOx5hYmwry3gRjLBLplctD8aeL7VU7lcLO8U3sYhx9J2gFj2EPua5ayQ2zHW7rfEQjd4NrPpVVceuVdZ1u8Bh1ic3i0kph7cMyGvYb94dpSCbQC45zpb8o7Ql3A7xCP4oYtuyBaE5rq+WQd273uF7AOY9aYa67mP8Xl+wzy0KM06pJ2qJvB+GDhC2hfxKXL7z7bE5tk3Db9PkEWdnHCTeopZ15wtxOTazDAwxORsTNz/rcrnQv+aMGv95n59WqEQUYiMB6SxFk2Hf+tB/fO4hamOZE1uleZlCB1i2b3eZxUDBz+L85HxsP8FLmOo70kp77IAbrOS/yycdcMONNB1i32dx+2awst5LW08/9DNWlxwfGzKOpqCeNEUKD4U3HesOLl/bcwWBp2ZQA1UrHrJ4BFU7GEj2yHMc++9hYbqdlMpIiwAHaux5nbT48iFtLyfl4m/RnC7A1YQP4JAySNEKf7nyWUr632N85qjs5OplutjBiaAm1DhZSLCqN4RZskZaGTP7aF37BrFFxK3JMCD8NmbidPTjaRV5CSscCurw==
             template:
               metadata:
-                name: phiole-secret
+                name: pihole-secret
                 namespace: external-dns
   destination:
     server: "https://kubernetes.default.svc"
