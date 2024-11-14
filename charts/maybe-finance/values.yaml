@@ -1,0 +1,62 @@
+---
+service:
+  type: ClusterIP
+
+deployment:
+  repository: ghcr.io/maybe-finance/maybe
+  tag: sha-490f44589e846e5b5d2b6bf56ddb4382234f0067
+  replicaCount: 1
+  port: 3000
+  pullPolicy: IfNotPresent
+  extraEnvVarsCM: ""
+  extraEnvVarsSecret: ""
+  env: [] # https://github.com/maybe-finance/maybe/blob/main/.env.example
+    # - name: RAILS_ASSUME_SSL
+    #   value: false
+    # - name: RAILS_FORCE_SSL
+    #   value: false
+    # - name: GOOD_JOB_EXECUTION_MODE
+    #   value: async
+    # - name: SECRET_KEY_BASE
+    #   value: "<YourSecretKeyBase>"
+    # - name: SELF_HOSTING_ENABLED
+    #   value: true
+
+postgresql:
+  primary:
+    persistence:
+      size: 4Gi
+  auth:
+    username: maybe
+    password: maybe
+    database: password
+    #existingSecret: "" # Use this value to mount your own database secret# Use this value to mount your own database secret
+
+ingress:
+  create: false
+  annotations: {}
+    # cert-manager.io/cluster-issuer: ""
+  tls:
+    - secretName: maybe-general-tls
+      hosts:
+        - maybe.mydomain.com
+  hosts:
+    - host: maybe.mydomain.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+extraObjects: []
+# - |
+#   apiVersion: bitnami.com/v1alpha1
+#   kind: SealedSecret
+#   metadata:
+#     name: database-password
+#     namespace: mynamepace
+#   spec:
+#     encryptedData:
+#       password: <Your sealed secret>
+#     template:
+#       metadata:
+#         name: database-password
+#         namespace: maybe-finance

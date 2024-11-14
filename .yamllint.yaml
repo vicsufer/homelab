@@ -5,4 +5,4 @@ rules:
   comments:
     require-starting-space: false
 ignore:
-  - manifests/charts/**/templates/*.y(a)?ml
+  - charts/**/templates/*.yaml
