@@ -16,9 +16,11 @@ spec:
       releaseName: external-dns
       values: |
         provider: pihole
-        extraArgs:
-          - --pihole-tls-skip-verify
-          # - --annotation-filter="external-dns.alpha.kubernetes.io/exclude notin (true)"
+        pihole:
+          tlsSkipVerify: true
+        # extraArgs:
+        #   - --pihole-tls-skip-verify
+        #   # - --annotation-filter="external-dns.alpha.kubernetes.io/exclude notin (true)"
         extraEnvVarsSecret: pihole-secret
         sources:
           - service
