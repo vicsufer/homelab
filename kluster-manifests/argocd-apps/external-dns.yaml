@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     chart: external-dns
-    repoURL: oci://registry-1.docker.io/bitnamicharts/external-dns
+    repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 8.5.1
     helm:
       releaseName: external-dns
