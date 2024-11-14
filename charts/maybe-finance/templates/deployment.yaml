@@ -24,15 +24,6 @@ spec:
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
-          envFrom:
-            {{- if .Values.deployment.extraEnvVarsCM }}
-            - configMapRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsCM "context" $) }}
-            {{- end }}
-            {{- if .Values.deployment.extraEnvVarsSecret }}
-            - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsSecret "context" $) }}
-            {{- end }}
             - name: DB_HOST 
               value: {{ .Release.Name }}-postgresql
             - name: POSTGRES_DB
@@ -44,6 +35,16 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.postgresql.existingSecret | default (printf "%s-postgresql" .Release.Name) }}
                   key: password
+          envFrom:
+            {{- if .Values.deployment.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsCM "context" $) }}
+            {{- end }}
+          envFrom:
+            {{- if .Values.deployment.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsSecret "context" $) }}
+            {{- end }}
           ports:
             - containerPort: {{ .Values.deployment.port }}
           readinessProbe:

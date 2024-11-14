@@ -55,6 +55,7 @@ extraObjects: []
 #     namespace: mynamepace
 #   spec:
 #     encryptedData:
+#       postgres-password: <Your sealed secret>
 #       password: <Your sealed secret>
 #     template:
 #       metadata:
