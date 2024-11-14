@@ -33,7 +33,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.postgresql.existingSecret | default (printf "%s-postgresql" .Release.Name) }}
+                  name: {{ .Values.postgresql.auth.existingSecret | default (printf "%s-postgresql" .Release.Name) }}
                   key: password
           {{- if .Values.deployment.extraEnvVarsCM }}
           envFrom:
