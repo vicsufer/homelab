@@ -5,4 +5,4 @@ rules:
   comments:
     require-starting-space: false
 ignore:
-  - kluster-manifests/charts/**/templates/*.yaml
+  - manifests/charts/**/templates/*.y(a)?ml
