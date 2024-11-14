@@ -28,8 +28,8 @@ postgresql:
       size: 4Gi
   auth:
     username: maybe
-    password: maybe
-    database: password
+    password: password
+    database: maybe
     #existingSecret: "" # Use this value to mount your own database secret# Use this value to mount your own database secret
 
 ingress:
