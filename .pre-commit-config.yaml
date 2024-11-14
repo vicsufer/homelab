@@ -3,6 +3,7 @@ repos:
     rev: v8.21.2
     hooks:
       - id: gitleaks
+        entry: gitleaks --max-decode-depth=3 git  --pre-commit --redact --staged --verbose
       # - id: gitleaks-docker
       #   entry: zricethezav/gitleaks git --pre-commit --redact --staged --verbose
   - repo: https://github.com/adrienverge/yamllint.git
