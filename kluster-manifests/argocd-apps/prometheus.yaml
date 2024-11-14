@@ -1,0 +1,88 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 66.1.1
+    helm:
+      releaseName: prometheus-stack
+      values: |
+        prometheus:
+          ingress:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Prometheus"
+              gethomepage.dev/description: "Prometheus"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/widget.type: "prometheus"
+              gethomepage.dev/widget.url: "https://prometheus.vicsufer.xyz"
+              gethomepage.dev/icon: "prometheus.png"
+            tls:
+              - secretName: prometheus-general-tls
+                hosts:
+                  - prometheus.vicsufer.xyz
+            hosts:
+              - prometheus.vicsufer.xyz
+
+        grafana:
+          ingress:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Grafana"
+              gethomepage.dev/description: "Grafama"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/widget.type: "grafana"
+              gethomepage.dev/widget.url: "https://grafana.vicsufer.xyz"
+              gethomepage.dev/widget.username: "admin"
+              gethomepage.dev/widget.password: "prom-operator"
+              gethomepage.dev/icon: "grafana.png"
+            tls:
+              - secretName: grafana-general-tls
+                hosts:
+                  - grafana.vicsufer.xyz
+            hosts:
+              - grafana.vicsufer.xyz
+
+        alertmanager:
+          ingress:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Alertmanager"
+              gethomepage.dev/description: "Alertmanager"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/widget.type: "alertmanager"
+              gethomepage.dev/widget.url: "https://alertmanager.vicsufer.xyz"
+              gethomepage.dev/widget.username: "admin"
+              gethomepage.dev/widget.password: "prom-operator"
+              gethomepage.dev/icon: "grafana.png"
+            tls:
+              - secretName: alertmanager-general-tls
+                hosts:
+                  - alertmanager.vicsufer.xyz
+            hosts:
+              - alertmanager.vicsufer.xyz
