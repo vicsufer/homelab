@@ -17,7 +17,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoUrl: https://github.com/vicsufer/homelab
+    repoURL: https://github.com/vicsufer/homelab
     path: charts/maybe-finance
     targetRevision: HEAD
     helm:
