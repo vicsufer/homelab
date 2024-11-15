@@ -61,7 +61,7 @@ spec:
                 gethomepage.dev/icon: "immich.png"
                 gethomepage.dev/widget.type: "immich"
                 gethomepage.dev/widget.url: "https://immich.vicsufer.xyz"
-                gethomepage.dev/widget.version: 2
+                gethomepage.dev/widget.version: "2"
               tls:
                 - hosts:
                     - &host immich.vicsufer.xyz
