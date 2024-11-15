@@ -18,7 +18,7 @@ spec:
       - CreateNamespace=true
   sources:
     - repoURL: https://github.com/vicsufer/homelab
-      path: kubernetes-manifests/cloudflared-extras
+      path: kluster-manifests/cloudflared-extras
       targetRevision: HEAD
 
     - chart: cloudflare-tunnel
