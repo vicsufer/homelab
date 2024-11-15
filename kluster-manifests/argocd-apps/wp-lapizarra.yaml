@@ -80,7 +80,7 @@ spec:
               namespace: wp-lapizarrapedagogica
             spec:
               encryptedData:
-                wordpress-password: AgCqSwVHk5SVIrBrEVxsLOeOFzgiDlzt02oh0RkmGVDa4TjMw5nj1sCSnTgEmQJ1IG0qSPCVg2oI62LrSAZm12tXlrnBXk+/IpXyzOFC56LWZlWKSBnfZase09VF9rutUy/1qnSpWPCXOAt9q9NcEV2sm5c/KGryP8lvVKTbl6hrcYqhwb89gehoHPSnkytbymDE239gIEM71ZhN5DT/9esgLutfUItdppHbm/fqos/qPmCSMLb3AGYlXICqEHJrg+4Az84RXMFKnNO8ln2plJHhKEG1iyBC+7i2/PTkRUCtwWiG/1DhbJ2fzKPuiE8GtVGLSIgjtexsMhJyTm/uaPDVrp7emAvoBqbIeQJ5zXl0Vhr9XJRZMnvFP+y+6vF/i+szvydNGj3u/+2COyHGYSzNiVek6RGqBg2IFxAHlyMQ71eq7OnXU9LevZ228XKbZndGQoUjRDL0+WyW3pOEXalnlYqVBkzvT24QJWN4AV3GRaGPcFKXVzQfO+PxugN2ndouMBPnp9NZtP08DrgpGEpc0JdGr2OZOLMUAXN1PBjTWfVI+NbzWLmX1kovPjvr1tzWz0iQy0JOPzUm25nCH0N5boPArL9t9rNySYcUhPXF8KNAFs1WQbwy0Ju5UjJVS3YrVrv0MyDKDfotCVug7IlQU2lFjCuFrM2z0cvnS7FmRY44w2mMZPKDXufR7+bxEV4BLmH/naLZTA==
+                wordpress-password: AgBZLUv/Fm11CbgGV3SKvUQlQeobWH1EALL9snbOkmlwmW2c4q74QaOkNlP/wnK5rc0W1f0JQPxUvec1F3y6Bcv+jvHfuO/lN94Czbs4uEUMloVmwZM4fOF9lCzk1SrTWrup54OCJ7Ub7ClMssF0AMAanabS47wZ/QDnDAsnBH7vqFzk9pU2benBG7y5X413Japn8R22KXVejzdewNi0zi/JFx40OvUHVakQMpJspxj/fFrQWoGpiXv370hK5w4tuoEbrhhVIP43c88IB6/rXOGfNzQMRsYOgP08u/3oJp8Xhi/+7pef95OmMPEpwef9IzHWwOHcmFtqXVNWtD5t6NGLM03JlXi64y4HcMQ1byq07OqzJw8DXVxTwyoJuwD8IvDcqHoepaskUPJnBa/QTWqKfwPhacga+QTJbu3zyEwfyCDVREgMuVL33FPWcVxRAIXurcDUxSP7OanZ7zXzgdoIUY6kEBx4E+jvweHfYZglqg4rhisEPExtWUoT2jqAv5grK3cjCsVXhNKffOIi3mNoHvhSJ1g3Sh9vetZmyPOGFZpUCr+i9aQ+9WyKBvfMfD4i9N4hVz4HW9QGZpXoF2oowxpnpx6Vk6eLoUTacYoxC0oXwGhI7yi0qCG5H/OmeiAIcUW0q7kAMp2WpENwvk9sfYP8Nr0p+y9dNhRxD41uclguHUKUydLbWRGJWqsgUuozVuhklNU+0A==
               template:
                 metadata:
                   name: wp-password
