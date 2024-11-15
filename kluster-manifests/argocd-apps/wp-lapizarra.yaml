@@ -1,0 +1,87 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: wp-lapizarra-staging
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: wp-lapizarrapedagogica
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    chart: wordpress
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 24.0.4
+    helm:
+      releaseName: wordpress
+      values: |
+        # WordPress service type
+        service:
+          type: ClusterIp
+
+        # Enable persistence using Persistent Volume Claims
+        persistence:
+          enabled: true
+          storageClassName: nfs-csi
+          accessModes: ["ReadWriteMany"]
+          size: 5Gi
+
+        volumePermissions:
+          enabled: true
+
+        # Prometheus Exporter / Metrics configuration
+        metrics:
+          enabled: false
+
+        # Level of auto-updates to allow. Allowed values: major, minor or none.
+        wordpressAutoUpdateLevel: minor
+
+        # Scheme to use to generate WordPress URLs
+        wordpressScheme: https
+
+        # WordPress credentials
+        wordpressUsername: admin
+        existingSecret: wp-password
+
+        wordpressBlogName: La Pizarra Pedagogica
+
+        # Disabling MariaDB
+        mariadb:
+          enabled: true
+
+        ingress:
+          enabled: true
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "La Pizarra Pedagogica"
+            gethomepage.dev/description: "Staging environment for lapizarradedagogica.com"
+            gethomepage.dev/group: "k3s"
+            gethomepage.dev/href: "https://lapizarrapedagogica.vicsufer.xyz"
+            gethomepage.dev/icon: "wordpress.png"
+          hostname: lapizarrapedagogica.vicsufer.xyz
+          tls: true
+
+        extraObjects:
+          - |
+            apiVersion: bitnami.com/v1alpha1
+            kind: SealedSecret
+            metadata:
+              name: wp-password
+              namespace: wp-lapizarrapedagogica
+            spec:
+              encryptedData:
+                wpordpress-password: AgCqSwVHk5SVIrBrEVxsLOeOFzgiDlzt02oh0RkmGVDa4TjMw5nj1sCSnTgEmQJ1IG0qSPCVg2oI62LrSAZm12tXlrnBXk+/IpXyzOFC56LWZlWKSBnfZase09VF9rutUy/1qnSpWPCXOAt9q9NcEV2sm5c/KGryP8lvVKTbl6hrcYqhwb89gehoHPSnkytbymDE239gIEM71ZhN5DT/9esgLutfUItdppHbm/fqos/qPmCSMLb3AGYlXICqEHJrg+4Az84RXMFKnNO8ln2plJHhKEG1iyBC+7i2/PTkRUCtwWiG/1DhbJ2fzKPuiE8GtVGLSIgjtexsMhJyTm/uaPDVrp7emAvoBqbIeQJ5zXl0Vhr9XJRZMnvFP+y+6vF/i+szvydNGj3u/+2COyHGYSzNiVek6RGqBg2IFxAHlyMQ71eq7OnXU9LevZ228XKbZndGQoUjRDL0+WyW3pOEXalnlYqVBkzvT24QJWN4AV3GRaGPcFKXVzQfO+PxugN2ndouMBPnp9NZtP08DrgpGEpc0JdGr2OZOLMUAXN1PBjTWfVI+NbzWLmX1kovPjvr1tzWz0iQy0JOPzUm25nCH0N5boPArL9t9rNySYcUhPXF8KNAFs1WQbwy0Ju5UjJVS3YrVrv0MyDKDfotCVug7IlQU2lFjCuFrM2z0cvnS7FmRY44w2mMZPKDXufR7+bxEV4BLmH/naLZTA==
+              template:
+                metadata:
+                  name: wp-password
+                  namespace: wp-lapizarrapedagogica
