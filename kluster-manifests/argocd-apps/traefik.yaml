@@ -26,7 +26,7 @@ spec:
         ingressRoute:
           dashboard:
             enabled: true
-            match: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+            matchRule: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
             tls:
               certResolver: letsencrypt-prod
         deployment:
