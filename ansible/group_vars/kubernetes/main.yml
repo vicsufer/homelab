@@ -7,4 +7,3 @@ k3s_release_version: stable
 k3s_become: true
 k3s_start_on_boot: true
 # k3s_registration_address: loadbalancer
-

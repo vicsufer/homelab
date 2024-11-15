@@ -79,4 +79,4 @@ provisioner:
   config_options:
     defaults:
       stdout_callback: yaml
-      bin_ansible_callbacks: True
+      bin_ansible_callbacks: true

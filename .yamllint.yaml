@@ -4,5 +4,6 @@ rules:
   line-length: disable
   comments:
     require-starting-space: false
+  comments-indentation: disable
 ignore:
   - charts/**/templates/*.yaml
