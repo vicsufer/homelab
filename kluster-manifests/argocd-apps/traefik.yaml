@@ -29,6 +29,8 @@ spec:
             matchRule: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
             tls:
               certResolver: letsencrypt-prod
+              domains:
+                - main: traefik.vicsufer.xyz
         deployment:
           podAnnotations:
             prometheus.io/port: "8082"
