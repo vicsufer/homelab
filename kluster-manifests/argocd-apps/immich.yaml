@@ -26,6 +26,8 @@ spec:
         image:
           tag: v1.120.2
 
+
+        envFrom: "database-password"
         immich:
           metrics:
             enabled: true
@@ -85,9 +87,6 @@ spec:
               type: pvc
               # type: emptyDir
               accessMode: ReadWriteMany
-
-        env:
-          DB_PASSWORD: "{{ .Values.postgresql.global.postgresql.auth.existingSecret }}"
 
         redis:
           enabled: true
