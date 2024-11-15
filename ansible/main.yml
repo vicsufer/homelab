@@ -22,5 +22,7 @@
   hosts: kubernetes
   roles:
     - role: k3s
+      tags:
+        - kubernetes
   #TODO
   # - Autoregister k3s nodes to NAS NFS shared drive

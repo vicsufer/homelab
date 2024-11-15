@@ -5,7 +5,11 @@ k3s_server:
   # datastore-endpoint: /postgres?sslmode=disable
   cluster-cidr: 10.42.0.0/16
   service-cidr: 10.43.0.0/16
-  flannel-backend: 'vxlan'  # This needs to be in quotes
-  disable: []
-    # - traefik
+  flannel-backend: 'vxlan' # This needs to be in quotes
+  disable:
+    - traefik # manage it with argocd
     # - coredns
+# k3s_controller_list:
+#     - rpi-4b-0
+# k3s_server_manifests_templates:
+#   - "traefik.helmconfig.yaml.j2"

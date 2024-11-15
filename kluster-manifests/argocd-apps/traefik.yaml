@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
   name: traefik
   namespace: argocd
 spec:
@@ -17,6 +17,32 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoURL: https://github.com/vicsufer/homelab
-    path: kluster-manifests/traefik
-    targetRevision: HEAD
+    chart: homepage
+    repoURL: https://traefik.github.io/helm-charts
+    targetRevision: 33.0.0
+    helm:
+      releaseName: traefik
+      values: |
+        ingressRoute:
+          dashboard:
+            enabled: true
+        deployment:
+          podAnnotations:
+            prometheus.io/port: "8082"
+            prometheus.io/scrape: "true"
+        providers:
+          kubernetesIngress:
+            publishedService:
+              enabled: true
+        priorityClassName: "system-cluster-critical"
+        tolerations:
+          - key: "CriticalAddonsOnly"
+            operator: "Exists"
+          - key: "node-role.kubernetes.io/control-plane"
+            operator: "Exists"
+            effect: "NoSchedule"
+          - key: "node-role.kubernetes.io/master"
+            operator: "Exists"
+            effect: "NoSchedule"
+        service:
+          ipFamilyPolicy: "PreferDualStack"
