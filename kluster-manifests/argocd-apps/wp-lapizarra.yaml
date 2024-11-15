@@ -25,7 +25,7 @@ spec:
       values: |
         # WordPress service type
         service:
-          type: ClusterIp
+          type: ClusterIP
 
         # Enable persistence using Persistent Volume Claims
         persistence:
