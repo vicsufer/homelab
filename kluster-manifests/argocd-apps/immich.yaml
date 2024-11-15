@@ -25,12 +25,14 @@ spec:
       values: |
         image:
           tag: v1.120.2
+
         env:
           DATABASE_PASSWORD:
-              valueFrom
-                secretKeyRef:
-                  name: database-password
-                  key: password
+            valueFrom
+              secretKeyRef:
+                name: database-password
+                key: password
+
         immich:
           metrics:
             enabled: true
