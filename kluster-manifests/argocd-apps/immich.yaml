@@ -28,7 +28,7 @@ spec:
 
         env:
           DATABASE_PASSWORD:
-            valueFrom
+            valueFrom:
               secretKeyRef:
                 name: database-password
                 key: password
