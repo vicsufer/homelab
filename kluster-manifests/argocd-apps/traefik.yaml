@@ -61,5 +61,5 @@ spec:
               dnsNames:
                 - traefik.vicsufer.xyz
               issuerRef:
-                kind: Issuer
+                kind: ClusterIssuer
                 name: letsencrypt-prod
