@@ -101,6 +101,7 @@ spec:
           # image:
           #   repository: bitnami/postgresql
           #   tag: 14.14.0-debian-12-r0
+          tag: pg14-v0.2.1
           primary:
             containerSecurityContext:
               readOnlyRootFilesystem: false
