@@ -62,7 +62,11 @@ spec:
           annotations:
             traefik.ingress.kubernetes.io/router.entrypoints: websecure
             cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            gethomepage.dev/enabled: "true" gethomepage.dev/name: "La Pizarra Pedagogica" gethomepage.dev/description: "Staging environment for lapizarradedagogica.com" gethomepage.dev/group: "k3s" gethomepage.dev/href: "https://lapizarrapedagogica.vicsufer.xyz"
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "La Pizarra Pedagogica"
+            gethomepage.dev/description: "Staging environment for lapizarradedagogica.com"
+            gethomepage.dev/group: "k3s"
+            gethomepage.dev/href: "https://lapizarrapedagogica.vicsufer.xyz"
             gethomepage.dev/icon: "wordpress.png"
           hostname: lapizarrapedagogica.vicsufer.xyz
           tls: true
