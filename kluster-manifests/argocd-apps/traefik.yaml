@@ -28,9 +28,7 @@ spec:
             enabled: true
             matchRule: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
             tls:
-              certResolver: letsencrypt-prod
-              domains:
-                - main: traefik.vicsufer.xyz
+              secretName: traefik-cert
         deployment:
           podAnnotations:
             prometheus.io/port: "8082"
@@ -51,3 +49,18 @@ spec:
             effect: "NoSchedule"
         service:
           ipFamilyPolicy: "PreferDualStack"
+        extraObjects:
+          - |
+            apiVersion: cert-manager.io/v1
+            kind: Certificate
+            metadata:
+              name: traefik-cert
+              namespace: default
+            spec:
+              commonName: traefik.vicsufer.xyz
+              secretName: traefik-cert
+              dnsNames:
+                - traefik.vicsufer.xyz
+              issuerRef:
+                kind: Issuer
+                name: letsencrypt-prod
