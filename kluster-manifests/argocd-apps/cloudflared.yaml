@@ -22,18 +22,19 @@ spec:
       targetRevision: HEAD
 
     - chart: cloudflare-tunnel
-      repoURL: https://cloudflare.github.io/helm-charts
-      targetRevision: v0.3.2
+      repoURL: https://github.com/pabaquino/helm--cloudflare-tunnel-v3
+      targetRevision: kit-ar/pub/v3.1011.240806
+      path: helm/cf-tunnel-v3
       helm:
         releaseName: cloudflared
         values: |
           image:
             repository: cloudflare/cloudflared
-            # tag: "2024.6.1"
+            tag: "2024.11.0"
           cloudflare:
             tunnelName: homelab
-            secretName: cfd-tken
-            enableWarp: false
+            existingSecretCred: cfd-tken
+            protocol: quic
             # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress
             ingress: []
               # The first rule proxies traffic to the httpbin sample service named web-server at port 80
