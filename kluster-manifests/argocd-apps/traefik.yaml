@@ -18,7 +18,7 @@ spec:
       - CreateNamespace=true
   source:
     chart: homepage
-    repoURL: https://traefik.github.io/helm-charts
+    repoURL: https://traefik.github.io/charts
     targetRevision: 33.0.0
     helm:
       releaseName: traefik
