@@ -55,7 +55,6 @@ spec:
             kind: Certificate
             metadata:
               name: traefik-cert
-              namespace: default
             spec:
               commonName: traefik.vicsufer.xyz
               secretName: traefik-cert
