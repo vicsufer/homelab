@@ -89,21 +89,3 @@ extraObjects:
       syncPolicy:
         automated:
           prune: true
-  - apiVersion: bitnami.com/v1alpha1
-    kind: SealedSecret # Circular dependency, move this to another app just to store repo credentials
-    metadata:
-      name: docker-io-helm-oci
-      namespace: argocd
-    spec:
-      encryptedData:
-        enableOCI: AgBI2RVENPeM/UJa+kAcMFjr+B9GNOdqXtmqrb48bg2EpZLR+0UwDZXCFCLTPw0O2UT8TQALjBBoAihW8ZRwP0hKZsqCHNX29E0FZdeMZ0z/NwjMRpYDVOhwKdUCEOnqVE98Ttp1FDgB25oceOJ5i3w+lyyt361ufYWawUwd3mF2N18pcj+7DBKNwwgF/SivThQ7DXrok4GYjgFAJS/RnWL3AbIFGZeltV0+YTNvAWseJW0o59iVPBrpb0QiBUrPKJKKejPuoIcfmPJunk9QO8cRsrRcFaTLyFTES65Anrh9bmxNesRqIwkC8KIdQkuOalcJww4U0biFnU1Z/ZgZNCtM/P6odXrodOeAomh/QTmUM3l1u6B3kkFdrR4gm6lhdvgpbk8sJSzujXhyN9AMus971u6mmXHW/q0GzfPjb/Tg8peGL/vJAw2jgDRXR7lTc5JsfrUSwSKneLg4q8ISgosuB+DX46hqtoiUH9U7ExUAo1qoRzg/VxDWTwrL1YDXoOwyz7xgrTDVqTl+TMwc8fsIs87HiK27Tjq+IAD45P6XP99INCjz895K2UWQAACcr2LDy0PUBfud8GHStNZpuNVlY/aTs3Np2zZzlx7G6QCKRTWvHJzjxbgN/28RnlvEFydwljGtzSa9eJ2KRDla8isP4jyrNAk3M/8V/0nIR+eHe3UFPws7YrFY3p9DjvxkUv6SrFIM
-        name: AgADG7e85KAg25DWUofBvPgVsoSZfzcxkPvwiRYd8z+Ocf+83cMJilebG/aOyvaaeqX//Y17JSVHvOQYzXVYUWTiqHB4dhvruKUPCuyKXUQYHfR2acXb/TLtx35BVrzuCzklud1Mj73+WzQPlofjzDc4WeEVwodl2TvumBle82EotiXrJQmezLnYRQ8zuS77tTwuX63H7ddSm1XAYmE5ImlgUl0941Y4yrlwzW1S0lsDcD6A0V9Pre1ROcknXVWQmv9x/mwbGmGUh7PLQflVqJsUzjpokYLyclpcenkGJvrSBa9Cb7dwnImNG4GZx9orOTZbXkzL3ysVgXZ01xfbRhONhVipR9vgczp3YeL6fV+g+BnZMVQjQ3/J3trmgoWseaYuKYB/42dK5h9GkUEV3w2Z+CdJwLCJyo7kZ47S3nQfSTUw0m0/e+kmEHyrRXL9YQrEZNRexzWY4FB0W59vY4VahvCW4aagHGCaymqVburcdQuqQidutpjhmXhJt+vOHmOjru1vhAezWfMLhSui+nsDl3lJUkxduAFQDV+uDTgIalJtg0J1fv6GmVT5BS8/dshXk9h/S0rGWdFC4GTj+TgrfH0lOgrTQLYs5RxJlaiUYfC02Nbz7QGu/UpDZ++F7fRCfhPo2Glnn48B/IKbUj8uMtp7O/Yl0trC0n89fi6otRQ8nqDJ0DgZ4NopOE0xkHNtSuS3WFvnC8KrYIAs
-        type: AgBw+rKyI3/N7U9qgzSJR6cRk1Zb+oJh+L8Qak7ursUiammof0xiwdprl99xdVIgWdXTWMDNJuc2RTY/RrYPlwKnz4Bq8X9s/GOrmkyNBH+Iqpd6pAJHdLvJ2dRE6J6eW+0V7Q67JoYsj5zl2F3pskMK5HLabiMDv6T1TCzVh1kBOZfkximDK47tbaY3tIB1WkJEcQ2Cz1gTIno3p3H+SzYprGdHj37Bci0B8kgEZq9eapgiHv9HCS3FxV2tUfaIRvJizOczg4DrjIvi6sqFeoNFQpJDqqhZwRubnQ4p2ATSn7gy5c8Q4DwVEfeTlUURUS+8dKZReLld7M8jy2D2vIiGV21qjU4s5SiiybTyAiZbm1BbogS4IPbRbtUwre6OPpWk6z/5t1RcEvTu+Ipwglt9vyCKORV+jOc4uoyPlzU7gVJ2PXEogqatyy/PDWJlymrO/fqgqbMefdfGKO8HaK7d0AXB9p8TPNFka0Xk3PtKrXPm2Sinez6F2tblZ3XOfTOSMNykYLRTdPyX7qjYK3NzKl5SvKEIVkwSn0LUzaAbZxtF1IEfS6/Q6OaZTkTk37DtlP1FmrNlJs55y65sFAC2+8YYkv9W/8ByCGP1XzksCtwoYdHgEmTI+w2MukW7Xz/KazCubWwB3QC0zQL6URUuPl1YqG1wH717aDftOMkcsf5z7GdBQXKqmAd65uqgfSvCUkXe
-        url: AgBy937T3jl3oGEPBl35bvv1eQ1f/Pnz7lV6rrQ81e2gEUTtl4HSYoivlkX+U5GDB9eVQPaZrx0gG5lfMADa9wyDs4omfqY5S/wSi+Y9zXNBqeeUC8FIaO5MtR+jSUCFbzRy+XpI+tAkpU8q7e6RjjpV+zyVel+Hsgw9ObgsPvVYxeyyxcUCtz52N7yidX4VpDxjvuEofcGMrrspJH5e1U8dDj6v9a2qvdwGPDBzyl97nm+NKM/iolJqkbgLupTnPPAEKxyPRZr/kRzeH+K4yfDplCYXN9uYd3U/vDXmZxV0e3N1flFAMIfC2qQzSZGr+Ls555/04/vaxb0M4KjaUmBHICvVJM95sOzg6fdSrpzWo07gDobr9Hh6haR5l+3nruHq1yuLpZXZcIEO4sz2feqhFrS7xDw8F4z6SNurm9rywIuaeEB25sAPS0e81AvDaqGARHAp+1yXvJ+xcmbj87D+fL8IXTn+I/MM9mTuxj+XHZi8P8U8GGclPRMcI7KAmZVsQyOFng0kimAc2Tyljuz6j5DFqvD5SwyHUKrwjumcq5TvB7wKn8dhKIUgFmjIeBuyQX/uzcIya0lsYRTXoZnqczuevvcCKkZk22g285hveFKitHWDMiwwQR9/YtNJRXfdGLxWXkXwlisV9vhBS0WAk165/vcnO9bSWX0QGcLAZRHhK52NdGzHR+VUDGVF5dmM0N5YWOlozrTUT2bpZk2FJj7aJ5qfrrFag2y0Q8BhfPR8
-      template:
-        metadata:
-          labels:
-            argocd.argoproj.io/secret-type: repository
-          name: docker-io-helm-oci
-          namespace: argocd
-        type: Opaque
