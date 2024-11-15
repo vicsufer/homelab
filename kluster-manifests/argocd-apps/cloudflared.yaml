@@ -23,7 +23,7 @@ spec:
 
     - chart: cloudflare-tunnel
       repoURL: https://github.com/pabaquino/helm--cloudflare-tunnel-v3
-      targetRevision: kit-ar/pub/v3.1011.240806
+      targetRevision: HEAD
       path: helm/cf-tunnel-v3
       helm:
         releaseName: cloudflared
