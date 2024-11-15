@@ -17,9 +17,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    chart: homepage
+    chart: traefik
     repoURL: https://traefik.github.io/charts
-    targetRevision: 33.0.0
+    targetRevision: v33.0.0
     helm:
       releaseName: traefik
       values: |
