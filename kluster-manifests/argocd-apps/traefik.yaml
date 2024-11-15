@@ -22,6 +22,9 @@ spec:
     targetRevision: v33.0.0
     helm:
       releaseName: traefik
+      parameters:
+        - name: ingressRoute.dashboard.enabled
+          value: true
       values: |
         ingressRoute:
           dashboard:
