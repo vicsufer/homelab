@@ -4,13 +4,13 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
-  name: traefik
+  name: cloudflared
   namespace: argocd
 spec:
   project: default
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: cloudflare
+    namespace: cloudflared
   syncPolicy:
     automated:
       prune: true
