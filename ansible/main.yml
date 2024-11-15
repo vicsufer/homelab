@@ -24,5 +24,21 @@
     - role: k3s
       tags:
         - kubernetes
+  tasks:
+    - name: Increase UDP wmem_max Buffer size # Quic protocol https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
+      sysctl:
+        name: net.core.wmem_max
+        value: '7500000'
+        sysctl_set: yes
+        state: present
+        reload: yes
+    - name: Increase UDP rmem_max Buffer size # Quic protocol https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
+      sysctl:
+        name: net.core.rmem_max
+        value: '7500000'
+        sysctl_set: yes
+        state: present
+        reload: yes
+
   #TODO
   # - Autoregister k3s nodes to NAS NFS shared drive
