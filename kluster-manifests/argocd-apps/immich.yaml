@@ -98,6 +98,9 @@ spec:
 
         postgresql:
           enabled: true
+          image:
+            repository: bitnami/postgresql
+            tag: 14.14.0-debian-12-r0
           primary:
             resourcesPreset: "small" #https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
           auth:
