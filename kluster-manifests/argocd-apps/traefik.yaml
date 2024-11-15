@@ -27,8 +27,6 @@ spec:
           dashboard:
             enabled: true
              match: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-            tls:
-              certResolver: letsencrypt-prod
         deployment:
           podAnnotations:
             prometheus.io/port: "8082"
