@@ -21,27 +21,23 @@ spec:
       path: kluster-manifests/cloudflared-extras
       targetRevision: HEAD
 
-    - chart: cloudflare-tunnel
-      repoURL: https://github.com/pabaquino/helm--cloudflare-tunnel-v3
-      targetRevision: 8c29a2b9c9b4167f5d1c1fcd46923b174de3cfd7
-      path: helm/cf-tunnel-v3
+    - chart: strrl.dev/cloudflare-tunnel-ingress-controller
+      repoURL: https://helm.strrl.dev
+      targetRevision: v0.0.16
       helm:
-        releaseName: cloudflared
         values: |
-          image:
-            repository: cloudflare/cloudflared
-            tag: "2024.11.0"
+          cloudflared:
+            image:
+              repository: cloudflare/cloudflared
+              tag: latest
+          ingressClass:
+            name: cloudflare-tunnel
+            controllerValue: strrl.dev/cloudflare-tunnel-ingress-controller
+            isDefaultClass: false
           cloudflare:
-            tunnelName: homelab
-            existingSecretCred: cfd-tken
-            protocol: quic
-            # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress
-            ingress: []
-              # The first rule proxies traffic to the httpbin sample service named web-server at port 80
-              # - hostname: tunnel.example.com
-              #  service: http://web-service:80
-              # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
-              # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
-              # in the connection from cloudflared to your local service, not from the internet to cloudflared.
-              # - hostname: hello.example.com
-              #   service: hello_world
+            secretRef:
+              name: cloudflare-api
+              accountIDKey: accountId
+              tunnelNameKey: tunnelName
+              apiTokenKey: apiToken
+          replicaCount: 2
