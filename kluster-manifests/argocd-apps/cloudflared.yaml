@@ -36,7 +36,7 @@ spec:
             isDefaultClass: false
           cloudflare:
             secretRef:
-              name: cloudflare-api
+              name: cfg-tken
               accountIDKey: accountId
               tunnelNameKey: tunnelName
               apiTokenKey: apiToken
