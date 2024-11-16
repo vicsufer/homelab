@@ -21,7 +21,7 @@ spec:
       path: kluster-manifests/cloudflared-extras
       targetRevision: HEAD
 
-    - chart: strrl.dev/cloudflare-tunnel-ingress-controller
+    - chart: cloudflare-tunnel-ingress-controller
       repoURL: https://helm.strrl.dev
       targetRevision: 0.0.16
       helm:
