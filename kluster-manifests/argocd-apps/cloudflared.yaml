@@ -23,7 +23,7 @@ spec:
 
     - chart: strrl.dev/cloudflare-tunnel-ingress-controller
       repoURL: https://helm.strrl.dev
-      targetRevision: v0.0.16
+      targetRevision: 0.0.16
       helm:
         values: |
           cloudflared:
