@@ -34,26 +34,26 @@ spec:
                   repository: ghcr.io/mealie-recipes/mealie
                   tag: v2.2.0
         ingress:
-          main:
-            enabled: true
-            annotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-              cert-manager.io/cluster-issuer: "letsencrypt-prod"
-              gethomepage.dev/enabled: "true"
-              gethomepage.dev/name: "Recetas"
-              gethomepage.dev/description: "Recetario"
-              gethomepage.dev/group: "k3s"
-              gethomepage.dev/href: "https://recetas.vicsufer.xyz"
-              gethomepage.dev/icon: "mealie.png"
-            tls:
-              - secretName: mealie-general-tls
-                hosts:
-                  - recetas.vicsufer.xyz
-            hosts:
-              - host: recetas.vicsufer.xyz
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
+          enabled: true
+          className: "traefik"
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "Recetas"
+            gethomepage.dev/description: "Recetario"
+            gethomepage.dev/group: "k3s"
+            gethomepage.dev/href: "https://recetas.vicsufer.xyz"
+            gethomepage.dev/icon: "mealie.png"
+          tls:
+            - secretName: mealie-general-tls
+              hosts:
+                - recetas.vicsufer.xyz
+          hosts:
+            - host: recetas.vicsufer.xyz
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
 
         persistence:
           data:
