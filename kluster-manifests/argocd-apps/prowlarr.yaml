@@ -32,8 +32,8 @@ spec:
               traefik.ingress.kubernetes.io/router.entrypoints: websecure
               cert-manager.io/cluster-issuer: "letsencrypt-prod"
               gethomepage.dev/enabled: "true"
-              gethomepage.dev/name: "Overseerr"
-              gethomepage.dev/description: "Peticiones mediaserver"
+              gethomepage.dev/name: "Prowlarr"
+              gethomepage.dev/description: "Rastreador torrent"
               gethomepage.dev/group: "Media"
               gethomepage.dev/widget.type: "prowlarr"
               gethomepage.dev/widget.url: "https://prowlarr.vicsufer.xyz"
