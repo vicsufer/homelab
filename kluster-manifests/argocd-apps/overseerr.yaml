@@ -25,6 +25,7 @@ spec:
       values: |
         env:
           TZ: Europe/Madrid
+          LOG_LEVEL: "info"
         ingress:
           main:
             enabled: true
