@@ -32,6 +32,12 @@ spec:
               value: https://recetas.vicsufer.xyz
             - name: TZ
               value: Europe/Madrid
+            - name: DEFAULT_EMAIL
+              value: vicsufer+mealie.vicsufer.xyz
+            - name: DEFAULT_GROUP
+              value: Familia
+            - name: DEFAULT_HOUSEHOLD
+              value: Hogar
           enabled: true
           className: "traefik"
           annotations:
