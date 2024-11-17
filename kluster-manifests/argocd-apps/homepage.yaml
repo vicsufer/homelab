@@ -33,6 +33,12 @@ spec:
             brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
             opacity: 50 # 0-100
           color: cyan
+
+          layout:
+            Media:
+              style: row
+              columns: 4
+
           bookmarks:
             - Developer:
                 - Github:
@@ -57,7 +63,7 @@ spec:
                     href: http://portainer.home/
                     description: Docker management
                 - Traefik:
-                    href: http://traefik.home/
+                    href: http://traefik.vicsufer.xyz/
                     description: K3s ingress
           widgets:
             # show the kubernetes widget, with the cluster summary and individual nodes
