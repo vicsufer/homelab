@@ -34,6 +34,12 @@ server:
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "ArgoCD"
+      gethomepage.dev/description: "GitOps Management"
+      gethomepage.dev/group: "Orchestration"
+      gethomepage.dev/href: "https://argocd.vicsufer.xyz"
+      gethomepage.dev/icon: "argocd.png"
     tls: true
   # certificate:
   #   enabled: true
