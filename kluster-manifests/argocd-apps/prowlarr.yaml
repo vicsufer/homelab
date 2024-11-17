@@ -1,0 +1,52 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: prowlarr
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: mediaserver
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: https://charts.pree.dev
+    chart: prowlarr
+    targetRevision: v1.0.1
+    helm:
+      releaseName: prowlarr
+      values: |
+        env:
+          TZ: Europe/Madrid
+        ingress:
+          main:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Overseerr"
+              gethomepage.dev/description: "Peticiones mediaserver"
+              gethomepage.dev/group: "Media"
+              gethomepage.dev/widget.type: "prowlarr"
+              gethomepage.dev/widget.url: "https://prowlarr.vicsufer.xyz"
+              gethomepage.dev/icon: "prowlarr.png"
+            tls:
+              - secretName: overseerr-general-tls
+                hosts:
+                  - prowlarr.vicsufer.xyz
+            hosts:
+              - host: prowlarr.vicsufer.xyz
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
+        persistence:
+          config:
+            enabled: true
