@@ -2,7 +2,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-csi
+  name: nfs-csi-retain
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: nfs.csi.k8s.io
@@ -11,7 +11,7 @@ parameters:
   share: /volume1/kubernetes
   subdir: /${pvc.metadata.namespace}/${pvc.metadata.name}/${pv.metadata.name}
   mountPermissions: "0777"
-reclaimPolicy: Retain # Use "Delete" if you want automatic storage deletion
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
 mountOptions:
   - hard
