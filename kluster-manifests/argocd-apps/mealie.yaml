@@ -35,7 +35,7 @@ spec:
                   tag: v2.2.0
         ingress:
           main:
-            enabled: false
+            enabled: true
             annotations:
               traefik.ingress.kubernetes.io/router.entrypoints: websecure
               cert-manager.io/cluster-issuer: "letsencrypt-prod"
