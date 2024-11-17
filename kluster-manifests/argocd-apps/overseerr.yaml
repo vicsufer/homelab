@@ -16,7 +16,7 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  sources:
+  source:
     repoURL: https://charts.pree.dev
     chart: overseerr
     targetRevision: v1.0.1
@@ -35,7 +35,7 @@ spec:
             gethomepage.dev/description: "Peticiones mediaserver"
             gethomepage.dev/group: "Media"
             gethomepage.dev/widget.type: "Overseerr"
-            gethomepage.dev/widget.url: "https://overseerrvicsufer.xyz"
+            gethomepage.dev/widget.url: "https://overseerr.vicsufer.xyz"
             gethomepage.dev/icon: "overseerr.png"
         persistence:
           config:
