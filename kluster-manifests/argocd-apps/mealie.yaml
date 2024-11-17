@@ -16,60 +16,65 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    repoURL: https://github.com/ben-kemister/mealie-helm-chart.git
-    targetRevision: main
-    path: mealie
-    helm:
-      releaseName: mealie
-      values: |
-        mealie:
-          repository: ghcr.io/mealie-recipes/mealie
-          tag: v2.2.0
-          env:
-            - name: BASE_URL
-              value: https://recetas.vicsufer.xyz
-            - name: TZ
-              value: Europe/Madrid
-            - name: DEFAULT_EMAIL
-              value: vicsufer+mealie.vicsufer.xyz
-            - name: DEFAULT_GROUP
-              value: Familia
-            - name: DEFAULT_HOUSEHOLD
-              value: Hogar
-        ingress:
-          enabled: true
-          className: "traefik"
-          annotations:
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/name: "Recetas"
-            gethomepage.dev/description: "Recetario"
-            gethomepage.dev/group: "k3s"
-            gethomepage.dev/href: "https://recetas.vicsufer.xyz"
-            gethomepage.dev/icon: "mealie.png"
-          tls:
-            - secretName: mealie-general-tls
-              hosts:
-                - recetas.vicsufer.xyz
-          hosts:
-            - host: recetas.vicsufer.xyz
-              paths:
-                - path: /
-                  pathType: ImplementationSpecific
+  sources:
+    - repoURL: https://github.com/vicsufer/homelab.git
+      targetRevision: HEAD
+      path: kluster-manifets/mealie-extras
 
-        volumes:
-          - name: mealie-data
-            emptyDir: {}
+    - repoURL: https://github.com/ben-kemister/mealie-helm-chart.git
+      targetRevision: main
+      path: mealie
+      helm:
+        releaseName: mealie
+        values: |
+          mealie:
+            repository: ghcr.io/mealie-recipes/mealie
+            tag: v2.2.0
+            env:
+              - name: BASE_URL
+                value: https://recetas.vicsufer.xyz
+              - name: TZ
+                value: Europe/Madrid
+              - name: DEFAULT_EMAIL
+                value: vicsufer+mealie.vicsufer.xyz
+              - name: DEFAULT_GROUP
+                value: Familia
+              - name: DEFAULT_HOUSEHOLD
+                value: Hogar
+          ingress:
+            enabled: true
+            className: "traefik"
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Recetas"
+              gethomepage.dev/description: "Recetario"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/href: "https://recetas.vicsufer.xyz"
+              gethomepage.dev/icon: "mealie.png"
+            tls:
+              - secretName: mealie-general-tls
+                hosts:
+                  - recetas.vicsufer.xyz
+            hosts:
+              - host: recetas.vicsufer.xyz
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
 
-        # persistence:
-        #   data:
-        #     enabled: true
-        #     accessMode: ReadWriteOnce
-        #     size: 10Gi
-        #     advancedMounts:
-        #       main:
-        #         main:
-        #           - path: /app/data/
-        #             readOnly: false
+          volumes:
+            - name: mealie-data
+              persistentVolumeClaim:
+                claimName: mealie-data
+
+          # persistence:
+          #   data:
+          #     enabled: true
+          #     accessMode: ReadWriteOnce
+          #     size: 10Gi
+          #     advancedMounts:
+          #       main:
+          #         main:
+          #           - path: /app/data/
+          #             readOnly: false
