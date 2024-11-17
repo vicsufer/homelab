@@ -49,18 +49,21 @@ spec:
                 - Plex:
                     href: http://plex.home/
                     description: Media server
+                    icon: plex.png
                     widget:
                       type: plex
                       url: http://plex.home/
                 - Radarr:
                     href: http://sonarr.home/
                     description: Movies management
+                    icon: radarr.png
                     widget:
                       type: radarr
                       url: http://radarr.home/
                 - Sonarr:
                     href: http://sonarr.home/
                     description: TV management
+                    icon: sonarr.png
                     widget:
                       type: sonarr
                       url: http://sonarr.home/
@@ -77,9 +80,11 @@ spec:
                 - Portainer:
                     href: http://portainer.home/
                     description: Docker management
+                    icon: portainer.png
                 - Traefik:
                     href: http://traefik.vicsufer.xyz/
                     description: K3s ingress
+                    icon: traefik.png
           widgets:
             # show the kubernetes widget, with the cluster summary and individual nodes
             - kubernetes:
