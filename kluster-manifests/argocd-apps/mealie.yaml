@@ -38,6 +38,7 @@ spec:
               value: Familia
             - name: DEFAULT_HOUSEHOLD
               value: Hogar
+        ingress:
           enabled: true
           className: "traefik"
           annotations:
