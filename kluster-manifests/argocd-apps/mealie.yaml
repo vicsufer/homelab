@@ -1,0 +1,67 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: mealie
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: mealie
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: https://github.com/ben-kemister/mealie-helm-chart.git
+    targetRevision: main
+    path: mealie
+    helm:
+      releaseName: mealie
+      values: |
+        strategy:
+          type: Recreate
+        controllers:
+          main:
+            enabled: true
+            containers:
+              main:
+                image:
+                  repository: ghcr.io/mealie-recipes/mealie
+                  tag: v2.2.0
+        ingress:
+          main:
+            enabled: false
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Recetas"
+              gethomepage.dev/description: "Recetario"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/href: "https://recetas.vicsufer.xyz"
+              gethomepage.dev/icon: "mealie.png"
+            tls:
+              - secretName: mealie-general-tls
+                hosts:
+                  - recetas.vicsufer.xyz
+            hosts:
+              - host: recetas.vicsufer.xyz
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
+
+        persistence:
+          data:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 10Gi
+            advancedMounts:
+              main:
+                main:
+                  - path: /app/data/
+                    readOnly: false
