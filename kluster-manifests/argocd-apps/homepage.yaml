@@ -76,10 +76,6 @@ spec:
                     href: http://portainer.home/
                     description: Docker management
                     icon: portainer.png
-                - Traefik:
-                    href: http://traefik.vicsufer.xyz/
-                    description: K3s ingress
-                    icon: traefik.png
           widgets:
             # show the kubernetes widget, with the cluster summary and individual nodes
             - kubernetes:
@@ -99,6 +95,7 @@ spec:
                 targewidget:
           kubernetes:
             mode: cluster
+
           settings:
             headerStyle: boxedWidgets
             base: http://homepage.vicsufer.xyz
