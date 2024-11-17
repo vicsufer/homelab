@@ -62,12 +62,6 @@ spec:
                     widget:
                       type: sonarr
                       url: http://sonarr.home/
-                # - Overseerr:
-                #     href: http://overseerr.home/
-                #     description: Media request managemenet
-                #     widget:
-                #       type: overseerr
-                #       url: http://overeerr.home/
                 - Deluge:
                     href: http://deluge.home/
                     description: Torrent client
@@ -103,7 +97,7 @@ spec:
             layout:
               Media:
                 style: row
-                columns: 4
+                columns: 6
 
 
         # The service account is necessary to allow discovery of other services

@@ -28,15 +28,25 @@ spec:
         ingress:
           main:
             enabled: true
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/name: "Overseerr"
-            gethomepage.dev/description: "Peticiones mediaserver"
-            gethomepage.dev/group: "Media"
-            gethomepage.dev/widget.type: "Overseerr"
-            gethomepage.dev/widget.url: "https://overseerr.vicsufer.xyz"
-            gethomepage.dev/icon: "overseerr.png"
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Overseerr"
+              gethomepage.dev/description: "Peticiones mediaserver"
+              gethomepage.dev/group: "Media"
+              gethomepage.dev/widget.type: "Overseerr"
+              gethomepage.dev/widget.url: "https://overseerr.vicsufer.xyz"
+              gethomepage.dev/icon: "overseerr.png"
+            tls:
+              - secretName: overseer-general-tls
+                hosts:
+                  - overseer.vicsufer.xyz
+            hosts:
+              - host: overseer.vicsufer.xyz
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
         persistence:
           config:
             enabled: true
