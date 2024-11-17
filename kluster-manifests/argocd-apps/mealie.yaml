@@ -23,16 +23,11 @@ spec:
     helm:
       releaseName: mealie
       values: |
-        strategy:
-          type: Recreate
-        controllers:
-          main:
-            enabled: true
-            containers:
-              main:
-                image:
-                  repository: ghcr.io/mealie-recipes/mealie
-                  tag: v2.2.0
+        mealie:
+          image:
+            repository: ghcr.io/mealie-recipes/mealie
+            tag: v2.2.0
+
         ingress:
           enabled: true
           className: "traefik"
@@ -55,13 +50,17 @@ spec:
                 - path: /
                   pathType: ImplementationSpecific
 
-        persistence:
-          data:
-            enabled: true
-            accessMode: ReadWriteOnce
-            size: 10Gi
-            advancedMounts:
-              main:
-                main:
-                  - path: /app/data/
-                    readOnly: false
+        volumes:
+          - name: mealie-data
+            emptyDir: {}
+
+        # persistence:
+        #   data:
+        #     enabled: true
+        #     accessMode: ReadWriteOnce
+        #     size: 10Gi
+        #     advancedMounts:
+        #       main:
+        #         main:
+        #           - path: /app/data/
+        #             readOnly: false
