@@ -39,7 +39,7 @@ spec:
               gethomepage.dev/widget.url: "https://prowlarr.vicsufer.xyz"
               gethomepage.dev/icon: "prowlarr.png"
             tls:
-              - secretName: overseerr-general-tls
+              - secretName: prowlarr-general-tls
                 hosts:
                   - prowlarr.vicsufer.xyz
             hosts:
