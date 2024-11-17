@@ -34,11 +34,6 @@ spec:
             opacity: 50 # 0-100
           color: cyan
 
-          layout:
-            Media:
-              style: row
-              columns: 4
-
           bookmarks:
             - Developer:
                 - Github:
@@ -104,7 +99,12 @@ spec:
                 targewidget:
           kubernetes:
             mode: cluster
-          # settings:
+          settings:
+            layout:
+              Media:
+                style: row
+                columns: 4
+
 
         # The service account is necessary to allow discovery of other services
         serviceAccount:
