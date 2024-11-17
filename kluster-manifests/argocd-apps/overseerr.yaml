@@ -39,11 +39,11 @@ spec:
               gethomepage.dev/widget.url: "https://overseerr.vicsufer.xyz"
               gethomepage.dev/icon: "overseerr.png"
             tls:
-              - secretName: overseer-general-tls
+              - secretName: overseerr-general-tls
                 hosts:
-                  - overseer.vicsufer.xyz
+                  - overseerr.vicsufer.xyz
             hosts:
-              - host: overseer.vicsufer.xyz
+              - host: overseerr.vicsufer.xyz
                 paths:
                   - path: /
                     pathType: ImplementationSpecific
