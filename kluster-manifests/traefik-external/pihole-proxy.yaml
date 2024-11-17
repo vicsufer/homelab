@@ -26,7 +26,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: traefik-cert
+  name: pihole-cert
 spec:
   commonName: pihole.vicsufer.xyz
   secretName: pihole-cert
