@@ -25,6 +25,9 @@ spec:
       values: |
         env:
           TZ: Europe/Madrid
+        image:
+          repository: ghcr.io/onedr0p/prowlarr-develop
+          tag: 1.26.0
         ingress:
           main:
             enabled: true
