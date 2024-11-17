@@ -51,7 +51,8 @@ spec:
               gethomepage.dev/name: "Recetas"
               gethomepage.dev/description: "Recetario"
               gethomepage.dev/group: "k3s"
-              gethomepage.dev/href: "https://recetas.vicsufer.xyz"
+              gethomepage.dev/widget.type: "mealie"
+              gethomepage.dev/widget.url: "https://recetas.vicsufer.xyz"
               gethomepage.dev/icon: "mealie.png"
             tls:
               - secretName: mealie-general-tls
