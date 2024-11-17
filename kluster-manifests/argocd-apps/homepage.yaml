@@ -49,12 +49,27 @@ spec:
                 - Plex:
                     href: http://plex.home/
                     description: Media server
+                    widget:
+                      type: plex
+                      url: http://plex.home/
                 - Radarr:
-                    href: http://radarr.home/
+                    href: http://sonarr.home/
                     description: Movies management
+                    widget:
+                      type: radarr
+                      url: http://radarr.home/
                 - Sonarr:
                     href: http://sonarr.home/
                     description: TV management
+                    widget:
+                      type: sonarr
+                      url: http://sonarr.home/
+                # - Overseerr:
+                #     href: http://overseerr.home/
+                #     description: Media request managemenet
+                #     widget:
+                #       type: overseerr
+                #       url: http://overeerr.home/
                 - Deluge:
                     href: http://deluge.home/
                     description: Torrent client
