@@ -27,8 +27,11 @@ spec:
           image:
             repository: ghcr.io/mealie-recipes/mealie
             tag: v2.2.0
-
-        ingress:
+          env:
+            - name: BASE_URL
+              value: https://recetas.vicsufer.xyz
+            - name: TZ
+              value: Europe/Madrid
           enabled: true
           className: "traefik"
           annotations:
