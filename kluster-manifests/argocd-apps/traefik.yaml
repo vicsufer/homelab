@@ -16,62 +16,65 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    chart: traefik
-    repoURL: https://traefik.github.io/charts
-    targetRevision: v33.0.0
-    helm:
-      releaseName: traefik
-      values: |
-        ingressRoute:
-          dashboard:
-            annotations:
-              kubernetes.io/ingress.class: traefik
-              gethomepage.dev/enabled: "true"
-              gethomepage.dev/name: "Traefik"
-              gethomepage.dev/description: "Ingress Controller"
-              gethomepage.dev/group: "Orchestration"
-              gethomepage.dev/href: "https://traefik.vicsufer.xyz"
-              gethomepage.dev/icon: "traefik.png"
-              gethomepage.dev/widget.type: "traefik"
-              gethomepage.dev/widget.url: "https://traefik.vicsufer.xyz"
-            enabled: true
-            matchRule: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-            entryPoints:
-              - websecure
-            tls:
-              secretName: traefik-cert
-        deployment:
-          podAnnotations:
-            prometheus.io/port: "8082"
-            prometheus.io/scrape: "true"
-        providers:
-          kubernetesIngress:
-            publishedService:
+  sources:
+    - repoURL: https://github.com/vicsufer/homelab
+      path: kluster-manifests/traefik-external
+      targetRevision: HEAD
+    - chart: traefik
+      repoURL: https://traefik.github.io/charts
+      targetRevision: v33.0.0
+      helm:
+        releaseName: traefik
+        values: |
+          ingressRoute:
+            dashboard:
+              annotations:
+                kubernetes.io/ingress.class: traefik
+                gethomepage.dev/enabled: "true"
+                gethomepage.dev/name: "Traefik"
+                gethomepage.dev/description: "Ingress Controller"
+                gethomepage.dev/group: "Orchestration"
+                gethomepage.dev/href: "https://traefik.vicsufer.xyz"
+                gethomepage.dev/icon: "traefik.png"
+                gethomepage.dev/widget.type: "traefik"
+                gethomepage.dev/widget.url: "https://traefik.vicsufer.xyz"
               enabled: true
-        priorityClassName: "system-cluster-critical"
-        tolerations:
-          - key: "CriticalAddonsOnly"
-            operator: "Exists"
-          - key: "node-role.kubernetes.io/control-plane"
-            operator: "Exists"
-            effect: "NoSchedule"
-          - key: "node-role.kubernetes.io/master"
-            operator: "Exists"
-            effect: "NoSchedule"
-        service:
-          ipFamilyPolicy: "PreferDualStack"
-        extraObjects:
-          - |
-            apiVersion: cert-manager.io/v1
-            kind: Certificate
-            metadata:
-              name: traefik-cert
-            spec:
-              commonName: traefik.vicsufer.xyz
-              secretName: traefik-cert
-              dnsNames:
-                - traefik.vicsufer.xyz
-              issuerRef:
-                kind: ClusterIssuer
-                name: letsencrypt-prod
+              matchRule: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+              entryPoints:
+                - websecure
+              tls:
+                secretName: traefik-cert
+          deployment:
+            podAnnotations:
+              prometheus.io/port: "8082"
+              prometheus.io/scrape: "true"
+          providers:
+            kubernetesIngress:
+              publishedService:
+                enabled: true
+          priorityClassName: "system-cluster-critical"
+          tolerations:
+            - key: "CriticalAddonsOnly"
+              operator: "Exists"
+            - key: "node-role.kubernetes.io/control-plane"
+              operator: "Exists"
+              effect: "NoSchedule"
+            - key: "node-role.kubernetes.io/master"
+              operator: "Exists"
+              effect: "NoSchedule"
+          service:
+            ipFamilyPolicy: "PreferDualStack"
+          extraObjects:
+            - |
+              apiVersion: cert-manager.io/v1
+              kind: Certificate
+              metadata:
+                name: traefik-cert
+              spec:
+                commonName: traefik.vicsufer.xyz
+                secretName: traefik-cert
+                dnsNames:
+                  - traefik.vicsufer.xyz
+                issuerRef:
+                  kind: ClusterIssuer
+                  name: letsencrypt-prod
