@@ -25,6 +25,7 @@ spec:
         sources:
           - service
           - ingress
+          - traefik-proxy
         extraDeploy:
          - |
           apiVersion: bitnami.com/v1alpha1
