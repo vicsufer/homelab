@@ -18,10 +18,8 @@ spec:
         provider: pihole
         pihole:
           tlsSkipVerify: true
-        extraArgs:
-          - --traefik-disable-legacy
-          - --pihole-tls-skip-verify
-        #   # - --annotation-filter="external-dns.alpha.kubernetes.io/exclude notin (true)"
+        traefik:
+          disableLegacy: true
         extraEnvVarsSecret: pihole-secret
         sources:
           # - service
