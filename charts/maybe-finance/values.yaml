@@ -6,6 +6,7 @@ deployment:
   repository: ghcr.io/maybe-finance/maybe
   tag: sha-490f44589e846e5b5d2b6bf56ddb4382234f0067
   replicaCount: 1
+  revisionHistoryLimit: 3
   port: 3000
   pullPolicy: IfNotPresent
   extraEnvVarsCM: ""
