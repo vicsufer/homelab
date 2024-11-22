@@ -65,7 +65,7 @@ spec:
             failureThreshold: 3
           volumeMounts:
             - name: data
-              mountPath: 
+              mountPath: /rails/storage
       volumes:
         - name: data
           persistentVolumeClaim:
