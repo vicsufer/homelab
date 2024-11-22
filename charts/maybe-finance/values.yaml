@@ -22,6 +22,10 @@ deployment:
     # - name: SELF_HOSTING_ENABLED
     #   value: true
 
+storage:
+  accessModes: ReadWriteOnce
+  size: 2Gi
+
 postgresql:
   primary:
     persistence:

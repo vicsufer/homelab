@@ -63,3 +63,10 @@ spec:
             timeoutSeconds: 5
             successThreshold: 1
             failureThreshold: 3
+          volumeMounts:
+            - name: data
+              mountPath: 
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-{{ .Release.name }}
