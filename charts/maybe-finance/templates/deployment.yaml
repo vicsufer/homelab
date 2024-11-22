@@ -69,4 +69,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: data-{{ .Release.name }}
+            claimName: data-{{ .Release.Name }}
