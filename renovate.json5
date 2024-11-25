@@ -5,5 +5,7 @@
   ],
   "argocd": {
     "fileMatch": ["kluster-manifests/argocd-apps/.+\\.yaml$"]
-  }
+    "labels": "ArgoCD Application"
+  },
+  "labels": ["dependencies", "renovate"]
 }
