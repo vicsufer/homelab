@@ -38,8 +38,8 @@ spec:
             persistence:
               cache:
                 enabled: true
-                storageClass: 'nfs-csi-delete'
-                storageSize: "512Mi"
+                storageClass: 'local-path'
+                storageSize: "1Gi"
             config: |
               {
                 "platform": "github",
