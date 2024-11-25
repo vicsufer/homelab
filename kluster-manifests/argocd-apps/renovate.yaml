@@ -43,6 +43,5 @@ spec:
               {
                 "platform": "github",
                 "autodiscover": "false",
-                "dryRun": true,
                 "repositories": ["vicsufer/homelab"]
               }
