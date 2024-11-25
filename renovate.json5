@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "config:recommended",
+    "docker:pinDigests",
+  ]
+  "argocd": {
+    "fileMatch": ["kluster-manifests/argocd-apps/.+\\.yaml$"]
+  }
+}
