@@ -1,0 +1,48 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: renovate
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: renovate
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/renovate-extras
+    - chart: renovate
+      repoURL: https://docs.renovatebot.com/helm-charts
+      targetRevision: 39.26.3
+      helm:
+        releaseName: renovate
+        values: |
+          cronjob:
+            schedule: "*/10 * * * *"
+            failedJobsHistoryLimit: 2
+            successfulJobsHistoryLimit: 2
+          persistence:
+            cache:
+              enabled: true
+              storageClass: 'nfs-csi-delete'
+              storageSize: "512Mi"
+          existingSecret: "renovateSecrets"
+          env:
+            RENOVATE_X_GITHUB_HOST_RULES: true
+          renovate:
+            config: |
+              {
+                "platform": "github",
+                "autodiscover": "false",
+                "dryRun": true,
+                "repositories": ["vicsufer/homelab"]
+              }

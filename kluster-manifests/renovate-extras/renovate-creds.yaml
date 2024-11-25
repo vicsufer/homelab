@@ -1,0 +1,14 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: renovate-creds
+  namespace: renovate
+spec:
+  encryptedData:
+    RENOVATE_TOKEN: AgBfQuyn0ZRRHLRjOPVvlTN+A8ikVKWxqyvg0y7UR3HLcB8z2l5bfs/iyuYQYN7ze5SG9wtcE7UNv2qt/EanO8IoX4z6rYdDEPu28BiH5MbvlDOj2UU8wYFsoSIrEBBeonCvOOkys1K1vKEgq+KJPRfatWST8aKgk1ZWOIZWX5qz4HKgosgLYUHNWKAjFssjKA3muLIwQCxYLG8Id3Oe2kjGgBDUNiqWz+tSQQqQ/7Dg6wK1vqfCIMrTfbQ4eIB0tY6ln85hxKZcQA2jAOSRG/4o9lHMGNp55UcbT6WW8T8QfLeSziT+IojAogF/ABwVyRUzrc4j1h/E8R9UaRzmcwFv9ST93WWCoU7m6mss1Az65fWAkCO2pbtaBp6gAQQxTE3lcpoVX311it5I+s6Je/+uDYiJyTBl6MOP9RUmoOJoDU9fattSYnYkcFED2XNXLCR4L8oH51IEj0nkp9MXfa2RozibYdevKANATB0NNDXk7o7M863bOsydYRiFR4gk1bhZin29VVnVhFWO6OUDY86RD4JWY28fS1VJR80eFjuEOQWjYhg9cbfmumLWWstklc4tRRf/l5MGb/SGfotk5MdsQSVMqH0x1Nn4YeWuiaCo3UvPYWCYWT/ZCfsqaCkBZLFGkeNPxncVjFauk5QjxP2EfZhUcylm2NVypogp7x+XIxOV5KfvHNBivx653aJBcNne2EA6+C3h5zouBXPV7EL6lKpZL4a2x9MclCmyVmkQfXUZ5A0cE7tQ
+  template:
+    metadata:
+      name: renovate-creds
+      namespace: renovate
+    type: Opaque
