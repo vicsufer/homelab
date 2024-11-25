@@ -43,6 +43,6 @@ spec:
             config: |
               {
                 "platform": "github",
-                "autodiscover": "false",
+                "autodiscover": false,
                 "repositories": ["vicsufer/homelab"]
               }
