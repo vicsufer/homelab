@@ -30,15 +30,15 @@ spec:
             schedule: "*/10 * * * *"
             failedJobsHistoryLimit: 2
             successfulJobsHistoryLimit: 2
-          persistence:
-            cache:
-              enabled: true
-              storageClass: 'nfs-csi-delete'
-              storageSize: "512Mi"
           existingSecret: "renovate-creds"
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
+            persistence:
+              cache:
+                enabled: true
+                storageClass: 'nfs-csi-delete'
+                storageSize: "512Mi"
             config: |
               {
                 "platform": "github",
