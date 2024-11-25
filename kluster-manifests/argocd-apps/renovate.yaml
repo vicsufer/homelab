@@ -28,7 +28,7 @@ spec:
         values: |
           cronjob:
             schedule: "* */2 * * *"
-            failedJobsHistoryLimit: 2
+            failedJobsHistoryLimit: 1
             successfulJobsHistoryLimit: 2
             concurrencyPoligy: Forbid
           existingSecret: "renovate-creds"
@@ -48,7 +48,7 @@ spec:
               }
           resources:
             limits:
-              memory: 2Gi
+              memory: 5Gi
             requests:
-              cpu: 500m
-              memory: 1Gi
+              cpu: 1000
+              memory: 3Gi
