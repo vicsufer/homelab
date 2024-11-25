@@ -2,7 +2,7 @@
   "extends": [
     "config:recommended",
     "docker:pinDigests",
-    ":disableRateLimiting"
+    ":disableRateLimiting",
     ":automergePatch"
   ],
   "argocd": {
