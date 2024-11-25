@@ -4,7 +4,7 @@
     "docker:pinDigests",
   ],
   "argocd": {
-    "fileMatch": ["kluster-manifests/argocd-apps/.+\\.yaml$"]
+    "fileMatch": ["kluster-manifests/argocd-apps/.+\\.yaml$"],
     "labels": ["renovate", "ArgoCD Application"]
   },
   "labels": ["dependencies", "renovate"]
