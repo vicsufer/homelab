@@ -35,7 +35,7 @@ spec:
               enabled: true
               storageClass: 'nfs-csi-delete'
               storageSize: "512Mi"
-          existingSecret: "renovateSecrets"
+          existingSecret: "renovate-creds"
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
