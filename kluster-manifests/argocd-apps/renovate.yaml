@@ -30,6 +30,7 @@ spec:
             schedule: "*/10 * * * *"
             failedJobsHistoryLimit: 2
             successfulJobsHistoryLimit: 2
+            startingDeadlineSeconds: 1
           existingSecret: "renovate-creds"
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
