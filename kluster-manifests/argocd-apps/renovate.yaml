@@ -27,7 +27,7 @@ spec:
         releaseName: renovate
         values: |
           cronjob:
-            schedule: "*/10 * * * *"
+            schedule: "*/30 * * * *"
             failedJobsHistoryLimit: 2
             successfulJobsHistoryLimit: 2
             startingDeadlineSeconds: 1
