@@ -46,3 +46,9 @@ spec:
                 "autodiscover": false,
                 "repositories": ["vicsufer/homelab"]
               }
+          resources:
+            limits:
+             memory: 1Gi
+            requests:
+             cpu: 500m
+             memory: 1Gi
