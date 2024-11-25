@@ -2,6 +2,7 @@
   "extends": [
     "config:recommended",
     "docker:pinDigests",
+    ":disableRateLimiting"
   ],
   "argocd": {
     "fileMatch": ["kluster-manifests/argocd-apps/.+\\.yaml$"],
