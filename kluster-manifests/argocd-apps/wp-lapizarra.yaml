@@ -56,6 +56,12 @@ spec:
         # Disabling MariaDB
         mariadb:
           enabled: true
+          auth:
+            existingSecret: db-credentials
+          passwordUpdateJob:
+            enabled: true
+            password: ""
+            rootPassword: ""
 
         ingress:
           enabled: true
@@ -84,4 +90,19 @@ spec:
               template:
                 metadata:
                   name: wp-password
+                  namespace: wp-lapizarrapedagogica
+          - |
+            apiVersion: bitnami.com/v1alpha1
+            kind: SealedSecret
+            metadata:
+              name: db-credentials
+              namespace: wp-lapizarrapedagogica
+            spec:
+              encryptedData:
+                mariadb-password: AgBvuiqEkOmcUcc1Yn6Umxh+mfNxiNq0G92AWGhHRDbyfCeF+OjI3TZxwgOUsjRu9X+9ZWhR8vIf6lix0B2OQKO+lxHa8p6nN5jgUf3iXZDqnJwovOPJVDTZCwcdmU7GhdmFcx0pR0Gvn6FxAwDoJPKlGY1cJhxM339dZXUMyvreFKAO4IOAC0W+3EldfGsqhYK5+2/HEVJhbLtyH2UB5h5/H4a5usEtIOSAynI2omRTVdrdaOD2/jzM8ikYLHYYwxF35Oe2tEQyQ/G3EcDyFoZNyYMQxk9piqknR4W/a27uat2tSB3IFRCDkZnlq6BBylY7sblz5z3iSbY0CSIEoB9gexEgC3/5zqgkvkn+pEjoIN0sWd6kxGLqvVFHHXcFUq00pV930fNmvvS/ZMUAGaPd1TFXrxlCXWqpvZruwPvA5QJL46T8otvkSzxkDfgWZ41V9JAdfMU5w7oGPgoKZOnuWLqyEct/h1qJnWSXT3F/uIbH7SBC5Yu6KNrWAt7u5XaHrU8dvoqvoxm1dngcs4tLCthf4MCR9zxnGIEchVAF6RsH7cHc3dQnRZtpfenHlyZa8AAhSt4STg4HuXD+/+nwTJeilSOK0IdHMNKDxqJfT/IuxnsKo0sivwYXuEvwrFX4NabQN+IYLF8GKHD6ddvEUEIKiAyrWi3MviS+cepZr2PRMbu0f5UpxwUSl7+ilX9VW/ko2spg6d9CpQ==
+                mariadb-replication-password: AgBm9cbqU7vaVOrR9fBBD2o6Yhxb2t5nBCm5Z7w3HAjSxXnUt8ISbO0Cx5wXdDXp1ryg1jnRNFAx4rKztyIPW3EZVtIWn4pgUrOWxZoTG7aJd0bDHgA4jn00EiSdc3VifouKo5Pe20kwyqAxtu0Ve5qOnF99FDkWxN4knOvAHdnaLHt/fiEfy/mAA09s0rP3Tk7vam+ee0bIaVGiAJbULstlZYR+FQX5fkMd/ux4w5mWi/hyB7CzAipHPPMA7C83vaGeKfGj9GQllP2XRZhDzKmWoPBJ94R38IeNLrQ57gaJSr0l/5Hj76NyjJazROTeHJ/Entsdx9Gl3DRovdvK097j+O2JaM9cZMHqb/8JyehbxLBz5xG4Uxzo50K1nM1sIKCNcGyP8wEV+/fpIQax1t2ucQ5po0lddQNGGWINHazGtzzU6anBl22c/4dcpoligtgc14UAywjcgTvJAnIAo3iXtIj1jWdsSoy2yAZ5vuTdANkvr6dOpm+1yp5UvhlItzWqzLHCEShn9LLnES5q//xz326vpGlPLYWtZVVKGNrbRaJBmULab3K4TAf79FQjR1dlSTQAgwcepm/T3QZQTc9lBYXLObg7icZIDQWDvXuKdQbLvcal5Qln9WWHvhyQaGIdbxFggqIPGGT/tpSP7LgFpERRoSpoHqr8meMYZdGiFXz173PKsARHS1mBwslhmojIACDqbOgZFbU=
+                mariadb-root-password: AgBhHtx1Q6hyTG7VsYZct5B8+JRGUQy9ASSoZesJZrqWb92VsoTZOPBo7QldXrxSwmkxVvZB5DC62PDcTxqtGDT/Y6JAnTpbFB2k58DKssFcoO6QAU0jC0zu6IcTl95EsETS6qXfg7LB2KO/rOoZMZ9dbipWetyeLcGOZK0fP6IbH2H2CaSJzVZLlfLXTLVPIR78VsfDsBbEqQqE4+Bba8XyCMEGiJF12LU+FTuIt9Efzhw45aKiNLQhXJF4G91+ewL3dFvPp8W3v2DBFVtTNUJt3zPDCpE+C33F8aymZUwhoxcuLlEX3BWYvmrE/QD2JCtjYhDI4rvzm4C5NlfSmpamc9fDyuW4AByPQGp9U4KIbVocJ13kaZJ7PEGDHEBOIx/D05T+laHXC5q50NR1BnuYm0REaapaCadek0fePMWKdr09qQ1SlebABXHhpDXdb1MvNnlQZblVI+p4hbBnQFQdQw0h1phKY0LBpPBMxs0Y4NGk4Vpy0P230ijhMSivBAEWSvYv/P7vL6OM4E48aTBC5PV2taegLR/h1e2zcY06IqFu8c5ygcAy5BorU1TwoZiAxPCBFX5d5KZWZAT+IdEBBLAXYnyshfZjdoNw/U6BQWe4ZUSPioeJgKDeFgGc3q/RYb7OXhhTIYe1K+F5L2H25wc1U8pp3vDo7qfwTy1+mICIFLx+bn1tP+oiwSi20fIlvXGHVGu3ubGr1oJQ8KNL
+              template:
+                metadata:
+                  name: db-credentials
                   namespace: wp-lapizarrapedagogica
