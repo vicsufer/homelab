@@ -53,16 +53,10 @@ spec:
 
         wordpressBlogName: La Pizarra Pedagogica
 
-        # Disabling MariaDB
         mariadb:
           enabled: true
           auth:
             existingSecret: db-credentials
-          passwordUpdateJob:
-            enabled: true
-            previousPasswords:
-              password: ""
-              rootPassword: ""
 
         ingress:
           enabled: true
