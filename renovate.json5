@@ -3,7 +3,10 @@
     "config:recommended",
     "docker:pinDigests",
     ":disableRateLimiting",
-    ":automergePatch"
+    ":prHourlyLimitNone",
+    ":automergePatch",
+    ":approveMajorUpdates",
+    ":configMigration"
   ],
   "argocd": {
     "fileMatch": ["kluster-manifests/argocd-apps/.+\\.yaml$"],
