@@ -60,8 +60,9 @@ spec:
             existingSecret: db-credentials
           passwordUpdateJob:
             enabled: true
-            password: ""
-            rootPassword: ""
+            previousPasswords:
+              password: ""
+              rootPassword: ""
 
         ingress:
           enabled: true
