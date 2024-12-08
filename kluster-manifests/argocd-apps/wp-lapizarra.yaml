@@ -55,10 +55,10 @@ spec:
 
         mariadb:
           enabled: true
-          auth:
-            existingSecret: db-credentials
+          # auth:
+            # existingSecret: db-credentials
           passwordUpdateJob:
-            enabled: true
+            enabled: false
             previousPasswords:
               password: ""
               rootPassword: ""
