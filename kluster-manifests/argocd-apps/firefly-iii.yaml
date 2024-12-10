@@ -35,6 +35,7 @@ spec:
               pullPolicy: IfNotPresent
             storage:
               class: "nfs-csi-retain"
+              accessModes: ReadWriteOnce
               dataSize: 10Gi
 
             # environment variables
