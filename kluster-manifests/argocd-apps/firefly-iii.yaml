@@ -42,7 +42,7 @@ spec:
             configs:
               RESTORE_URL: ""
               BACKUP_URL: ""
-              DBHOST: firefly-firefly-db
+              DBHOST: firefly-iii-firefly-db
               DBPORT: "5432"
               TZ: Europe/Madrid
               existingSecret: firefly-iii
