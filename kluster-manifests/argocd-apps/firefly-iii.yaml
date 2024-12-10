@@ -57,6 +57,7 @@ spec:
             config:
               existingSecret: firefly-iii
               env:
+                DB_HOST: firefly-iii-firefly-db
                 DEFAULT_LANGUAGE: "es_US"
                 DEFAULT_LOCALE: "equal"
                 TZ: "Europe/Madrid"
