@@ -34,6 +34,7 @@ spec:
               tag: 10-alpine
               pullPolicy: IfNotPresent
             storage:
+              class: "nfs-csi-retain"
               dataSize: 10Gi
 
             # environment variables
@@ -51,6 +52,7 @@ spec:
             enabled: true
             persistency:
               storage: 10Gi
+              storageclassname: "nfs-csi-retain"
             config:
               existingSecret: firefly-iii
               env:
