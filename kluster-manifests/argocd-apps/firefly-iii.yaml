@@ -89,7 +89,7 @@ spec:
             config:
               existingSecret: firefly-iii
               env:
-                FIREFLY_III_URL: firefly-iii-firely
+                FIREFLY_III_URL: firefly-iii-firefly
                 VANITY_URL: firefly.vicsufer.xyz
             ingress:
               enabled: true
