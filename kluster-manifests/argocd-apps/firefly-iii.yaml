@@ -89,8 +89,8 @@ spec:
             config:
               existingSecret: firefly-iii
               env:
-                FIREFLY_III_URL: firefly-iii-firefly
-                VANITY_URL: firefly.vicsufer.xyz
+                FIREFLY_III_URL: http://firefly-iii-firefly
+                VANITY_URL: https://firefly.vicsufer.xyz
             ingress:
               enabled: true
               className: "traefik"
