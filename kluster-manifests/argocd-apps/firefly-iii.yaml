@@ -91,6 +91,7 @@ spec:
               env:
                 FIREFLY_III_URL: http://firefly-iii-firefly
                 VANITY_URL: https://firefly.vicsufer.xyz
+                TRUSTED_PROXIES: **
             ingress:
               enabled: true
               className: "traefik"
