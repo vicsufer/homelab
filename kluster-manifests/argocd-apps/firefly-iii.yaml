@@ -87,7 +87,7 @@ spec:
             # -- Set to false to not deploy the importer
             enabled: true
             config:
-              existingSecret; firefly-iii
+              existingSecret: firefly-iii
               env:
                 FIREFLY_III_URL: firefly-iii-firely
                 VANITY_URL: firefly.vicsufer.xyz
