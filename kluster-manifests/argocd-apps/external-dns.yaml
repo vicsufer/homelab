@@ -23,7 +23,7 @@ spec:
         extraEnvVarsSecret: pihole-secret
         sources:
           # - service
-          # - ingress
+          - ingress
           - traefik-proxy
         extraDeploy:
          - |
