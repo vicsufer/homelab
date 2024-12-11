@@ -49,9 +49,6 @@ spec:
 
             # environment variables
             configs:
-              RESTORE_URL: ""
-              BACKUP_URL: ""
-              TZ: Europe/Madrid
               existingSecret: firefly-iii
 
             backupSchedule: "0 3 * * *"
