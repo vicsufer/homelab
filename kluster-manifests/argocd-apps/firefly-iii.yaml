@@ -18,8 +18,7 @@ spec:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
   ignoreDifferences:
-    - group: ""
-      name: firefly-iii-app-key
+    - name: firefly-iii-app-key
       kind: Secret
       jsonPointers:
         - /data
