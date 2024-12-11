@@ -27,11 +27,9 @@ spec:
       targetRevision: HEAD
       path: kluster-manifests/firefly-iii-extras
 
-    # - repoURL: https://firefly-iii.github.io/kubernetes/
-    #   chart: firefly-iii-stack
-    #   targetRevision: v0.8.0
-    - repoURL: https://github.com/vicsufer/firefly-kubernetes
-      targetRevision: HEAD
+    - repoURL: https://firefly-iii.github.io/kubernetes/
+      chart: firefly-iii-stack
+      targetRevision: v0.8.0
       helm:
         releaseName: firefly-iii
         values: |
