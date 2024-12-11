@@ -73,7 +73,7 @@ spec:
               tls:
                 - secretName: firefly-general-tls
                   hosts:
-                    - firefly.vicsfer.xyz
+                    - firefly.vicsufer.xyz
 
           importer:
             # -- Set to false to not deploy the importer
