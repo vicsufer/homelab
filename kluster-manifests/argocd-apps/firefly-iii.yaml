@@ -16,6 +16,12 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+  ignoreDifferences:
+    - group: ""
+      name: firefly-iii-app-key
+      kind: Secret
+      jsonPointers:
+        - /data
   sources:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
