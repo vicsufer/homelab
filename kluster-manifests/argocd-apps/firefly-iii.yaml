@@ -64,7 +64,6 @@ spec:
             config:
               existingSecret: firefly-iii
               env:
-                DB_HOST: firefly-iii-firefly-db
                 DEFAULT_LANGUAGE: "es_US"
                 DEFAULT_LOCALE: "equal"
                 TZ: "Europe/Madrid"
@@ -90,7 +89,6 @@ spec:
             config:
               existingSecret: firefly-iii
               env:
-                FIREFLY_III_URL: http://firefly-iii-firefly
                 VANITY_URL: https://firefly.vicsufer.xyz
                 TRUSTED_PROXIES: "**"
             ingress:
