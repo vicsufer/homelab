@@ -87,3 +87,15 @@ spec:
           importer:
             # -- Set to false to not deploy the importer
             enabled: true
+            ingress:
+              enabled: true
+              className: "traefik"
+              annotations:
+                traefik.ingress.kubernetes.io/router.entrypoints: websecure
+                cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              tls:
+                - secretName: firefly-general-tls
+                  hosts:
+                    - firefly-importer.vicsufer.xyz
+              hosts:
+                - firefly-importer.vicsufer.xyz
