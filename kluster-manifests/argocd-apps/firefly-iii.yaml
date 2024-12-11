@@ -69,8 +69,8 @@ spec:
                 DEFAULT_LOCALE: "equal"
                 TZ: "Europe/Madrid"
                 TRUSTED_PROXIES: "**"
-                APP_FORCE_SSL=true
-                APP_FORCE_ROOT=https://firefly.vicsufer.xyz
+                APP_FORCE_SSL: "true"
+                APP_FORCE_ROOT: "https://firefly.vicsufer.xyz"
             ingress:
               enabled: true
               className: "traefik"
