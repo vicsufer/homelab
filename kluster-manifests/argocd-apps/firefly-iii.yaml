@@ -76,7 +76,10 @@ spec:
                 traefik.ingress.kubernetes.io/router.entrypoints: websecure
                 cert-manager.io/cluster-issuer: "letsencrypt-prod"
               hosts:
-                - firefly.vicsufer.xyz
+                - host: firefly.vicsufer.xyz
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
               tls:
                 - secretName: firefly-general-tls
                   hosts:
