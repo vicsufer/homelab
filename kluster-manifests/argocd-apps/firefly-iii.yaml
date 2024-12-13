@@ -88,7 +88,6 @@ spec:
               existingSecret: firefly-iii
               env:
                 VANITY_URL: https://firefly.vicsufer.xyz
-                FIREFLY_III_URL: http://firefly-iii-firefly
                 TRUSTED_PROXIES: "**"
             ingress:
               enabled: true
