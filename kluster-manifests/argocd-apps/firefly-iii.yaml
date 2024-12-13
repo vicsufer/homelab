@@ -84,7 +84,7 @@ spec:
           importer:
             # -- Set to false to not deploy the importer
             enabled: true
-            firefly:
+            fireflyiii:
               url: http://firefly-iii
               vanityUrl: https://firefly.vicsufer.xyz
             config:
