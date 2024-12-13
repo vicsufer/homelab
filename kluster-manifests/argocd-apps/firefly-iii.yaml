@@ -84,13 +84,13 @@ spec:
           importer:
             # -- Set to false to not deploy the importer
             enabled: true
-
-            url: http://firefly-iii
+            firefly:
+              url: http://firefly-iii
+              vanityUrl: https://firefly.vicsufer.xyz
             config:
               existingSecret: firefly-iii
               env:
                 TRUSTED_PROXIES: "**"
-                VANITY_URL: https://firefly.vicsufer.xyz
             ingress:
               enabled: true
               className: "traefik"
