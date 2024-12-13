@@ -27,12 +27,12 @@ spec:
       targetRevision: HEAD
       path: kluster-manifests/firefly-iii-extras
 
-    # - repoURL: https://firefly-iii.github.io/kubernetes/
-    #   chart: firefly-iii-stack
-    #   targetRevision: v0.8.0
-    - repoURL: https://github.com/vicsufer/firefly-kubernetes
-      targetRevision: main
-      path: charts/firefly-iii-stack
+    - repoURL: https://firefly-iii.github.io/kubernetes/
+      chart: firefly-iii-stack
+      targetRevision: v0.8.1
+    # - repoURL: https://github.com/vicsufer/firefly-kubernetes
+    #   targetRevision: main
+    #   path: charts/firefly-iii-stack
       helm:
         releaseName: firefly-iii
         values: |
@@ -84,10 +84,12 @@ spec:
           importer:
             # -- Set to false to not deploy the importer
             enabled: true
+
+            url: http://firefly-iii
+            vanityUrl: https://firefly.vicsufer.xyz
             config:
               existingSecret: firefly-iii
               env:
-                VANITY_URL: https://firefly.vicsufer.xyz
                 TRUSTED_PROXIES: "**"
             ingress:
               enabled: true
