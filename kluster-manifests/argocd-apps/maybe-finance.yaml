@@ -24,7 +24,7 @@ spec:
       releaseName: maybefinance
       values: |
         deployment:
-          tag: sha-490f44589e846e5b5d2b6bf56ddb4382234f0067
+          tag: sha-fe199f235784a96d9b25efe846d87e6f5fb010e7
           env:
             - name: RAILS_ASSUME_SSL
               value: false
