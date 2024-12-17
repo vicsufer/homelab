@@ -7,6 +7,17 @@ global:
 configs:
   params:
     server.insecure: true
+  cm:
+    create: true
+    admin.enabled: "true"
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    exec.enabled: "false"
+    server.rbac.log.enforce.enable: "false"
+    statusbadge.enabled: "true"
+    timeout.hard.reconciliation: 0s
+    timeout.reconciliation: 180s
+    url: https://vicsufer.argocd.xyz
+    ui.cssurl: https://cdn.jsdelivr.net/gh/code-crusher/argocd-gravity-theme@main/argo-theme.css
 
 controller:
   resources:
