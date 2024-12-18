@@ -22,7 +22,7 @@ spec:
       path: kluster-manifests/renovate-extras
     - chart: renovate
       repoURL: https://docs.renovatebot.com/helm-charts
-      targetRevision: 39.72.3
+      targetRevision: 39.72.4
       helm:
         releaseName: renovate
         values: |
