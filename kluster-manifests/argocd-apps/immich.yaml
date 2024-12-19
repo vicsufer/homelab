@@ -19,7 +19,7 @@ spec:
   source:
     chart: immich
     repoURL: https://immich-app.github.io/immich-charts
-    targetRevision: 0.8.5
+    targetRevision: 0.9.0
     helm:
       releaseName: immich
       values: |
