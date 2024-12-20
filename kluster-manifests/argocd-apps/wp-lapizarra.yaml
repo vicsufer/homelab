@@ -57,8 +57,13 @@ spec:
           enabled: true
           auth:
             existingSecret: db-credentials
+          primary:
+            livenessProbe:
+              enabled: false
+            readinessProbe:
+              enabled: false
           passwordUpdateJob:
-            enabled: true
+            enabled: false
             previousPasswords:
               password: ""
               rootPassword: ""
