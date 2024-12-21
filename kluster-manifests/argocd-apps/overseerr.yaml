@@ -19,7 +19,7 @@ spec:
   source:
     repoURL: https://charts.pree.dev
     chart: overseerr
-    targetRevision: v1.0.1
+    targetRevision: 1.0.2
     helm:
       releaseName: overseerr
       values: |
