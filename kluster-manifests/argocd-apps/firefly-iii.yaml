@@ -1,105 +1,105 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-  name: firefly-iii-stack
-  namespace: argocd
-spec:
-  project: default
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: firefly-iii
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
-  ignoreDifferences:
-    - name: firefly-iii-app-key
-      kind: Secret
-      jsonPointers:
-        - /data
-  sources:
-    - repoURL: https://github.com/vicsufer/homelab
-      targetRevision: HEAD
-      path: kluster-manifests/firefly-iii-extras
-
-    - repoURL: https://firefly-iii.github.io/kubernetes/
-      chart: firefly-iii-stack
-      targetRevision: v0.8.1
-    # - repoURL: https://github.com/vicsufer/firefly-kubernetes
-    #   targetRevision: main
-    #   path: charts/firefly-iii-stack
-      helm:
-        releaseName: firefly-iii
-        values: |
-          firefly-db:
-            enabled: true
-            image:
-              repository: postgres
-              tag: 10-alpine
-              pullPolicy: IfNotPresent
-            storage:
-              class: "nfs-csi-retain"
-              accessModes: ReadWriteOnce
-              dataSize: 10Gi
-
-            # environment variables
-            configs:
-              existingSecret: firefly-iii
-
-            backupSchedule: "0 3 * * *"
-
-          firefly-iii:
-            enabled: true
-            persistency:
-              storage: 10Gi
-              storageclassname: "nfs-csi-retain"
-            config:
-              existingSecret: firefly-iii
-              env:
-                DB_HOST: firefly-iii-firefly-db
-                DEFAULT_LANGUAGE: "es_US"
-                DEFAULT_LOCALE: "equal"
-                TZ: "Europe/Madrid"
-                TRUSTED_PROXIES: "**"
-                APP_FORCE_SSL: "true"
-                APP_FORCE_ROOT: "https://firefly.vicsufer.xyz"
-            ingress:
-              enabled: true
-              className: "traefik"
-              annotations:
-                traefik.ingress.kubernetes.io/router.entrypoints: websecure
-                cert-manager.io/cluster-issuer: "letsencrypt-prod"
-              tls:
-                - secretName: firefly-general-tls
-                  hosts:
-                    - firefly.vicsufer.xyz
-              hosts:
-                - firefly.vicsufer.xyz
-
-          importer:
-            # -- Set to false to not deploy the importer
-            enabled: true
-            fireflyiii:
-              url: http://firefly-iii
-              vanityUrl: https://firefly.vicsufer.xyz
-            config:
-              existingSecret: firefly-iii
-              env:
-                TRUSTED_PROXIES: "**"
-            ingress:
-              enabled: true
-              className: "traefik"
-              annotations:
-                traefik.ingress.kubernetes.io/router.entrypoints: websecure
-                cert-manager.io/cluster-issuer: "letsencrypt-prod"
-              tls:
-                - secretName: firefly-importer-general-tls
-                  hosts:
-                    - firefly-importer.vicsufer.xyz
-              hosts:
-                - firefly-importer.vicsufer.xyz
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+#   name: firefly-iii-stack
+#   namespace: argocd
+# spec:
+#   project: default
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: firefly-iii
+#   syncPolicy:
+#     automated:
+#       prune: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ApplyOutOfSyncOnly=true
+#   ignoreDifferences:
+#     - name: firefly-iii-app-key
+#       kind: Secret
+#       jsonPointers:
+#         - /data
+#   sources:
+#     - repoURL: https://github.com/vicsufer/homelab
+#       targetRevision: HEAD
+#       path: kluster-manifests/firefly-iii-extras
+#
+#     - repoURL: https://firefly-iii.github.io/kubernetes/
+#       chart: firefly-iii-stack
+#       targetRevision: v0.8.1
+#     # - repoURL: https://github.com/vicsufer/firefly-kubernetes
+#     #   targetRevision: main
+#     #   path: charts/firefly-iii-stack
+#       helm:
+#         releaseName: firefly-iii
+#         values: |
+#           firefly-db:
+#             enabled: true
+#             image:
+#               repository: postgres
+#               tag: 10-alpine
+#               pullPolicy: IfNotPresent
+#             storage:
+#               class: "nfs-csi-retain"
+#               accessModes: ReadWriteOnce
+#               dataSize: 10Gi
+#
+#             # environment variables
+#             configs:
+#               existingSecret: firefly-iii
+#
+#             backupSchedule: "0 3 * * *"
+#
+#           firefly-iii:
+#             enabled: true
+#             persistency:
+#               storage: 10Gi
+#               storageclassname: "nfs-csi-retain"
+#             config:
+#               existingSecret: firefly-iii
+#               env:
+#                 DB_HOST: firefly-iii-firefly-db
+#                 DEFAULT_LANGUAGE: "es_US"
+#                 DEFAULT_LOCALE: "equal"
+#                 TZ: "Europe/Madrid"
+#                 TRUSTED_PROXIES: "**"
+#                 APP_FORCE_SSL: "true"
+#                 APP_FORCE_ROOT: "https://firefly.vicsufer.xyz"
+#             ingress:
+#               enabled: true
+#               className: "traefik"
+#               annotations:
+#                 traefik.ingress.kubernetes.io/router.entrypoints: websecure
+#                 cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#               tls:
+#                 - secretName: firefly-general-tls
+#                   hosts:
+#                     - firefly.vicsufer.xyz
+#               hosts:
+#                 - firefly.vicsufer.xyz
+#
+#           importer:
+#             # -- Set to false to not deploy the importer
+#             enabled: true
+#             fireflyiii:
+#               url: http://firefly-iii
+#               vanityUrl: https://firefly.vicsufer.xyz
+#             config:
+#               existingSecret: firefly-iii
+#               env:
+#                 TRUSTED_PROXIES: "**"
+#             ingress:
+#               enabled: true
+#               className: "traefik"
+#               annotations:
+#                 traefik.ingress.kubernetes.io/router.entrypoints: websecure
+#                 cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#               tls:
+#                 - secretName: firefly-importer-general-tls
+#                   hosts:
+#                     - firefly-importer.vicsufer.xyz
+#               hosts:
+#                 - firefly-importer.vicsufer.xyz
