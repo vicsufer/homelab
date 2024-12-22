@@ -53,6 +53,8 @@ spec:
 
         wordpressBlogName: La Pizarra Pedagogica
 
+        resourcesPreset: "medium"
+
         mariadb:
           enabled: true
           auth:
