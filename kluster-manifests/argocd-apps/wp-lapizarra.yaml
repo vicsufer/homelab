@@ -126,14 +126,14 @@ spec:
                 - host: lapizarrapedagogica.vicsufer.xyz
                   http:
                     paths:
-                    - backend:
-                        service:
-                          name: wordpress
-                          port:
-                            name: http
-                      path: /
-                      pathType: ImplementationSpecific
-                tls:
-                  - hosts:
+                      - backend:
+                          service:
+                            name: wordpress
+                            port:
+                              name: http
+                        path: /
+                        pathType: ImplementationSpecific
+              tls:
+                - hosts:
                     - lapizarrapedagogica.vicsufer.xyz
-                    secretName: lapizarrapedagogica.vicsufer.xyz-tls
+                  secretName: lapizarrapedagogica.vicsufer.xyz-tls
