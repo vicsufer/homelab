@@ -113,27 +113,27 @@ spec:
                 metadata:
                   name: db-credentials
                   namespace: wp-lapizarrapedagogica
-          - |
-            apiVersion: networking.k8s.io/v1
-            kind: Ingress
-            metadata:
-              name: ingress-cf
-              annotations:
-                cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            spec:
-              ingressClassName: cloudflare-tunnel
-              rules:
-                - host: lapizarrapedagogica.vicsufer.xyz
-                  http:
-                    paths:
-                      - backend:
-                          service:
-                            name: wordpress
-                            port:
-                              name: http
-                        path: /
-                        pathType: ImplementationSpecific
-              tls:
-                - hosts:
-                    - lapizarrapedagogica.vicsufer.xyz
-                  secretName: lapizarrapedagogica.vicsufer.xyz-tls
+          # - |
+          #   apiVersion: networking.k8s.io/v1
+          #   kind: Ingress
+          #   metadata:
+          #     name: ingress-cf
+          #     annotations:
+          #       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+          #   spec:
+          #     ingressClassName: cloudflare-tunnel
+          #     rules:
+          #       - host: lapizarrapedagogica.vicsufer.xyz
+          #         http:
+          #           paths:
+          #             - backend:
+          #                 service:
+          #                   name: wordpress
+          #                   port:
+          #                     name: http
+          #               path: /
+          #               pathType: ImplementationSpecific
+          #     tls:
+          #       - hosts:
+          #           - lapizarrapedagogica.vicsufer.xyz
+          #         secretName: lapizarrapedagogica.vicsufer.xyz-tls

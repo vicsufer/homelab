@@ -40,4 +40,4 @@ spec:
               accountIDKey: accountId
               tunnelNameKey: tunnelName
               apiTokenKey: apiToken
-          replicaCount: 2
+          replicaCount: 1
