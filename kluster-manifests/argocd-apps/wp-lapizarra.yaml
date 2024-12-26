@@ -118,7 +118,8 @@ spec:
             kind: Ingress
             metadata:
               name: ingress-cf
-              annotations: cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              annotations:
+                cert-manager.io/cluster-issuer: "letsencrypt-prod"
             spec:
               ingressClassName: cloudflare-tunnel
               rules:
