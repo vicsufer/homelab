@@ -1,0 +1,116 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: zigbee2mqtt
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: zigbee
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: https://charts.zigbee2mqtt.io
+    chart: zigbee2mqtt
+    targetRevision: 1.42.0
+    helm:
+      releaseName: zigbee2mqtt
+      values: |
+        image:
+          repository: koenkk/zigbee2mqtt
+          tag: "1.37.1"
+          pullPolicy: IfNotPresent
+        ingress:
+          enabled: true
+          ingressClassName: traefik
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "Zigbee2MQTT"
+            gethomepage.dev/description: "Zigbee Bridge"
+            gethomepage.dev/group: "Domotics"
+            gethomepage.dev/icon: "zigbee2mqtt.png"
+          hosts:
+            - host: zigbee2mqtt.vicsufer.xyz
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
+                - path: /api
+                  pathType: ImplementationSpecific
+          tls:
+            - secretName: zigbee2mqtt-tls-secret
+              hosts:
+                - zigbee2mqtt.vicsufer.xyz
+        statefulset:
+          storage:
+            enabled: true
+            storageClassName: nfs-delete
+          securityContext:
+            privileged: true # TODO Use a device-manager
+          extraVolumes:
+            - hostPath:
+                path: >-
+                  /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_d460f6a6da1bef119aa3a3d94909ffd0-if00-port0
+                type: CharDevice
+              name: usb
+          extraVolumeMounts:
+            - mountPath: /dev/ttsUSB0
+              name: usb
+        service:
+          type: ClusterIP
+        nodeSelector:
+          kubernetes.io/hostname: nuc-0
+        zigbee2mqtt:
+          # Required: serial settings
+          serial:
+              # Required: location of the adapter (e.g. CC2531).
+              # USB adapters - use format "port: /dev/ttyACM0"
+              # To autodetect the USB port, set 'port: null'.
+              # Ethernet adapters - use format "port: tcp://192.168.1.12:6638"
+              port: null
+              # Optional: disable LED of the adapter if supported (default: false)
+              disable_led: false
+              # Optional: adapter type, specify if you are experiencing startup problems (default: shown below, options: zstack, deconz, ember, zigate)
+              adapter: null
+              # Optional: Baud rate speed for serial port, this can be anything firmware support but default is 115200 for Z-Stack and EZSP, 38400 for Deconz, however note that some EZSP firmware need 57600.
+              baudrate: 115200
+              # Optional: RTS / CTS Hardware Flow Control for serial port (default: false)
+              rtscts: false
+          # Required: MQTT settings
+          mqtt:
+              # Required: MQTT server URL (use mqtts:// for SSL/TLS connection)
+              server: 'mqtt://mqtt.zigbee.svc.cluster.local:1883'
+              # Optional: MQTT base topic for Zigbee2MQTT MQTT messages (default: zigbee2mqtt)
+              base_topic: zigbee2mqtt
+              # Optional: absolute path to SSL/TLS certificate of CA used to sign server and client certificates (default: nothing)
+              ca: '/etc/ssl/mqtt-ca.crt'
+              # Optional: absolute paths to SSL/TLS key and certificate for client-authentication (default: nothing)
+              key: '/etc/ssl/mqtt-client.key'
+              cert: '/etc/ssl/mqtt-client.crt'
+              # Optional: MQTT server authentication user (default: nothing)
+              user: my_user
+              # Optional: MQTT server authentication password (default: nothing)
+              password: my_password
+              # Optional: MQTT client ID (default: nothing)
+              client_id: 'MY_CLIENT_ID'
+              # Optional: disable self-signed SSL certificates (default: true)
+              reject_unauthorized: true
+              # Optional: Include device information to mqtt messages (default: false)
+              include_device_information: true
+              # Optional: MQTT keepalive in seconds (default: 60)
+              keepalive: 60
+              # Optional: MQTT protocol version (default: 4), set this to 5 if you
+              # use the 'retention' device specific configuration
+              version: 4
+              # Optional: Disable retain for all send messages. ONLY enable if you MQTT broker doesn't
+              # support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform).
+              # Enabling will break the Home Assistant integration. (default: false)
+              force_disable_retain: false
