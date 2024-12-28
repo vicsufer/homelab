@@ -1,0 +1,68 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: home-assistant
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: home-assistant
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoUrl: https://pajikos.github.io/home-assistant-helm-chart/
+    chart: home-assistant
+    targetRevision: HEAD
+    helm:
+      releaseName: home-assistant
+      values: |
+        image:
+          # Repository for the Home Assistant image
+          repository: ghcr.io/home-assistant/home-assistant
+          pullPolicy: IfNotPresent
+          tag: "2024.12.5"
+        ingress:
+          enabled: true
+          className: traefik
+          labels: {}
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "Home Assistant"
+            gethomepage.dev/description: "Automatizaciones de la casa"
+            gethomepage.dev/group: ""
+            gethomepage.dev/widget.type: "homeassistant"
+            gethomepage.dev/widget.url: "https://home-assistant.vicsufer.xyz"
+            gethomepage.dev/icon: "home-assistant.png"
+          hosts:
+            - host: home-assistant.vicsufer.xyz
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
+          tls:
+            - secretName: home-assistant-tls
+              hosts:
+                - home-assistant.vicsufer.xyz
+        persistence:
+          enabled: true
+          size: 5Gi
+          storageClass: "nfs-csi-retain"
+        additionalVolumes: []
+          # - hostPath:
+          #     path: >-
+          #       /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
+          #     type: CharDevice
+          #   name: usb
+      # tolerations:
+      #   - key: "interface"
+      #     operator: "Equal"
+      #     value: "eth0"
+      #     effect: "NoSchedule"
