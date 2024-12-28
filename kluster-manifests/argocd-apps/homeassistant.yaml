@@ -57,6 +57,7 @@ spec:
           storageClass: "nfs-csi-retain"
         configuration:
           enabled: true
+          forceInit: true
           trusted_proxies:
             - 10.42.0.0/16
         additionalVolumes: []
