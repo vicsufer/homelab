@@ -55,6 +55,10 @@ spec:
           enabled: true
           size: 5Gi
           storageClass: "nfs-csi-retain"
+        configuration:
+          enabled: true
+          trusted_proxies:
+            - 10.43.0.0/16
         additionalVolumes: []
           # - hostPath:
           #     path: >-
