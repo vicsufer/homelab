@@ -58,7 +58,7 @@ spec:
         configuration:
           enabled: true
           trusted_proxies:
-            - 10.0.0.0/8
+            - 10.42.0.0/16
         additionalVolumes: []
           # - hostPath:
           #     path: >-
