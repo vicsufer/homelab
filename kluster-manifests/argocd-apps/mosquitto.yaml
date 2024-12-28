@@ -49,3 +49,18 @@ spec:
              hosts:
                - mqtt.vicsufer.xyz
           resources: {} #TBD
+          auth:
+            enabled: true
+            users:
+              - username: admin
+                # "admin" password in sha512-pbkdf2 format, generated with mosquitto_passwd
+                password: $7$101$T1RBXD5MGIImHq8g$hSCHVAyZtAif0qN9Fhuam9mVCd0xLomREHIwzdreGjjADCQewz9VpfhK6AumcZyVFHFpHd2EhZdqU+Lq7393Xw==
+                acl:
+                  - topic: "#"
+                    access: readwrite
+              - username: zigbee2mqtt
+                # "admin" password in sha512-pbkdf2 format, generated with mosquitto_passwd
+                password: $7$101$T1RBXD5MGIImHq8g$hSCHVAyZtAif0qN9Fhuam9mVCd0xLomREHIwzdreGjjADCQewz9VpfhK6AumcZyVFHFpHd2EhZdqU+Lq7393Xw==
+                acl:
+                  - topic: "zigbee2mqtt"
+                    access: readwrite

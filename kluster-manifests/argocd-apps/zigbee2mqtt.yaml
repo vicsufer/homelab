@@ -91,18 +91,18 @@ spec:
               # Optional: MQTT base topic for Zigbee2MQTT MQTT messages (default: zigbee2mqtt)
               base_topic: zigbee2mqtt
               # Optional: absolute path to SSL/TLS certificate of CA used to sign server and client certificates (default: nothing)
-              ca: '/etc/ssl/mqtt-ca.crt'
+              # ca: '/etc/ssl/mqtt-ca.crt'
               # Optional: absolute paths to SSL/TLS key and certificate for client-authentication (default: nothing)
-              key: '/etc/ssl/mqtt-client.key'
-              cert: '/etc/ssl/mqtt-client.crt'
+              # key: '/etc/ssl/mqtt-client.key'
+              # cert: '/etc/ssl/mqtt-client.crt'
               # Optional: MQTT server authentication user (default: nothing)
-              user: my_user
+              user: zigbee2mqtt
               # Optional: MQTT server authentication password (default: nothing)
-              password: my_password
+              password: admin
               # Optional: MQTT client ID (default: nothing)
-              client_id: 'MY_CLIENT_ID'
+              client_id: 'zigbee2mqtt'
               # Optional: disable self-signed SSL certificates (default: true)
-              reject_unauthorized: true
+              # reject_unauthorized: true
               # Optional: Include device information to mqtt messages (default: false)
               include_device_information: true
               # Optional: MQTT keepalive in seconds (default: 60)
@@ -114,3 +114,11 @@ spec:
               # support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform).
               # Enabling will break the Home Assistant integration. (default: false)
               force_disable_retain: false
+          frontend:
+            url: 'https://zigbee2mqtt.vicsufer.xyz'
+            # Optional, certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated
+            # ssl_cert: /config/etc/letsencrypt/live/mydomain.com/fullchain.pem
+            # Optional, private key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated
+            # ssl_key: /config/etc/letsencrypt/live/mydomain.com/privkey.pem
+            # Optional, base URL for the frontend, when served from a subpath, e.g. behind the proxy. Default value is '/'
+            base_url: /zigbee2mqtt
