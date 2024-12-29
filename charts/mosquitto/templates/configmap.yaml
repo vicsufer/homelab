@@ -21,7 +21,7 @@ data:
     cafile {{ .Values.auth.mtls.caPath }}
     certfile {{ .Values.auth.mtls.certPath }}
     keyfile {{ .Values.auth.mtls.keyPath }}
-    {{- else }}
+    {{- end }}
 
     log_dest stdout
     max_inflight_messages {{ .Values.general.maxInflightMessages }}
