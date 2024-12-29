@@ -58,6 +58,8 @@ spec:
               mountPath: "/tmp/certificates/"
               readOnly: true
         resources: {} #TBD
+        general:
+          logType: all
         auth:
           enabled: true
           users:

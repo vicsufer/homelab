@@ -9,11 +9,6 @@ data:
     listener 1883 0.0.0.0
     protocol mqtt
 
-    {{- if .Values.mqttOverWebsocket }}
-    listener 9001 0.0.0.0
-    protocol websockets
-    {{- end }}
-
     {{- if .Values.auth.mtls.enabled }}
     tls_version tlsv1.2
     require_certificate true
@@ -23,7 +18,13 @@ data:
     keyfile {{ .Values.auth.mtls.keyPath }}
     {{- end }}
 
+    {{- if .Values.mqttOverWebsocket }}
+    listener 9001 0.0.0.0
+    protocol websockets
+    {{- end }}
+
     log_dest stdout
+    log_type {{ .Values.general.logType }}
     max_inflight_messages {{ .Values.general.maxInflightMessages }}
     max_queued_messages {{ .Values.general.maxQueuedMessages }}
     

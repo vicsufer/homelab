@@ -14,6 +14,7 @@ mqttOverWebsocket: true
 general:
   maxInflightMessages: 20
   maxQueuedMessages: 1000
+  logType: warning
 
 deployment:
   volumeMounts: []
