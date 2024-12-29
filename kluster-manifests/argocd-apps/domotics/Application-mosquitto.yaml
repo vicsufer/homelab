@@ -59,14 +59,14 @@ spec:
               readOnly: true
         resources: {} #TBD
         auth:
-          enabled: false
+          enabled: true
           users:
             - username: zigbee2mqtt
               acl:
                 - topic: "zigbee2mqtt/#"
                   access: readwrite
           mtls:
-            enabled: false
+            enabled: true
             certPath: /tmp/certificates/tls.crt
             keyPath: /tmp/certificates/tls.key
             caPath: /tmp/certificates/ca.crt
