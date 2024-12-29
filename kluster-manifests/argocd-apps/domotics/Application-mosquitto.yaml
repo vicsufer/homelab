@@ -17,9 +17,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoURL: https://sintef.github.io/mosquitto-helm-chart
-    chart: mosquitto
-    targetRevision: 0.1.0
+    repoURL: https://github.com/vicsufer/homelab
+    path: charts/mosquitto
+    targetRevision: HEAD
     helm:
       releaseName: mosquitto
       values: |
@@ -27,6 +27,7 @@ spec:
           repository: eclipse-mosquitto
           pullPolicy: IfNotPresent
           tag: "2.0.20"
+
         ingress:
           enabled: true
           className: traefik
@@ -47,6 +48,17 @@ spec:
            - secretName: mqtt-tls-secret
              hosts:
                - mqtt.vicsufer.xyz
+
+          extraVolumes:
+            - name: certificates
+                secret:
+                  secretName: mqtt-zigbee2mqtt-cert
+          extraVolumeMounts:
+            - mountPath: /dev/ttyUSB0
+              name: usb
+            - name: certificates
+              mountPath: "/tmp/certificates/"
+              readOnly: true
           resources: {} #TBD
           auth:
             enabled: true
