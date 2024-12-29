@@ -21,7 +21,7 @@ deployment:
   volumes: []
 
 auth:
-  enabled: true
+  enabled: false
   users:
     - username: admin
       # "admin" password in sha512-pbkdf2 format, generated with mosquitto_passwd

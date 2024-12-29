@@ -99,11 +99,11 @@ spec:
               # Optional: MQTT base topic for Zigbee2MQTT MQTT messages (default: zigbee2mqtt)
               base_topic: zigbee2mqtt
               # Optional: absolute path to SSL/TLS certificate of CA used to sign server and client certificates (default: nothing)
-              ca: '/tmp/certificates/ca.crt'
-              key: '/tmp/certificates/tls.key'
-              cert: '/tmp/certificates/tls.crt'
+              # ca: '/tmp/certificates/ca.crt'
+              # key: '/tmp/certificates/tls.key'
+              # cert: '/tmp/certificates/tls.crt'
               client_id: 'zigbee2mqtt'
-              user: 'zigbee2mqtt'
+              # user: 'zigbee2mqtt'
               include_device_information: true
               keepalive: 60
               # Optional: MQTT protocol version (default: 4), set this to 5 if you
