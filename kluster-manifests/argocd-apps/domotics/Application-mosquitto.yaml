@@ -53,9 +53,11 @@ spec:
             - name: certificates
               secret:
                 secretName: mqtt-server-cert
+                defaultMode: 420
+                optional: false
           volumeMounts:
             - name: certificates
-              mountPath: "/tmp/certificates/"
+              mountPath: "/tmp/certificates"
               readOnly: true
         resources: {} #TBD
         general:

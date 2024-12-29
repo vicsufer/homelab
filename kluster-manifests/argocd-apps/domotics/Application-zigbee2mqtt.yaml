@@ -64,11 +64,13 @@ spec:
             - name: certificates
               secret:
                 secretName: mqtt-zigbee2mqtt-cert
+                defaultMode: 420
+                optional: false
           extraVolumeMounts:
             - mountPath: /dev/ttyUSB0
               name: usb
             - name: certificates
-              mountPath: "/tmp/certificates/"
+              mountPath: "/tmp/certificates"
               readOnly: true
         service:
           type: ClusterIP
