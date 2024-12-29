@@ -63,7 +63,7 @@ spec:
           users:
             - username: zigbee2mqtt
               acl:
-                - topic: "zigbee2mqtt"
+                - topic: "zigbee2mqtt/#"
                   access: readwrite
           mtls:
             enabled: true
