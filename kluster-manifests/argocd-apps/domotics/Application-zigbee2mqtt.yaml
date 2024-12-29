@@ -117,4 +117,4 @@ spec:
             base_url: /zigbee2mqtt
           advanced:
               # Optional: Logging level, options: debug, info, warning, error (default: info)
-              log_level: debug
+              log_level: info
