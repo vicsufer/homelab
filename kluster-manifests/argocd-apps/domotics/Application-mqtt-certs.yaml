@@ -13,8 +13,6 @@ spec:
     path: kluster-manifests/argocd-apps/domotics/mqtt-certs
     repoURL: https://github.com/vicsufer/homelab
     targetRevision: HEAD
-    directory:
-      recurse: false
   syncPolicy:
     automated:
       prune: true

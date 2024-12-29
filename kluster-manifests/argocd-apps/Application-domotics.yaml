@@ -14,7 +14,6 @@ spec:
     repoURL: https://github.com/vicsufer/homelab
     targetRevision: HEAD
     directory:
-      recurse: false
       include: 'Application-{*.yml,*.yaml}'
   syncPolicy:
     automated:
