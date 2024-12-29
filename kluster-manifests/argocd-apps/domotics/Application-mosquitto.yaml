@@ -59,7 +59,7 @@ spec:
               readOnly: true
         resources: {} #TBD
         auth:
-          enabled: true
+          enabled: false
           users:
             - username: zigbee2mqtt
               password: $7$101$T1RBXD5MGIImHq8g$hSCHVAyZtAif0qN9Fhuam9mVCd0xLomREHIwzdreGjjADCQewz9VpfhK6AumcZyVFHFpHd2EhZdqU+Lq7393Xw==
@@ -67,7 +67,7 @@ spec:
                 - topic: "zigbee2mqtt/#"
                   access: readwrite
           mtls:
-            enabled: true
+            enabled: false
             certPath: /tmp/certificates/tls.crt
             keyPath: /tmp/certificates/tls.key
             caPath: /tmp/certificates/ca.crt
