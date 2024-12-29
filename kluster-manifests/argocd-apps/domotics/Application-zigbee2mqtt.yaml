@@ -62,13 +62,13 @@ spec:
                 type: CharDevice
               name: usb
             - name: certificates
-                secret:
-                  secretName: zigbee2mqtt-tls-secret
+              secret:
+                secretName: mqtt-zigbee2mqtt-cert
           extraVolumeMounts:
             - mountPath: /dev/ttyUSB0
               name: usb
             - name: certificates
-              mountPath: "/tmp/secrets/"
+              mountPath: "/tmp/certificates/"
               readOnly: true
         service:
           type: ClusterIP
@@ -97,19 +97,12 @@ spec:
               # Optional: MQTT base topic for Zigbee2MQTT MQTT messages (default: zigbee2mqtt)
               base_topic: zigbee2mqtt
               # Optional: absolute path to SSL/TLS certificate of CA used to sign server and client certificates (default: nothing)
-              # ca: '/etc/ssl/mqtt-ca.crt'
-              key: '/tmp/secrets/tls.key'
-              cert: '/tmp/secrets/tls.crt'
+              ca: '/tmp/certificates/ca.crt'
+              key: '/tmp/certificates/tls.key'
+              cert: '/tmp/certificates/tls.crt'
               user: zigbee2mqtt
-              # Optional: MQTT server authentication password (default: nothing)
-              # password: admin
-              # Optional: MQTT client ID (default: nothing)
               client_id: 'zigbee2mqtt'
-              # Optional: disable self-signed SSL certificates (default: true)
-              # reject_unauthorized: true
-              # Optional: Include device information to mqtt messages (default: false)
               include_device_information: true
-              # Optional: MQTT keepalive in seconds (default: 60)
               keepalive: 60
               # Optional: MQTT protocol version (default: 4), set this to 5 if you
               # use the 'retention' device specific configuration
@@ -120,9 +113,4 @@ spec:
               force_disable_retain: false
           frontend:
             url: 'https://zigbee2mqtt.vicsufer.xyz'
-            # Optional, certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated
-            # ssl_cert: /config/etc/letsencrypt/live/mydomain.com/fullchain.pem
-            # Optional, private key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated
-            # ssl_key: /config/etc/letsencrypt/live/mydomain.com/privkey.pem
-            # Optional, base URL for the frontend, when served from a subpath, e.g. behind the proxy. Default value is '/'
             base_url: /zigbee2mqtt
