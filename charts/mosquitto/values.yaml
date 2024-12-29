@@ -28,6 +28,11 @@ auth:
       acl:
         - topic: "#"
           access: readwrite
+  mtls:
+    enabled: false
+    certPath: /etc/tls.crt
+    keyPath: /etc/tls.key
+    caPath: /etc/ca.crt
 
 imagePullSecrets: []
 nameOverride: ""

@@ -8,11 +8,20 @@ data:
   mosquitto.conf: |-
     listener 1883 0.0.0.0
     protocol mqtt
-    
+
     {{- if .Values.mqttOverWebsocket }}
     listener 9001 0.0.0.0
     protocol websockets
     {{- end }}
+
+    {{- if .Values.auth.mtls.enabled }}
+    tls_version tlsv1.2
+    require_certificate true
+    use_identity_as_username true
+    cafile {{ .Values.auth.mtls.caPath }}
+    certfile {{ .Values.auth.mtls.certPath }}
+    keyfile {{ .Values.auth.mtls.keyPath }}
+    {{- else }}
 
     log_dest stdout
     max_inflight_messages {{ .Values.general.maxInflightMessages }}
