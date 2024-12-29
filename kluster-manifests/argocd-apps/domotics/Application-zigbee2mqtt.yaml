@@ -100,7 +100,6 @@ spec:
               ca: '/tmp/certificates/ca.crt'
               key: '/tmp/certificates/tls.key'
               cert: '/tmp/certificates/tls.crt'
-              user: zigbee2mqtt
               client_id: 'zigbee2mqtt'
               include_device_information: true
               keepalive: 60
@@ -111,6 +110,7 @@ spec:
               # support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform).
               # Enabling will break the Home Assistant integration. (default: false)
               force_disable_retain: false
+          homeassistant: true
           frontend:
             url: 'https://zigbee2mqtt.vicsufer.xyz'
             base_url: /zigbee2mqtt
