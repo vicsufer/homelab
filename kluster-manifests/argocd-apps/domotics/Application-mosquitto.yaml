@@ -51,8 +51,8 @@ spec:
         deployment:
           volumes:
             - name: certificates
-                secret:
-                  secretName: mqtt-server-cert
+              secret:
+                secretName: mqtt-server-cert
           volumeMounts:
             - name: certificates
               mountPath: "/tmp/certificates/"
