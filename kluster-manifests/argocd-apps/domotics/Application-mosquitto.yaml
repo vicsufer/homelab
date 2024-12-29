@@ -62,6 +62,7 @@ spec:
           enabled: true
           users:
             - username: zigbee2mqtt
+              password: $7$101$T1RBXD5MGIImHq8g$hSCHVAyZtAif0qN9Fhuam9mVCd0xLomREHIwzdreGjjADCQewz9VpfhK6AumcZyVFHFpHd2EhZdqU+Lq7393Xw==
               acl:
                 - topic: "zigbee2mqtt/#"
                   access: readwrite
