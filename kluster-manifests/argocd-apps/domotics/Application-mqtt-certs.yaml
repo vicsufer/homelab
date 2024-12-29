@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mqtt-certs
+  namespace: argocd
+spec:
+  destination:
+    namespace: zigbee
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: argocd-apps/domotics/mqtt-certs
+    repoURL: https://github.com/vicsufer/homelab
+    targetRevision: HEAD
+    directory:
+      recurse: false
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+      - ServerSideApply=false
