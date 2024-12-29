@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: argocd-apps/domotics
+    path: kluster-manifests/argocd-apps/domotics
     repoURL: https://github.com/vicsufer/homelab
     targetRevision: HEAD
     directory:
