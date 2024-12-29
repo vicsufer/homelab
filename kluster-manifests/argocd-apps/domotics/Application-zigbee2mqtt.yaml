@@ -61,9 +61,15 @@ spec:
                   /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_d460f6a6da1bef119aa3a3d94909ffd0-if00-port0
                 type: CharDevice
               name: usb
+            - name: certificates
+                secret:
+                  secretName: zigbee2mqtt-tls-secret
           extraVolumeMounts:
             - mountPath: /dev/ttyUSB0
               name: usb
+            - name: certificates
+              mountPath: "/tmp/secrets/"
+              readOnly: true
         service:
           type: ClusterIP
         nodeSelector:
@@ -92,13 +98,11 @@ spec:
               base_topic: zigbee2mqtt
               # Optional: absolute path to SSL/TLS certificate of CA used to sign server and client certificates (default: nothing)
               # ca: '/etc/ssl/mqtt-ca.crt'
-              # Optional: absolute paths to SSL/TLS key and certificate for client-authentication (default: nothing)
-              # key: '/etc/ssl/mqtt-client.key'
-              # cert: '/etc/ssl/mqtt-client.crt'
-              # Optional: MQTT server authentication user (default: nothing)
+              key: '/tmp/secrets/tls.key'
+              cert: '/tmp/secrets/tls.crt'
               user: zigbee2mqtt
               # Optional: MQTT server authentication password (default: nothing)
-              password: admin
+              # password: admin
               # Optional: MQTT client ID (default: nothing)
               client_id: 'zigbee2mqtt'
               # Optional: disable self-signed SSL certificates (default: true)

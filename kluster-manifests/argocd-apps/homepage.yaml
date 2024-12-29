@@ -25,7 +25,7 @@ spec:
       values: |
         image:
           repository: ghcr.io/gethomepage/homepage
-          tag: v0.9.12
+          tag: v0.10.5
         config:
           background:
             blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur

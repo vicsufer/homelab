@@ -7,6 +7,8 @@ global:
 configs:
   params:
     server.insecure: true
+  rbac:
+    policy.csv: "g, readonly, role:readonly"
   cm:
     create: true
     admin.enabled: "true"
@@ -17,7 +19,9 @@ configs:
     timeout.hard.reconciliation: 0s
     timeout.reconciliation: 180s
     url: https://vicsufer.argocd.xyz
+    accounts.readonly: apiKey
     # ui.cssurl: https://cdn.jsdelivr.net/gh/code-crusher/argocd-gravity-theme@main/argo-theme.css
+#
 
 controller:
   resources:
@@ -51,6 +55,8 @@ server:
       gethomepage.dev/group: "Orchestration"
       gethomepage.dev/href: "https://argocd.vicsufer.xyz"
       gethomepage.dev/icon: "argocd.png"
+      gethomepage.dev/widget.type: "argocd"
+      gethomepage.dev/widget.url: "https://argocd.vicsufer.xyz"
     tls: true
   # certificate:
   #   enabled: true
