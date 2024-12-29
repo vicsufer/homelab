@@ -118,5 +118,7 @@ spec:
             url: 'https://zigbee2mqtt.vicsufer.xyz'
             base_url: /zigbee2mqtt
           advanced:
-              # Optional: Logging level, options: debug, info, warning, error (default: info)
-              log_level: info
+            # Optional: Logging level, options: debug, info, warning, error (default: info)
+            log_level: info
+          ota:
+            ikea_ota_use_test_url: true
