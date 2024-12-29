@@ -121,4 +121,5 @@ spec:
             # Optional: Logging level, options: debug, info, warning, error (default: info)
             log_level: info
           ota:
+            legacy: false
             ikea_ota_use_test_url: true
