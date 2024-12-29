@@ -102,7 +102,6 @@ spec:
               cert: '/tmp/certificates/tls.crt'
               client_id: 'zigbee2mqtt'
               user: 'zigbee2mqtt'
-              password: '$7$101$T1RBXD5MGIImHq8g$hSCHVAyZtAif0qN9Fhuam9mVCd0xLomREHIwzdreGjjADCQewz9VpfhK6AumcZyVFHFpHd2EhZdqU+Lq7393Xw=='
               include_device_information: true
               keepalive: 60
               # Optional: MQTT protocol version (default: 4), set this to 5 if you
