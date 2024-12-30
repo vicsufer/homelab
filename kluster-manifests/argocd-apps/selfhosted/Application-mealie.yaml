@@ -19,8 +19,7 @@ spec:
   sources:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
-      path: kluster-manifests/mealie-extras
-
+      path: kluster-manifests/argocd-apps/selfhosted/mealie-extras
     - repoURL: https://github.com/ben-kemister/mealie-helm-chart.git
       targetRevision: main
       path: mealie

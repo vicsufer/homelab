@@ -18,5 +18,5 @@ spec:
       - CreateNamespace=true
   source:
     repoURL: https://github.com/vicsufer/homelab
-    path: kluster-manifests/argocd-extras
+    path: kluster-manifests/argocd-apps/infrastructure/argocd-extras
     targetRevision: HEAD

@@ -18,9 +18,8 @@ spec:
       - CreateNamespace=true
   sources:
     - repoURL: https://github.com/vicsufer/homelab
-      path: kluster-manifests/cloudflared-extras
+      path: kluster-manifests/argocd-apps/infrastructure/cloudflared-extras
       targetRevision: HEAD
-
     - chart: cloudflare-tunnel-ingress-controller
       repoURL: https://helm.strrl.dev
       targetRevision: 0.0.16

@@ -19,7 +19,7 @@ spec:
   sources:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
-      path: kluster-manifests/renovate-extras
+      path: kluster-manifests/argocd-apps/selfhosted/renovate-extras
     - chart: renovate
       repoURL: https://docs.renovatebot.com/helm-charts
       targetRevision: 39.86.0
