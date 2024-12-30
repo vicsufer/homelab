@@ -2,19 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: domotics
+  name: mqtt-certs
   namespace: argocd
 spec:
   destination:
-    namespace: argocd
+    namespace: zigbee
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: kluster-manifests/argocd-apps/domotics
+    path: kluster-manifests/argocd-apps/smarthome/mqtt-certs
     repoURL: https://github.com/vicsufer/homelab
     targetRevision: HEAD
-    directory:
-      include: 'Application-{*.yml,*.yaml}'
   syncPolicy:
     automated:
       prune: true

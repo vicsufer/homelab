@@ -19,7 +19,7 @@ spec:
   sources:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
-      path: kluster-manifests/argocd-apps/domotics/ingress
+      path: kluster-manifests/argocd-apps/smarthome/ingress
 
     - repoURL: https://pajikos.github.io/home-assistant-helm-chart/
       chart: home-assistant
@@ -42,7 +42,7 @@ spec:
               gethomepage.dev/enabled: "true"
               gethomepage.dev/name: "Home Assistant"
               gethomepage.dev/description: "Automatizaciones de la casa"
-              gethomepage.dev/group: ""
+              gethomepage.dev/group: "Smart Home"
               gethomepage.dev/widget.type: "homeassistant"
               gethomepage.dev/widget.url: "https://home-assistant.vicsufer.xyz"
               gethomepage.dev/icon: "home-assistant.png"
