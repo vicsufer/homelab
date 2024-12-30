@@ -16,7 +16,6 @@ spec:
                 name: home-assistant
                 port:
                   name: http
-              path: /
             pathType: ImplementationSpecific
   tls:
     - hosts:
