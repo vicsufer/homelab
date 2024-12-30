@@ -9,10 +9,10 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: https://github.com/vicsufer/homelab.git
+        repoURL: https://github.com/vicsufer/homelab
         revision: HEAD
         directories:
-          - path: kluster-manifests/argocd-apps/
+          - path: kluster-manifests/argocd-apps/*
   template:
     metadata:
       name: '{{.path.basename}}'
