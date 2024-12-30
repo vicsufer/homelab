@@ -1,0 +1,26 @@
+.DS_Store
+
+# pyenv
+.python-version
+
+
+# Environments
+.env
+.env.local
+.env.leave
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ansible
+*.retry
+.vagrant
+roles
+!roles/foundryvtt
+*.iml
+
+/.idea/.name
+*.pass.txt
