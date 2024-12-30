@@ -9,7 +9,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: https://github.com/argoproj/argo-cd.git
+        repoURL: https://github.com/vicsufer/homelab.git
         revision: HEAD
         directories:
           - path: kluster-manifests/argocd-apps/
