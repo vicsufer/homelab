@@ -17,9 +17,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoURL: https://github.com/vicsufer/homelab
-    path: charts/mosquitto
-    targetRevision: HEAD
+    chart: mosquitto
+    repoURL: https://charts.vicsufer.dev
+    targetRevision: 0.1.0
     helm:
       releaseName: mosquitto
       values: |
