@@ -113,7 +113,7 @@ spec:
               # support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform).
               # Enabling will break the Home Assistant integration. (default: false)
               force_disable_retain: false
-          homeassistant: true
+          homeassistant:
             legacy_entity_attributes: false
             legacy_triggers: false
           availability:
