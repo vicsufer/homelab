@@ -12,7 +12,7 @@ spec:
         repoURL: https://github.com/argoproj/argo-cd.git
         revision: HEAD
         directories:
-          - path: kluster-manifests/argocd-apps/*
+          - path: kluster-manifests/argocd-apps/
   template:
     metadata:
       name: '{{.path.basename}}'
