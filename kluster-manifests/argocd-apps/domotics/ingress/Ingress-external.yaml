@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-cf
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+    - host: home-assistant.vicsufer.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                name: home-assistant
+                port:
+                  name: http
+              path: /
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - home-assistant.vicsufer.xyz
+      secretName: home-assistant.vicsufer.xyz-cf-tls
