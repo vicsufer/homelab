@@ -114,6 +114,13 @@ spec:
               # Enabling will break the Home Assistant integration. (default: false)
               force_disable_retain: false
           homeassistant: true
+            legacy_entity_attributes: false
+            legacy_triggers: false
+          availability:
+            active:
+              timeout: 10
+            passive:
+              timeout: 1500
           frontend:
             url: 'https://zigbee2mqtt.vicsufer.xyz'
             base_url: /zigbee2mqtt
