@@ -14,6 +14,6 @@
   },
   "labels": ["dependencies", "renovate"],
   "ignorePaths": [
-     "./ansible"
+    "**/ansible/**"
   ]
 }
