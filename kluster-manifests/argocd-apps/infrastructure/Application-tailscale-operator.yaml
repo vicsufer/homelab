@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: tailscale-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: tailscale
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://github.com/vicsufer/homelab
+      path: kluster-manifests/argocd-apps/infrastructure/tailscale-operator-extras
+      targetRevision: HEAD
+    - chart: tailscale-operator
+      repoURL: https://pkgs.tailscale.com/helmcharts
+      targetRevision: v1.78.3
+      helm:
+        releaseName: tailscale-operator
+        values: |
+          oauthSecretVolume: {}
+          apiServerProxyConfig:
+            mode: "true"
+          # csi:
+          #   driver: secrets-store.csi.k8s.io
+          #   readOnly: true
+          #   volumeAttributes:
+          #     secretProviderClass: tailscale-oauth
