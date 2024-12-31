@@ -26,8 +26,8 @@ spec:
           # - service
           - ingress
           - traefik-proxy
-        extraArgs:
-          - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
+        labelFilter:
+          - external-dns.alpha.kubernetes.io/exclude notin (true)
         extraDeploy:
          - |
           apiVersion: bitnami.com/v1alpha1
