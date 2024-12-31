@@ -4,6 +4,7 @@ kind: Ingress
 metadata:
   name: ingress-cf
   annotations:
+    external-dns.alpha.kubernetes.io/exclude: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: cloudflare-tunnel

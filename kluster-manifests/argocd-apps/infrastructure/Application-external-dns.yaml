@@ -21,10 +21,13 @@ spec:
         traefik:
           disableLegacy: true
         extraEnvVarsSecret: pihole-secret
+        policy: sync
         sources:
           # - service
           - ingress
           - traefik-proxy
+        extraArgs:
+          - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
         extraDeploy:
          - |
           apiVersion: bitnami.com/v1alpha1
