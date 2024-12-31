@@ -39,6 +39,11 @@ spec:
         postgresql:
           auth:
             existingSecret: "database-password"
+          primary:
+            livenessProbe:
+              enabled: false
+            readinessProbe:
+              enabled: false
 
         ingress:
           create: true
