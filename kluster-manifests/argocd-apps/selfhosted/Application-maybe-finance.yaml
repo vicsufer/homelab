@@ -42,10 +42,10 @@ spec:
           primary:
             startupProbe:
               enabled: true
-              initialDelaySeconds: 30
-              periodSeconds: 10
+              initialDelaySeconds: 60
+              periodSeconds: 15
               timeoutSeconds: 1
-              failureThreshold: 30
+              failureThreshold: 60
               successThreshold: 1
 
         ingress:
