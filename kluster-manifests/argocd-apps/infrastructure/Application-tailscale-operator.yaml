@@ -27,11 +27,7 @@ spec:
         releaseName: tailscale-operator
         values: |
           oauthSecretVolume: {}
-          hostname: nuberu
+          operatorConfig:
+            hostname: nuberu
           apiServerProxyConfig:
             mode: "true"
-          # csi:
-          #   driver: secrets-store.csi.k8s.io
-          #   readOnly: true
-          #   volumeAttributes:
-          #     secretProviderClass: tailscale-oauth
