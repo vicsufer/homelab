@@ -27,6 +27,7 @@ spec:
         releaseName: tailscale-operator
         values: |
           oauthSecretVolume: {}
+          hostname: nuberu
           apiServerProxyConfig:
             mode: "true"
           # csi:
