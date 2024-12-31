@@ -52,6 +52,8 @@ spec:
             kubernetesIngress:
               publishedService:
                 enabled: true
+            kubernetesCRD:
+              allowExternalNameServices: true
           priorityClassName: "system-cluster-critical"
           tolerations:
             - key: "CriticalAddonsOnly"

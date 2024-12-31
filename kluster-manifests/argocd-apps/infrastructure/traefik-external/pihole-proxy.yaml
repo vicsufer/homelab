@@ -5,7 +5,9 @@ metadata:
   name: external-pihole
 spec:
   type: ExternalName
-  externalName: pihole.home
+  externalName: 192.168.0.20
+  ports:
+    - port: 80
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
