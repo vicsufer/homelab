@@ -1,137 +1,137 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-  name: immich
-  namespace: argocd
-spec:
-  project: homelab
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: immich
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
-  source:
-    chart: immich
-    repoURL: https://immich-app.github.io/immich-charts
-    targetRevision: 0.8.5
-    helm:
-      releaseName: immich
-      values: |
-        image:
-          tag: v1.120.2
-
-        env:
-          DATABASE_PASSWORD:
-            valueFrom:
-              secretKeyRef:
-                name: database-password
-                key: password
-
-        immich:
-          metrics:
-            enabled: true
-          persistence:
-            library:
-              existingClaim: immich-pvc
-
-          configuration: {}
-            # trash:
-            #   enabled: false
-            #   days: 30
-            # storageTemplate:
-            #   enabled: true
-            #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
-        server:
-          probes:
-            startup:
-              spec:
-                failureThreshold: 360
-          ingress:
-            main:
-              enabled: true
-              annotations:
-                cert-manager.io/cluster-issuer: "letsencrypt-prod"
-                traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-                traefik.ingress.kubernetes.io/buffering.maxrequestbodybytes: "0"
-                traefik.ingress.kubernetes.io/buffering.memrequestbodybytes: "0"
-                gethomepage.dev/enabled: "true"
-                gethomepage.dev/name: "Immich"
-                gethomepage.dev/description: "Photo library"
-                gethomepage.dev/group: "k3s"
-                gethomepage.dev/icon: "immich.png"
-                gethomepage.dev/widget.type: "immich"
-                gethomepage.dev/widget.url: "https://immich.vicsufer.xyz"
-                gethomepage.dev/widget.version: "2"
-              tls:
-                - hosts:
-                    - &host immich.vicsufer.xyz
-                  secretName: immich-general-tls
-              hosts:
-                - host: *host
-                  paths:
-                    - path: /
-                      pathType: ImplementationSpecific
-                      backend:
-                        service:
-                          name: immich-service
-                          port: 2283
-
-        machine-learning:
-          enabled: true
-          persistence:
-            cache:
-              enabled: true
-              size: 10Gi
-              # Optional: Set this to pvc to avoid downloading the ML models every start.
-              type: pvc
-              # type: emptyDir
-              accessMode: ReadWriteMany
-
-        redis:
-          enabled: true
-
-        postgresql:
-          enabled: true
-          # image:
-          #   repository: bitnami/postgresql
-          #   tag: 14.14.0-debian-12-r0
-          tag: pg14-v0.2.1
-          primary:
-            containerSecurityContext:
-              readOnlyRootFilesystem: false
-            resourcesPreset: "small" #https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
-          auth:
-            existingSecret: "database-password"
-          extraDeploy:
-            - |
-              apiVersion: bitnami.com/v1alpha1
-              kind: SealedSecret
-              metadata:
-                name: database-password
-                namespace: immich
-              spec:
-                encryptedData:
-                  postgres-password: AgCABP2wV1oQdTXFKLqerzX+VWvkMCeyleogfEp9kVtQDXawDscaLiPHwRBNx8Ha16prEFPBsBcKZ49lUXhZYTCNhLQU0P73B/NEPIUl84EzcZDOvO8g17RLWcK0Z2ac1MmiAwCQRJSCWtnO+o1IuKw9es30pvPPH3897dB2V7T1t3iZL6E3OgpbUonoq9QOhRlUkSbuZz6LRfzCZ4AqwudN0RedVpMAuXb1UbtXXe2PV7O0m7WXrRyIsxnC98K3L5KKg6MWw94gVBlYL7ploiSVXQEN8Z4EX1QZO5q9w6KHeYQBlgL7G7CBAwTl11jSK96AQZ0VP9qMwIjIW5lgA8anrBBeyaacJiABKQz8li2p/vBd2w36DRid5P0duuzBmcjTudKDI5jcbTROxNw73rJN6uf0iMplSPz8QrxMXzunbxbvdiO/FC4QXvLzLN0rQZ4LypjO4id6BBz8an/K2k6PxM9iQZ8FRi4z2WcASGV1kWdJJtemYFQikr+7XP94wIUtmDpyCpQlIj6mX140AE/yd/uEHXxGDXfsy/p32pK0AOh2jASwNQ+JlqtL8bLT8TvT2EosMQlTCi2v13pht5A/Wyen1qKCiaXIMd/3cncjOfdGe2B0N7fia9zE86V5vfqPWU4u/+S95RCs2bT92cJxS5DLc0u/H34LOlDrrIxlaxUqeHdO5IsfbrXUN5iQWyIB+ZmJQg0=
-                  password: AgCABP2wV1oQdTXFKLqerzX+VWvkMCeyleogfEp9kVtQDXawDscaLiPHwRBNx8Ha16prEFPBsBcKZ49lUXhZYTCNhLQU0P73B/NEPIUl84EzcZDOvO8g17RLWcK0Z2ac1MmiAwCQRJSCWtnO+o1IuKw9es30pvPPH3897dB2V7T1t3iZL6E3OgpbUonoq9QOhRlUkSbuZz6LRfzCZ4AqwudN0RedVpMAuXb1UbtXXe2PV7O0m7WXrRyIsxnC98K3L5KKg6MWw94gVBlYL7ploiSVXQEN8Z4EX1QZO5q9w6KHeYQBlgL7G7CBAwTl11jSK96AQZ0VP9qMwIjIW5lgA8anrBBeyaacJiABKQz8li2p/vBd2w36DRid5P0duuzBmcjTudKDI5jcbTROxNw73rJN6uf0iMplSPz8QrxMXzunbxbvdiO/FC4QXvLzLN0rQZ4LypjO4id6BBz8an/K2k6PxM9iQZ8FRi4z2WcASGV1kWdJJtemYFQikr+7XP94wIUtmDpyCpQlIj6mX140AE/yd/uEHXxGDXfsy/p32pK0AOh2jASwNQ+JlqtL8bLT8TvT2EosMQlTCi2v13pht5A/Wyen1qKCiaXIMd/3cncjOfdGe2B0N7fia9zE86V5vfqPWU4u/+S95RCs2bT92cJxS5DLc0u/H34LOlDrrIxlaxUqeHdO5IsfbrXUN5iQWyIB+ZmJQg0=
-                template:
-                  metadata:
-                    name: database-password
-                    namespace: immich
-            - | # PVC For immich server in postgres subchartbecause chart does not allow for custom resources
-              apiVersion: v1
-              kind: PersistentVolumeClaim
-              metadata:
-                name: immich-pvc
-                namespace: immich
-              spec:
-                accessModes:
-                  - ReadWriteOnce
-                resources:
-                  requests:
-                    storage: 100Gi
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+#   name: immich
+#   namespace: argocd
+# spec:
+#   project: homelab
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: immich
+#   syncPolicy:
+#     automated:
+#       prune: true
+#     syncOptions:
+#       - CreateNamespace=true
+#   source:
+#     chart: immich
+#     repoURL: https://immich-app.github.io/immich-charts
+#     targetRevision: 0.8.5
+#     helm:
+#       releaseName: immich
+#       values: |
+#         image:
+#           tag: v1.120.2
+#
+#         env:
+#           DATABASE_PASSWORD:
+#             valueFrom:
+#               secretKeyRef:
+#                 name: database-password
+#                 key: password
+#
+#         immich:
+#           metrics:
+#             enabled: true
+#           persistence:
+#             library:
+#               existingClaim: immich-pvc
+#
+#           configuration: {}
+#             # trash:
+#             #   enabled: false
+#             #   days: 30
+#             # storageTemplate:
+#             #   enabled: true
+#             #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
+#         server:
+#           probes:
+#             startup:
+#               spec:
+#                 failureThreshold: 360
+#           ingress:
+#             main:
+#               enabled: true
+#               annotations:
+#                 cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#                 traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+#                 traefik.ingress.kubernetes.io/buffering.maxrequestbodybytes: "0"
+#                 traefik.ingress.kubernetes.io/buffering.memrequestbodybytes: "0"
+#                 gethomepage.dev/enabled: "true"
+#                 gethomepage.dev/name: "Immich"
+#                 gethomepage.dev/description: "Photo library"
+#                 gethomepage.dev/group: "k3s"
+#                 gethomepage.dev/icon: "immich.png"
+#                 gethomepage.dev/widget.type: "immich"
+#                 gethomepage.dev/widget.url: "https://immich.vicsufer.xyz"
+#                 gethomepage.dev/widget.version: "2"
+#               tls:
+#                 - hosts:
+#                     - &host immich.vicsufer.xyz
+#                   secretName: immich-general-tls
+#               hosts:
+#                 - host: *host
+#                   paths:
+#                     - path: /
+#                       pathType: ImplementationSpecific
+#                       backend:
+#                         service:
+#                           name: immich-service
+#                           port: 2283
+#
+#         machine-learning:
+#           enabled: true
+#           persistence:
+#             cache:
+#               enabled: true
+#               size: 10Gi
+#               # Optional: Set this to pvc to avoid downloading the ML models every start.
+#               type: pvc
+#               # type: emptyDir
+#               accessMode: ReadWriteMany
+#
+#         redis:
+#           enabled: true
+#
+#         postgresql:
+#           enabled: true
+#           # image:
+#           #   repository: bitnami/postgresql
+#           #   tag: 14.14.0-debian-12-r0
+#           tag: pg14-v0.2.1
+#           primary:
+#             containerSecurityContext:
+#               readOnlyRootFilesystem: false
+#             resourcesPreset: "small" #https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+#           auth:
+#             existingSecret: "database-password"
+#           extraDeploy:
+#             - |
+#               apiVersion: bitnami.com/v1alpha1
+#               kind: SealedSecret
+#               metadata:
+#                 name: database-password
+#                 namespace: immich
+#               spec:
+#                 encryptedData:
+#                   postgres-password: AgCABP2wV1oQdTXFKLqerzX+VWvkMCeyleogfEp9kVtQDXawDscaLiPHwRBNx8Ha16prEFPBsBcKZ49lUXhZYTCNhLQU0P73B/NEPIUl84EzcZDOvO8g17RLWcK0Z2ac1MmiAwCQRJSCWtnO+o1IuKw9es30pvPPH3897dB2V7T1t3iZL6E3OgpbUonoq9QOhRlUkSbuZz6LRfzCZ4AqwudN0RedVpMAuXb1UbtXXe2PV7O0m7WXrRyIsxnC98K3L5KKg6MWw94gVBlYL7ploiSVXQEN8Z4EX1QZO5q9w6KHeYQBlgL7G7CBAwTl11jSK96AQZ0VP9qMwIjIW5lgA8anrBBeyaacJiABKQz8li2p/vBd2w36DRid5P0duuzBmcjTudKDI5jcbTROxNw73rJN6uf0iMplSPz8QrxMXzunbxbvdiO/FC4QXvLzLN0rQZ4LypjO4id6BBz8an/K2k6PxM9iQZ8FRi4z2WcASGV1kWdJJtemYFQikr+7XP94wIUtmDpyCpQlIj6mX140AE/yd/uEHXxGDXfsy/p32pK0AOh2jASwNQ+JlqtL8bLT8TvT2EosMQlTCi2v13pht5A/Wyen1qKCiaXIMd/3cncjOfdGe2B0N7fia9zE86V5vfqPWU4u/+S95RCs2bT92cJxS5DLc0u/H34LOlDrrIxlaxUqeHdO5IsfbrXUN5iQWyIB+ZmJQg0=
+#                   password: AgCABP2wV1oQdTXFKLqerzX+VWvkMCeyleogfEp9kVtQDXawDscaLiPHwRBNx8Ha16prEFPBsBcKZ49lUXhZYTCNhLQU0P73B/NEPIUl84EzcZDOvO8g17RLWcK0Z2ac1MmiAwCQRJSCWtnO+o1IuKw9es30pvPPH3897dB2V7T1t3iZL6E3OgpbUonoq9QOhRlUkSbuZz6LRfzCZ4AqwudN0RedVpMAuXb1UbtXXe2PV7O0m7WXrRyIsxnC98K3L5KKg6MWw94gVBlYL7ploiSVXQEN8Z4EX1QZO5q9w6KHeYQBlgL7G7CBAwTl11jSK96AQZ0VP9qMwIjIW5lgA8anrBBeyaacJiABKQz8li2p/vBd2w36DRid5P0duuzBmcjTudKDI5jcbTROxNw73rJN6uf0iMplSPz8QrxMXzunbxbvdiO/FC4QXvLzLN0rQZ4LypjO4id6BBz8an/K2k6PxM9iQZ8FRi4z2WcASGV1kWdJJtemYFQikr+7XP94wIUtmDpyCpQlIj6mX140AE/yd/uEHXxGDXfsy/p32pK0AOh2jASwNQ+JlqtL8bLT8TvT2EosMQlTCi2v13pht5A/Wyen1qKCiaXIMd/3cncjOfdGe2B0N7fia9zE86V5vfqPWU4u/+S95RCs2bT92cJxS5DLc0u/H34LOlDrrIxlaxUqeHdO5IsfbrXUN5iQWyIB+ZmJQg0=
+#                 template:
+#                   metadata:
+#                     name: database-password
+#                     namespace: immich
+#             - | # PVC For immich server in postgres subchartbecause chart does not allow for custom resources
+#               apiVersion: v1
+#               kind: PersistentVolumeClaim
+#               metadata:
+#                 name: immich-pvc
+#                 namespace: immich
+#               spec:
+#                 accessModes:
+#                   - ReadWriteOnce
+#                 resources:
+#                   requests:
+#                     storage: 100Gi
