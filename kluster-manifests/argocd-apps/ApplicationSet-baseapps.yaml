@@ -17,7 +17,7 @@ spec:
     metadata:
       name: '{{.path.basename}}'
     spec:
-      project: "default"
+      project: homelab
       source:
         repoURL: https://github.com/vicsufer/homelab
         targetRevision: HEAD
