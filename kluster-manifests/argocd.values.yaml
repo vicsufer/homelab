@@ -21,7 +21,6 @@ configs:
     url: https://vicsufer.argocd.xyz
     accounts.readonly: apiKey
     # ui.cssurl: https://cdn.jsdelivr.net/gh/code-crusher/argocd-gravity-theme@main/argo-theme.css
-#
 
 controller:
   resources:
@@ -96,6 +95,22 @@ notifications:
       memory: 128Mi
 
 extraObjects:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: homelab
+      namespace: argocd
+    spec:
+      orphanedResources:
+        warn: true
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      destinations:
+        - namespace: '*'
+          server: '*'
+      sourceRepos:
+        - '*'
   - apiVersion: argoproj.io/v1alpha1
     kind: Application
     metadata:

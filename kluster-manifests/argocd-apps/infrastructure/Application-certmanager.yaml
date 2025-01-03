@@ -7,7 +7,7 @@ metadata:
   name: cert-manager
   namespace: argocd
 spec:
-  project: default
+  project: homelab
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager

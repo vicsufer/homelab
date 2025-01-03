@@ -8,7 +8,7 @@ spec:
   destination:
     namespace: zigbee
     server: https://kubernetes.default.svc
-  project: default
+  project: homelab
   source:
     path: kluster-manifests/argocd-apps/smarthome/mqtt-certs
     repoURL: https://github.com/vicsufer/homelab
