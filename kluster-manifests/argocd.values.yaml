@@ -123,7 +123,7 @@ extraObjects:
       destination:
         namespace: argocd
         server: https://kubernetes.default.svc
-      project: default
+      project: homelab
       syncPolicy:
         automated:
           prune: true
