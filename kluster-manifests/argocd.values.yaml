@@ -102,7 +102,7 @@ extraObjects:
       namespace: argocd
     spec:
       orphanedResources:
-        warn: true
+        warn: false
       clusterResourceWhitelist:
         - group: '*'
           kind: '*'
