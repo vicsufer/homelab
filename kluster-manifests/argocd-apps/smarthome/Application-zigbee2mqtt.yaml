@@ -25,7 +25,7 @@ spec:
       values: |
         image:
           repository: koenkk/zigbee2mqtt
-          tag: "1.37.1"
+          tag: "2.0.0"
           pullPolicy: IfNotPresent
         ingress:
           enabled: true
@@ -77,7 +77,6 @@ spec:
         nodeSelector:
           kubernetes.io/hostname: nuc-0
         zigbee2mqtt:
-          # Required: serial settings
           serial:
               # Required: location of the adapter (e.g. CC2531).
               # USB adapters - use format "port: /dev/ttyACM0"
@@ -87,7 +86,7 @@ spec:
               # Optional: disable LED of the adapter if supported (default: false)
               disable_led: false
               # Optional: adapter type, specify if you are experiencing startup problems (default: shown below, options: zstack, deconz, ember, zigate)
-              # adapter:
+              adapter: zstack
               # Optional: Baud rate speed for serial port, this can be anything firmware support but default is 115200 for Z-Stack and EZSP, 38400 for Deconz, however note that some EZSP firmware need 57600.
               # baudrate: 115200
               # Optional: RTS / CTS Hardware Flow Control for serial port (default: false)
@@ -121,12 +120,18 @@ spec:
               timeout: 10
             passive:
               timeout: 1500
+          device_options:
+            legacy: false
           frontend:
             url: 'https://zigbee2mqtt.vicsufer.xyz'
             base_url: /zigbee2mqtt
           advanced:
             # Optional: Logging level, options: debug, info, warning, error (default: info)
             log_level: info
+            homeassistant_legacy_entity_attributes: false
+            homeassistant_legacy_triggers: false
+            legacy_api: false
+            legacy_availability_payload: false
           ota:
             legacy: false
             ikea_ota_use_test_url: true
