@@ -52,7 +52,7 @@ spec:
         statefulset:
           storage:
             enabled: true
-            storageClassName: nfs-csi-delete
+            storageClassName: nfs-csi-retain
           securityContext:
             privileged: true # TODO Use a device-manager
           extraVolumes:
