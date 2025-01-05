@@ -45,7 +45,7 @@ spec:
               gethomepage.dev/group: "Smart Home"
               gethomepage.dev/widget.type: "homeassistant"
               gethomepage.dev/widget.url: "http://home-assistant.home-assistant.svc:8080"
-              gethomepage.dev/widget.key: "{{ HOMEPAGE_VAR_HOMEASSISTANT_KEY }}"
+              gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}"
               gethomepage.dev/icon: "home-assistant.png"
             hosts:
               - host: home-assistant.vicsufer.xyz
