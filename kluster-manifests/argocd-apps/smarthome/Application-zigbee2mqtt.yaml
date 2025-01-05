@@ -19,13 +19,13 @@ spec:
   source:
     repoURL: https://charts.zigbee2mqtt.io
     chart: zigbee2mqtt
-    targetRevision: 2.0.0
+    targetRevision: 1.42.0
     helm:
       releaseName: zigbee2mqtt
       values: |
         image:
           repository: koenkk/zigbee2mqtt
-          tag: "2.0.0"
+          tag: "1.42.0"
           pullPolicy: IfNotPresent
         ingress:
           enabled: true
