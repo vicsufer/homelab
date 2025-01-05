@@ -37,9 +37,9 @@ spec:
                 gethomepage.dev/href: "https://traefik.vicsufer.xyz"
                 gethomepage.dev/icon: "traefik.png"
                 gethomepage.dev/widget.type: "traefik"
-                gethomepage.dev/widget.url: "https://traefik.traefik.svc:80"
+                gethomepage.dev/widget.url: "http://traefik.traefik.svc:80"
               enabled: true
-              matchRule: Host(`traefik.vicsufer.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+              matchRule: (Host(`traefik.vicsufer.xyz`) || Host(`traefik.traefik.svc`) )&& (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
               entryPoints:
                 - websecure
               tls:
