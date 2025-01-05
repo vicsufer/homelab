@@ -135,4 +135,3 @@ spec:
             legacy_availability_payload: false
           ota:
             legacy: false
-            ikea_ota_use_test_url: true
