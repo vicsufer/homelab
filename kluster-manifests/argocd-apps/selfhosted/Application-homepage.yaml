@@ -17,117 +17,124 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    chart: homepage
-    repoURL: https://jameswynn.github.io/helm-charts
-    targetRevision: 2.0.1
-    helm:
-      releaseName: homepage
-      values: |
-        image:
-          repository: ghcr.io/gethomepage/homepage
-          tag: v0.10.5
-        config:
-          background:
-            blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
-            saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
-            brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
-            opacity: 50 # 0-100
-          color: cyan
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/selfhosted/homepage-extras
+    - chart: homepage
+      repoURL: https://jameswynn.github.io/helm-charts
+      targetRevision: 2.0.1
+      helm:
+        releaseName: homepage
+        values: |
+          image:
+            repository: ghcr.io/gethomepage/homepage
+            tag: v0.10.5
+          config:
+            background:
+              blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
+              saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+              brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+              opacity: 50 # 0-100
+            color: cyan
 
-          bookmarks:
-            - Developer:
-                - Github:
-                    - abbr: GH
-                      href: https://github.com/vicsufer
-          services:
-            - Media:
-                - Plex:
-                    href: http://plex.home/
-                    description: Media server
-                    icon: plex.png
-                    widget:
-                      type: plex
-                      url: http://plex.home/
-                - Radarr:
-                    href: http://sonarr.home/
-                    description: Movies management
-                    icon: radarr.png
-                    widget:
-                      type: radarr
-                      url: http://radarr.home/
-                - Sonarr:
-                    href: http://sonarr.home/
-                    description: TV management
-                    icon: sonarr.png
-                    widget:
-                      type: sonarr
-                      url: http://sonarr.home/
-                - Deluge:
-                    href: http://deluge.home/
-                    description: Torrent client
-            - Orchestration:
-                - Portainer:
-                    href: http://portainer.home/
-                    description: Docker management
-                    icon: portainer.png
-          widgets:
-            # show the kubernetes widget, with the cluster summary and individual nodes
-            - kubernetes:
-                cluster:
-                  show: true
-                  cpu: true
-                  memory: true
-                  showLabel: true
-                  label: "k3s"
-                nodes:
-                  show: true
-                  cpu: true
-                  memory: true
-                  showLabel: true
-            - search:
-                provider: duckduckgo
-                targewidget:
-          kubernetes:
-            mode: cluster
+            bookmarks:
+              - Developer:
+                  - Github:
+                      - abbr: GH
+                        href: https://github.com/vicsufer
+            services:
+              - Media:
+                  - Plex:
+                      href: http://plex.home/
+                      description: Media server
+                      icon: plex.png
+                      widget:
+                        type: plex
+                        url: http://plex.home/
+                  - Radarr:
+                      href: http://sonarr.home/
+                      description: Movies management
+                      icon: radarr.png
+                      widget:
+                        type: radarr
+                        url: http://radarr.home/
+                  - Sonarr:
+                      href: http://sonarr.home/
+                      description: TV management
+                      icon: sonarr.png
+                      widget:
+                        type: sonarr
+                        url: http://sonarr.home/
+                  - Deluge:
+                      href: http://deluge.home/
+                      description: Torrent client
+              - Orchestration:
+                  - Portainer:
+                      href: http://portainer.home/
+                      description: Docker management
+                      icon: portainer.png
+            widgets:
+              # show the kubernetes widget, with the cluster summary and individual nodes
+              - kubernetes:
+                  cluster:
+                    show: true
+                    cpu: true
+                    memory: true
+                    showLabel: true
+                    label: "k3s"
+                  nodes:
+                    show: true
+                    cpu: true
+                    memory: true
+                    showLabel: true
+              - search:
+                  provider: duckduckgo
+                  targewidget:
+            kubernetes:
+              mode: cluster
 
-          settings:
-            headerStyle: boxedWidgets
-            base: http://homepage.vicsufer.xyz
-            language: es
-            layout:
-              Media:
-                style: row
-                columns: 6
+            settings:
+              headerStyle: boxedWidgets
+              base: http://homepage.vicsufer.xyz
+              language: es
+              layout:
+                Media:
+                  style: row
+                  columns: 6
 
 
-        # The service account is necessary to allow discovery of other services
-        serviceAccount:
-          create: true
-          name: homepage
+          # The service account is necessary to allow discovery of other services
+          serviceAccount:
+            create: true
+            name: homepage
 
-        # This enables the service account to access the necessary resources
-        enableRbac: true
+          # This enables the service account to access the necessary resources
+          enableRbac: true
 
-        ingress:
-          main:
-            enabled: true
-            ingressClassName: "traefik"
-            annotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-              cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            tls:
-              - hosts:
-                  - &host homepage.vicsufer.xyz
-                secretName: homepage-general-tls
-            hosts:
-              - host: *host
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-                    backend:
-                      service:
-                        name: homepage
-                        port: 3000
+          envFrom:
+            - secretRef:
+                name: homepage-secrets
+
+          ingress:
+            main:
+              enabled: true
+              ingressClassName: "traefik"
+              annotations:
+                traefik.ingress.kubernetes.io/router.entrypoints: websecure
+                cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              tls:
+                - hosts:
+                    - &host homepage.vicsufer.xyz
+                  secretName: homepage-general-tls
+              hosts:
+                - host: *host
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+                      backend:
+                        service:
+                          name: homepage
+                          port: 3000
 
         # apiVersion: v1
         # kind: ConfigMap
