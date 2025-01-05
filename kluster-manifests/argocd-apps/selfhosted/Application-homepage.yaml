@@ -16,7 +16,7 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  source:
+  sources:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/homepage-extras
