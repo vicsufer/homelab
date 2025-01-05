@@ -55,7 +55,8 @@ server:
       gethomepage.dev/href: "https://argocd.vicsufer.xyz"
       gethomepage.dev/icon: "argocd.png"
       gethomepage.dev/widget.type: "argocd"
-      gethomepage.dev/widget.url: "https://argocd.vicsufer.xyz"
+      gethomepage.dev/widget.url: "http://argocd-server.argocd.svc:80"
+      gethomepage.dev/widget.key: "{{ HOMEPAGE_VAR_ARGOCD_KEY }}"
     tls: true
   # certificate:
   #   enabled: true
