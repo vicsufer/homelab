@@ -95,7 +95,7 @@ spec:
 
             settings:
               headerStyle: boxedWidgets
-              base: http://homepage.vicsufer.xyz
+              base: https://homepage.vicsufer.xyz
               language: es
               layout:
                 Media:
