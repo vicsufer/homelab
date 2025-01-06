@@ -70,6 +70,7 @@ spec:
                   - Deluge:
                       href: http://deluge.home
                       description: Torrent client
+                      icon: deluge.png
                       widget:
                         type: deluge
                         url: http://deluge.home
