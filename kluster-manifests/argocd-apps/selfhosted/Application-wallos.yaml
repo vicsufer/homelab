@@ -36,6 +36,7 @@ spec:
         globals:
           traefik:
             fixedMiddlewares: []
+        middlewares: {}
         ingress:
           main:
             enabled: true
