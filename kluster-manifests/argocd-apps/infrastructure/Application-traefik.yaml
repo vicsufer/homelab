@@ -34,7 +34,7 @@ spec:
                 gethomepage.dev/name: "Traefik"
                 gethomepage.dev/description: "Ingress Controller"
                 gethomepage.dev/group: "Orchestration"
-                gethomepage.dev/href: "https://traefik.vicsufer.xyz"
+                gethomepage.dev/href: "https://traefik.vicsufer.xyz/dashboard"
                 gethomepage.dev/icon: "traefik.png"
                 gethomepage.dev/widget.type: "traefik"
                 gethomepage.dev/widget.url: "http://traefik.traefik.svc:80"
