@@ -18,7 +18,7 @@ spec:
       - CreateNamespace=true
   source:
     chart: wallos
-    repoURL: tccr.io/truechart
+    repoURL: tccr.io/truecharts
     targetRevision: 6.6.0
     helm:
       releaseName: wallos
