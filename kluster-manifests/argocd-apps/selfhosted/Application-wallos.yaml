@@ -33,11 +33,19 @@ spec:
           logos:
             enabled: true
             mountPath: "/var/www/html/images/uploads/logos"
+        globals:
+          traefik:
+            fixedMiddlewares: []
         ingress:
+          integrations:
+            traefik:
+              enabled: true
+              entrypoints:
+                - websecure
+              forceTLS: true
           main:
             enabled: true
             annotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
               cert-manager.io/cluster-issuer: letsencrypt-prod
               gethomepage.dev/enabled: "true"
               gethomepage.dev/name: "Subscripciones"
