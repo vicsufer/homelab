@@ -18,8 +18,8 @@ spec:
       - CreateNamespace=true
   source:
     chart: wallos
-    repoURL: https://vide.github.io/wallos-charts
-    targetRevision: 0.1.3
+    repoURL: oci://tccr.io/truechart
+    targetRevision: 6.6.0
     helm:
       releaseName: wallos
       values: |
@@ -27,24 +27,29 @@ spec:
           repository: ghcr.io/ellite/wallos
           tag: 2.42.2
         persistence:
-          enabled: true
-          size: 1Gi
+          database:
+            enabled: true
+            mountPath: "/var/www/html/db"
+          logos:
+            enabled: true
+            mountPath: "/var/www/html/images/uploads/logos"
         ingress:
-          enabled: true
-          annotations:
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            cert-manager.io/cluster-issuer: letsencrypt-prod
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/name: "Subscripciones"
-            gethomepage.dev/description: "Registro subscripciones"
-            gethomepage.dev/group: "k3s"
-            gethomepage.dev/icon: "wallos.png"
-          tls:
-            - hosts:
-                - &host wallos.vicsufer.xyz
-              secretName: wallos-general-tls
-          hosts:
-            - host: *host
-              paths:
-                - path: /
-                  pathType: Prefix
+          main:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Subscripciones"
+              gethomepage.dev/description: "Registro subscripciones"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/icon: "wallos.png"
+            tls:
+              - hosts:
+                  - &host wallos.vicsufer.xyz
+                secretName: wallos-general-tls
+            hosts:
+              - host: *host
+                paths:
+                  - path: /
+                    pathType: Prefix
