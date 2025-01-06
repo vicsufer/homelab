@@ -40,6 +40,7 @@ spec:
               gethomepage.dev/group: "Media"
               gethomepage.dev/widget.type: "prowlarr"
               gethomepage.dev/widget.url: "https://prowlarr.vicsufer.xyz"
+              gethomepage.dev/widget.key: {{HOMEPAGE_VAR_PROWLARR_KEY}}
               gethomepage.dev/icon: "prowlarr.png"
             tls:
               - secretName: prowlarr-general-tls
