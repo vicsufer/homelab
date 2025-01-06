@@ -37,6 +37,7 @@ spec:
           traefik:
             fixedMiddlewares: []
         ingress:
+          enabled: true
           integrations:
             traefik:
               enabled: true
