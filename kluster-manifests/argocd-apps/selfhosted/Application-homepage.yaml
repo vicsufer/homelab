@@ -50,14 +50,14 @@ spec:
                       icon: plex.png
                       widget:
                         type: plex
-                        url: http://plex.home/
+                        url: http://plex.home
                   - Radarr:
-                      href: http://sonarr.home/
+                      href: http://sonarr.home
                       description: Movies management
                       icon: radarr.png
                       widget:
                         type: radarr
-                        url: http://radarr.home/
+                        url: http://radarr.home
                         key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
                   - Sonarr:
                       href: http://sonarr.home/
