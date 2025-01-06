@@ -52,7 +52,7 @@ spec:
                         type: plex
                         url: http://plex.home
                   - Radarr:
-                      href: http://sonarr.home
+                      href: http://radarr.home
                       description: Movies management
                       icon: radarr.png
                       widget:
@@ -60,19 +60,23 @@ spec:
                         url: http://radarr.home
                         key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
                   - Sonarr:
-                      href: http://sonarr.home/
+                      href: http://sonarr.home
                       description: TV management
                       icon: sonarr.png
                       widget:
                         type: sonarr
-                        url: http://sonarr.home/
+                        url: http://sonarr.home
                         key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
                   - Deluge:
-                      href: http://deluge.home/
+                      href: http://deluge.home
                       description: Torrent client
+                      widget:
+                        type: deluge
+                        url: http://deluge.home
+                        key: "{{HOMEPAGE_VAR_DELUGE_KEY}}"
               - Orchestration:
                   - Portainer:
-                      href: http://portainer.home/
+                      href: http://portainer.home
                       description: Docker management
                       icon: portainer.png
             widgets:
