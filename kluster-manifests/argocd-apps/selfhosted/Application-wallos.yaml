@@ -37,15 +37,14 @@ spec:
           traefik:
             fixedMiddlewares: []
         ingress:
-          enabled: true
-          integrations:
-            traefik:
-              enabled: true
-              entrypoints:
-                - websecure
-              forceTLS: true
           main:
             enabled: true
+            integrations:
+              traefik:
+                enabled: true
+                entrypoints:
+                  - websecure
+                forceTLS: true
             annotations:
               cert-manager.io/cluster-issuer: letsencrypt-prod
               gethomepage.dev/enabled: "true"
