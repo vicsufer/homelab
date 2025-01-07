@@ -83,6 +83,7 @@ spec:
                       widget:
                         type: portainer
                         url: http://portainer.home
+                        env: 1
                         key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
             widgets:
               # show the kubernetes widget, with the cluster summary and individual nodes
