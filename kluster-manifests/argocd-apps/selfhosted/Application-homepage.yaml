@@ -78,8 +78,12 @@ spec:
               - Orchestration:
                   - Portainer:
                       href: http://portainer.home
-                      description: Docker management
+                      description: NAS Docker management
                       icon: portainer.png
+                      widget:
+                        type: portainer
+                        url: http://portainer.home
+                        key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
             widgets:
               # show the kubernetes widget, with the cluster summary and individual nodes
               - kubernetes:
