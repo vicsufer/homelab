@@ -90,7 +90,7 @@ spec:
                       description: Almacenamiento en red
                       icon: synology.png
                       widget:
-                        type: synology
+                        type: diskstation
                         url: "http://192.168.0.20:5000"
                         volume: volume1
                         username: homepage
