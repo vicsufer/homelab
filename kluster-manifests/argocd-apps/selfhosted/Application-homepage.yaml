@@ -85,6 +85,16 @@ spec:
                         url: http://portainer.home
                         env: 1
                         key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+                  - Synology
+                      href: http://192.168.0.20:5000
+                      description: Almacenamiento en red
+                      icon: synology.png
+                      widget:
+                        type: synology
+                        url: http://192.168.0.20:5000
+                        volume: volume1
+                        username: homepage
+                        password: "{{HOMEPAGE_VAR_SYNOLOGY_KEY}}"
             widgets:
               # show the kubernetes widget, with the cluster summary and individual nodes
               - kubernetes:
