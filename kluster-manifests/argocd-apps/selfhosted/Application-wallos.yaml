@@ -42,6 +42,8 @@ spec:
             enabled: true
             integrations:
               traefik:
+                fixedMiddlewares: []
+                middlewares: []
                 enabled: true
                 entrypoints:
                   - websecure
