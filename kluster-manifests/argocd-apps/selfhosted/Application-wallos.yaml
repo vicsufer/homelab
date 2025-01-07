@@ -33,13 +33,9 @@ spec:
           logos:
             enabled: true
             mountPath: "/var/www/html/images/uploads/logos"
-        globals:
-          traefik:
-            fixedMiddlewares: []
-        middlewares: {}
         ingress:
           main:
-            enabled: true
+            enabled: false
             integrations:
               traefik:
                 fixedMiddlewares: []
