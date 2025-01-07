@@ -35,7 +35,7 @@ spec:
             mountPath: "/var/www/html/images/uploads/logos"
         ingress:
           main:
-            enabled: false
+            enabled: true
             integrations:
               traefik:
                 enableFixedMiddlewares: false
