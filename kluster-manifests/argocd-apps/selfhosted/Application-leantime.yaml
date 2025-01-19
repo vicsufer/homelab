@@ -1,0 +1,55 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: leantime
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: leantime
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://github.com/leantime/leantime
+      targetRevision: v3.3.3
+      path: helm
+      helm:
+        values: |
+          image:
+            repository: leantime/leantime
+            tag: v3.3.3
+          app:
+            sitename: "Leantime"
+            language: "es-ES"
+            defaultTimezone: "Europe/Madrid"
+          persistence:
+            enabled: true
+            size: 3Gi
+            storageClass: nfs-csi-retain
+          ingress:
+            enabled: true
+            className: "traefik"
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: "Leantime"
+              gethomepage.dev/description: "Planificador de proyectos"
+              gethomepage.dev/group: "k3s"
+              gethomepage.dev/icon: "leantime.png"
+            tls:
+              - secretName: leantime-general-tls
+                hosts:
+                  - leantime.vicsufer.xyz
+            hosts:
+              - host: leantime.vicsufer.xyz
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
