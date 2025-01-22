@@ -17,7 +17,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - repoURL: https://github.com/leantime/leantime
+    - repoURL: https://github.com/Leantime/leantime
       targetRevision: v3.3.3
       path: helm
       helm:
