@@ -31,6 +31,7 @@ spec:
             failedJobsHistoryLimit: 1
             successfulJobsHistoryLimit: 2
             concurrencyPoligy: Forbid
+          startingDeadlineSeconds: 3600 # 1h
           existingSecret: "renovate-creds"
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
