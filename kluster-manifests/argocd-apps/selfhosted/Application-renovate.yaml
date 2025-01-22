@@ -50,5 +50,5 @@ spec:
             limits:
               memory: 5Gi
             requests:
-              cpu: 1
-              memory: 3Gi
+              cpu: 500m
+              memory: 1Gi
