@@ -1,139 +1,139 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-  name: wp-lapizarra-staging
-  namespace: argocd
-spec:
-  project: homelab
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: wp-lapizarrapedagogica
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
-  source:
-    chart: wordpress
-    repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 24.1.5
-    helm:
-      releaseName: wordpress
-      values: |
-        # WordPress service type
-        service:
-          type: ClusterIP
-
-        # Enable persistence using Persistent Volume Claims
-        persistence:
-          enabled: true
-          storageClassName: nfs-csi
-          accessModes: ["ReadWriteMany"]
-          size: 5Gi
-
-        volumePermissions:
-          enabled: true
-
-        # Prometheus Exporter / Metrics configuration
-        metrics:
-          enabled: false
-
-        # Level of auto-updates to allow. Allowed values: major, minor or none.
-        wordpressAutoUpdateLevel: minor
-
-        # Scheme to use to generate WordPress URLs
-        wordpressScheme: https
-
-        # WordPress credentials
-        wordpressUsername: admin
-        existingSecret: wp-password
-
-        wordpressBlogName: La Pizarra Pedagogica
-
-        resourcesPreset: "medium"
-
-        mariadb:
-          enabled: true
-          auth:
-            existingSecret: db-credentials
-          primary:
-            livenessProbe:
-              enabled: false
-            readinessProbe:
-              enabled: false
-          passwordUpdateJob:
-            enabled: false
-            previousPasswords:
-              password: ""
-              rootPassword: ""
-
-        ingress:
-          enabled: true
-          annotations:
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-            cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/name: "La Pizarra Pedagogica"
-            gethomepage.dev/description: "Staging environment for lapizarradedagogica.com"
-            gethomepage.dev/group: "k3s"
-            gethomepage.dev/href: "https://lapizarrapedagogica.vicsufer.xyz"
-            gethomepage.dev/icon: "wordpress.png"
-          hostname: lapizarrapedagogica.vicsufer.xyz
-          tls: true
-
-        extraDeploy:
-          - |
-            apiVersion: bitnami.com/v1alpha1
-            kind: SealedSecret
-            metadata:
-              name: wp-password
-              namespace: wp-lapizarrapedagogica
-            spec:
-              encryptedData:
-                wordpress-password: AgBZLUv/Fm11CbgGV3SKvUQlQeobWH1EALL9snbOkmlwmW2c4q74QaOkNlP/wnK5rc0W1f0JQPxUvec1F3y6Bcv+jvHfuO/lN94Czbs4uEUMloVmwZM4fOF9lCzk1SrTWrup54OCJ7Ub7ClMssF0AMAanabS47wZ/QDnDAsnBH7vqFzk9pU2benBG7y5X413Japn8R22KXVejzdewNi0zi/JFx40OvUHVakQMpJspxj/fFrQWoGpiXv370hK5w4tuoEbrhhVIP43c88IB6/rXOGfNzQMRsYOgP08u/3oJp8Xhi/+7pef95OmMPEpwef9IzHWwOHcmFtqXVNWtD5t6NGLM03JlXi64y4HcMQ1byq07OqzJw8DXVxTwyoJuwD8IvDcqHoepaskUPJnBa/QTWqKfwPhacga+QTJbu3zyEwfyCDVREgMuVL33FPWcVxRAIXurcDUxSP7OanZ7zXzgdoIUY6kEBx4E+jvweHfYZglqg4rhisEPExtWUoT2jqAv5grK3cjCsVXhNKffOIi3mNoHvhSJ1g3Sh9vetZmyPOGFZpUCr+i9aQ+9WyKBvfMfD4i9N4hVz4HW9QGZpXoF2oowxpnpx6Vk6eLoUTacYoxC0oXwGhI7yi0qCG5H/OmeiAIcUW0q7kAMp2WpENwvk9sfYP8Nr0p+y9dNhRxD41uclguHUKUydLbWRGJWqsgUuozVuhklNU+0A==
-              template:
-                metadata:
-                  name: wp-password
-                  namespace: wp-lapizarrapedagogica
-          - |
-            apiVersion: bitnami.com/v1alpha1
-            kind: SealedSecret
-            metadata:
-              name: db-credentials
-              namespace: wp-lapizarrapedagogica
-            spec:
-              encryptedData:
-                mariadb-password: AgBvuiqEkOmcUcc1Yn6Umxh+mfNxiNq0G92AWGhHRDbyfCeF+OjI3TZxwgOUsjRu9X+9ZWhR8vIf6lix0B2OQKO+lxHa8p6nN5jgUf3iXZDqnJwovOPJVDTZCwcdmU7GhdmFcx0pR0Gvn6FxAwDoJPKlGY1cJhxM339dZXUMyvreFKAO4IOAC0W+3EldfGsqhYK5+2/HEVJhbLtyH2UB5h5/H4a5usEtIOSAynI2omRTVdrdaOD2/jzM8ikYLHYYwxF35Oe2tEQyQ/G3EcDyFoZNyYMQxk9piqknR4W/a27uat2tSB3IFRCDkZnlq6BBylY7sblz5z3iSbY0CSIEoB9gexEgC3/5zqgkvkn+pEjoIN0sWd6kxGLqvVFHHXcFUq00pV930fNmvvS/ZMUAGaPd1TFXrxlCXWqpvZruwPvA5QJL46T8otvkSzxkDfgWZ41V9JAdfMU5w7oGPgoKZOnuWLqyEct/h1qJnWSXT3F/uIbH7SBC5Yu6KNrWAt7u5XaHrU8dvoqvoxm1dngcs4tLCthf4MCR9zxnGIEchVAF6RsH7cHc3dQnRZtpfenHlyZa8AAhSt4STg4HuXD+/+nwTJeilSOK0IdHMNKDxqJfT/IuxnsKo0sivwYXuEvwrFX4NabQN+IYLF8GKHD6ddvEUEIKiAyrWi3MviS+cepZr2PRMbu0f5UpxwUSl7+ilX9VW/ko2spg6d9CpQ==
-                mariadb-replication-password: AgBm9cbqU7vaVOrR9fBBD2o6Yhxb2t5nBCm5Z7w3HAjSxXnUt8ISbO0Cx5wXdDXp1ryg1jnRNFAx4rKztyIPW3EZVtIWn4pgUrOWxZoTG7aJd0bDHgA4jn00EiSdc3VifouKo5Pe20kwyqAxtu0Ve5qOnF99FDkWxN4knOvAHdnaLHt/fiEfy/mAA09s0rP3Tk7vam+ee0bIaVGiAJbULstlZYR+FQX5fkMd/ux4w5mWi/hyB7CzAipHPPMA7C83vaGeKfGj9GQllP2XRZhDzKmWoPBJ94R38IeNLrQ57gaJSr0l/5Hj76NyjJazROTeHJ/Entsdx9Gl3DRovdvK097j+O2JaM9cZMHqb/8JyehbxLBz5xG4Uxzo50K1nM1sIKCNcGyP8wEV+/fpIQax1t2ucQ5po0lddQNGGWINHazGtzzU6anBl22c/4dcpoligtgc14UAywjcgTvJAnIAo3iXtIj1jWdsSoy2yAZ5vuTdANkvr6dOpm+1yp5UvhlItzWqzLHCEShn9LLnES5q//xz326vpGlPLYWtZVVKGNrbRaJBmULab3K4TAf79FQjR1dlSTQAgwcepm/T3QZQTc9lBYXLObg7icZIDQWDvXuKdQbLvcal5Qln9WWHvhyQaGIdbxFggqIPGGT/tpSP7LgFpERRoSpoHqr8meMYZdGiFXz173PKsARHS1mBwslhmojIACDqbOgZFbU=
-                mariadb-root-password: AgBhHtx1Q6hyTG7VsYZct5B8+JRGUQy9ASSoZesJZrqWb92VsoTZOPBo7QldXrxSwmkxVvZB5DC62PDcTxqtGDT/Y6JAnTpbFB2k58DKssFcoO6QAU0jC0zu6IcTl95EsETS6qXfg7LB2KO/rOoZMZ9dbipWetyeLcGOZK0fP6IbH2H2CaSJzVZLlfLXTLVPIR78VsfDsBbEqQqE4+Bba8XyCMEGiJF12LU+FTuIt9Efzhw45aKiNLQhXJF4G91+ewL3dFvPp8W3v2DBFVtTNUJt3zPDCpE+C33F8aymZUwhoxcuLlEX3BWYvmrE/QD2JCtjYhDI4rvzm4C5NlfSmpamc9fDyuW4AByPQGp9U4KIbVocJ13kaZJ7PEGDHEBOIx/D05T+laHXC5q50NR1BnuYm0REaapaCadek0fePMWKdr09qQ1SlebABXHhpDXdb1MvNnlQZblVI+p4hbBnQFQdQw0h1phKY0LBpPBMxs0Y4NGk4Vpy0P230ijhMSivBAEWSvYv/P7vL6OM4E48aTBC5PV2taegLR/h1e2zcY06IqFu8c5ygcAy5BorU1TwoZiAxPCBFX5d5KZWZAT+IdEBBLAXYnyshfZjdoNw/U6BQWe4ZUSPioeJgKDeFgGc3q/RYb7OXhhTIYe1K+F5L2H25wc1U8pp3vDo7qfwTy1+mICIFLx+bn1tP+oiwSi20fIlvXGHVGu3ubGr1oJQ8KNL
-              template:
-                metadata:
-                  name: db-credentials
-                  namespace: wp-lapizarrapedagogica
-          # - |
-          #   apiVersion: networking.k8s.io/v1
-          #   kind: Ingress
-          #   metadata:
-          #     name: ingress-cf
-          #     annotations:
-          #       cert-manager.io/cluster-issuer: "letsencrypt-prod"
-          #   spec:
-          #     ingressClassName: cloudflare-tunnel
-          #     rules:
-          #       - host: lapizarrapedagogica.vicsufer.xyz
-          #         http:
-          #           paths:
-          #             - backend:
-          #                 service:
-          #                   name: wordpress
-          #                   port:
-          #                     name: http
-          #               path: /
-          #               pathType: ImplementationSpecific
-          #     tls:
-          #       - hosts:
-          #           - lapizarrapedagogica.vicsufer.xyz
-          #         secretName: lapizarrapedagogica.vicsufer.xyz-tls
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+#   name: wp-lapizarra-staging
+#   namespace: argocd
+# spec:
+#   project: homelab
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: wp-lapizarrapedagogica
+#   syncPolicy:
+#     automated:
+#       prune: true
+#     syncOptions:
+#       - CreateNamespace=true
+#   source:
+#     chart: wordpress
+#     repoURL: registry-1.docker.io/bitnamicharts
+#     targetRevision: 24.1.5
+#     helm:
+#       releaseName: wordpress
+#       values: |
+#         # WordPress service type
+#         service:
+#           type: ClusterIP
+#
+#         # Enable persistence using Persistent Volume Claims
+#         persistence:
+#           enabled: true
+#           storageClassName: nfs-csi
+#           accessModes: ["ReadWriteMany"]
+#           size: 5Gi
+#
+#         volumePermissions:
+#           enabled: true
+#
+#         # Prometheus Exporter / Metrics configuration
+#         metrics:
+#           enabled: false
+#
+#         # Level of auto-updates to allow. Allowed values: major, minor or none.
+#         wordpressAutoUpdateLevel: minor
+#
+#         # Scheme to use to generate WordPress URLs
+#         wordpressScheme: https
+#
+#         # WordPress credentials
+#         wordpressUsername: admin
+#         existingSecret: wp-password
+#
+#         wordpressBlogName: La Pizarra Pedagogica
+#
+#         resourcesPreset: "medium"
+#
+#         mariadb:
+#           enabled: true
+#           auth:
+#             existingSecret: db-credentials
+#           primary:
+#             livenessProbe:
+#               enabled: false
+#             readinessProbe:
+#               enabled: false
+#           passwordUpdateJob:
+#             enabled: false
+#             previousPasswords:
+#               password: ""
+#               rootPassword: ""
+#
+#         ingress:
+#           enabled: true
+#           annotations:
+#             traefik.ingress.kubernetes.io/router.entrypoints: websecure
+#             cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#             gethomepage.dev/enabled: "true"
+#             gethomepage.dev/name: "La Pizarra Pedagogica"
+#             gethomepage.dev/description: "Staging environment for lapizarradedagogica.com"
+#             gethomepage.dev/group: "k3s"
+#             gethomepage.dev/href: "https://lapizarrapedagogica.vicsufer.xyz"
+#             gethomepage.dev/icon: "wordpress.png"
+#           hostname: lapizarrapedagogica.vicsufer.xyz
+#           tls: true
+#
+#         extraDeploy:
+#           - |
+#             apiVersion: bitnami.com/v1alpha1
+#             kind: SealedSecret
+#             metadata:
+#               name: wp-password
+#               namespace: wp-lapizarrapedagogica
+#             spec:
+#               encryptedData:
+#                 wordpress-password: AgBZLUv/Fm11CbgGV3SKvUQlQeobWH1EALL9snbOkmlwmW2c4q74QaOkNlP/wnK5rc0W1f0JQPxUvec1F3y6Bcv+jvHfuO/lN94Czbs4uEUMloVmwZM4fOF9lCzk1SrTWrup54OCJ7Ub7ClMssF0AMAanabS47wZ/QDnDAsnBH7vqFzk9pU2benBG7y5X413Japn8R22KXVejzdewNi0zi/JFx40OvUHVakQMpJspxj/fFrQWoGpiXv370hK5w4tuoEbrhhVIP43c88IB6/rXOGfNzQMRsYOgP08u/3oJp8Xhi/+7pef95OmMPEpwef9IzHWwOHcmFtqXVNWtD5t6NGLM03JlXi64y4HcMQ1byq07OqzJw8DXVxTwyoJuwD8IvDcqHoepaskUPJnBa/QTWqKfwPhacga+QTJbu3zyEwfyCDVREgMuVL33FPWcVxRAIXurcDUxSP7OanZ7zXzgdoIUY6kEBx4E+jvweHfYZglqg4rhisEPExtWUoT2jqAv5grK3cjCsVXhNKffOIi3mNoHvhSJ1g3Sh9vetZmyPOGFZpUCr+i9aQ+9WyKBvfMfD4i9N4hVz4HW9QGZpXoF2oowxpnpx6Vk6eLoUTacYoxC0oXwGhI7yi0qCG5H/OmeiAIcUW0q7kAMp2WpENwvk9sfYP8Nr0p+y9dNhRxD41uclguHUKUydLbWRGJWqsgUuozVuhklNU+0A==
+#               template:
+#                 metadata:
+#                   name: wp-password
+#                   namespace: wp-lapizarrapedagogica
+#           - |
+#             apiVersion: bitnami.com/v1alpha1
+#             kind: SealedSecret
+#             metadata:
+#               name: db-credentials
+#               namespace: wp-lapizarrapedagogica
+#             spec:
+#               encryptedData:
+#                 mariadb-password: AgBvuiqEkOmcUcc1Yn6Umxh+mfNxiNq0G92AWGhHRDbyfCeF+OjI3TZxwgOUsjRu9X+9ZWhR8vIf6lix0B2OQKO+lxHa8p6nN5jgUf3iXZDqnJwovOPJVDTZCwcdmU7GhdmFcx0pR0Gvn6FxAwDoJPKlGY1cJhxM339dZXUMyvreFKAO4IOAC0W+3EldfGsqhYK5+2/HEVJhbLtyH2UB5h5/H4a5usEtIOSAynI2omRTVdrdaOD2/jzM8ikYLHYYwxF35Oe2tEQyQ/G3EcDyFoZNyYMQxk9piqknR4W/a27uat2tSB3IFRCDkZnlq6BBylY7sblz5z3iSbY0CSIEoB9gexEgC3/5zqgkvkn+pEjoIN0sWd6kxGLqvVFHHXcFUq00pV930fNmvvS/ZMUAGaPd1TFXrxlCXWqpvZruwPvA5QJL46T8otvkSzxkDfgWZ41V9JAdfMU5w7oGPgoKZOnuWLqyEct/h1qJnWSXT3F/uIbH7SBC5Yu6KNrWAt7u5XaHrU8dvoqvoxm1dngcs4tLCthf4MCR9zxnGIEchVAF6RsH7cHc3dQnRZtpfenHlyZa8AAhSt4STg4HuXD+/+nwTJeilSOK0IdHMNKDxqJfT/IuxnsKo0sivwYXuEvwrFX4NabQN+IYLF8GKHD6ddvEUEIKiAyrWi3MviS+cepZr2PRMbu0f5UpxwUSl7+ilX9VW/ko2spg6d9CpQ==
+#                 mariadb-replication-password: AgBm9cbqU7vaVOrR9fBBD2o6Yhxb2t5nBCm5Z7w3HAjSxXnUt8ISbO0Cx5wXdDXp1ryg1jnRNFAx4rKztyIPW3EZVtIWn4pgUrOWxZoTG7aJd0bDHgA4jn00EiSdc3VifouKo5Pe20kwyqAxtu0Ve5qOnF99FDkWxN4knOvAHdnaLHt/fiEfy/mAA09s0rP3Tk7vam+ee0bIaVGiAJbULstlZYR+FQX5fkMd/ux4w5mWi/hyB7CzAipHPPMA7C83vaGeKfGj9GQllP2XRZhDzKmWoPBJ94R38IeNLrQ57gaJSr0l/5Hj76NyjJazROTeHJ/Entsdx9Gl3DRovdvK097j+O2JaM9cZMHqb/8JyehbxLBz5xG4Uxzo50K1nM1sIKCNcGyP8wEV+/fpIQax1t2ucQ5po0lddQNGGWINHazGtzzU6anBl22c/4dcpoligtgc14UAywjcgTvJAnIAo3iXtIj1jWdsSoy2yAZ5vuTdANkvr6dOpm+1yp5UvhlItzWqzLHCEShn9LLnES5q//xz326vpGlPLYWtZVVKGNrbRaJBmULab3K4TAf79FQjR1dlSTQAgwcepm/T3QZQTc9lBYXLObg7icZIDQWDvXuKdQbLvcal5Qln9WWHvhyQaGIdbxFggqIPGGT/tpSP7LgFpERRoSpoHqr8meMYZdGiFXz173PKsARHS1mBwslhmojIACDqbOgZFbU=
+#                 mariadb-root-password: AgBhHtx1Q6hyTG7VsYZct5B8+JRGUQy9ASSoZesJZrqWb92VsoTZOPBo7QldXrxSwmkxVvZB5DC62PDcTxqtGDT/Y6JAnTpbFB2k58DKssFcoO6QAU0jC0zu6IcTl95EsETS6qXfg7LB2KO/rOoZMZ9dbipWetyeLcGOZK0fP6IbH2H2CaSJzVZLlfLXTLVPIR78VsfDsBbEqQqE4+Bba8XyCMEGiJF12LU+FTuIt9Efzhw45aKiNLQhXJF4G91+ewL3dFvPp8W3v2DBFVtTNUJt3zPDCpE+C33F8aymZUwhoxcuLlEX3BWYvmrE/QD2JCtjYhDI4rvzm4C5NlfSmpamc9fDyuW4AByPQGp9U4KIbVocJ13kaZJ7PEGDHEBOIx/D05T+laHXC5q50NR1BnuYm0REaapaCadek0fePMWKdr09qQ1SlebABXHhpDXdb1MvNnlQZblVI+p4hbBnQFQdQw0h1phKY0LBpPBMxs0Y4NGk4Vpy0P230ijhMSivBAEWSvYv/P7vL6OM4E48aTBC5PV2taegLR/h1e2zcY06IqFu8c5ygcAy5BorU1TwoZiAxPCBFX5d5KZWZAT+IdEBBLAXYnyshfZjdoNw/U6BQWe4ZUSPioeJgKDeFgGc3q/RYb7OXhhTIYe1K+F5L2H25wc1U8pp3vDo7qfwTy1+mICIFLx+bn1tP+oiwSi20fIlvXGHVGu3ubGr1oJQ8KNL
+#               template:
+#                 metadata:
+#                   name: db-credentials
+#                   namespace: wp-lapizarrapedagogica
+#           # - |
+#           #   apiVersion: networking.k8s.io/v1
+#           #   kind: Ingress
+#           #   metadata:
+#           #     name: ingress-cf
+#           #     annotations:
+#           #       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#           #   spec:
+#           #     ingressClassName: cloudflare-tunnel
+#           #     rules:
+#           #       - host: lapizarrapedagogica.vicsufer.xyz
+#           #         http:
+#           #           paths:
+#           #             - backend:
+#           #                 service:
+#           #                   name: wordpress
+#           #                   port:
+#           #                     name: http
+#           #               path: /
+#           #               pathType: ImplementationSpecific
+#           #     tls:
+#           #       - hosts:
+#           #           - lapizarrapedagogica.vicsufer.xyz
+#           #         secretName: lapizarrapedagogica.vicsufer.xyz-tls
