@@ -21,6 +21,7 @@ spec:
       targetRevision: v3.3.3
       path: helm
       helm:
+        releaseName: leantime
         values: |
           image:
             repository: leantime/leantime
