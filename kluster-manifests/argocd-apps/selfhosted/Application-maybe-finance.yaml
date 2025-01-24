@@ -24,7 +24,8 @@ spec:
       releaseName: maybefinance
       values: |
         deployment:
-          tag: sha-fe199f235784a96d9b25efe846d87e6f5fb010e7
+          repository: ghcr.io/maybe-finance/maybe
+          tag: 0.0.3
           env:
             - name: RAILS_ASSUME_SSL
               value: false

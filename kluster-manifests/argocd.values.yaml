@@ -20,6 +20,7 @@ configs:
     timeout.reconciliation: 180s
     url: https://vicsufer.argocd.xyz
     accounts.readonly: apiKey
+    reposerver.enable.git.submodule: false
     # ui.cssurl: https://cdn.jsdelivr.net/gh/code-crusher/argocd-gravity-theme@main/argo-theme.css
 
 controller:
@@ -56,7 +57,7 @@ server:
       gethomepage.dev/icon: "argocd.png"
       gethomepage.dev/widget.type: "argocd"
       gethomepage.dev/widget.url: "http://argocd-server.argocd.svc:80"
-      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_ARGOCD_KEY}}"
+      gethomepage.dev/widget.key: "{{ HOMEPAGE_VAR_ARGOCD_KEY }}"
     tls: true
   # certificate:
   #   enabled: true
@@ -69,9 +70,6 @@ server:
       memory: 256Mi
 
 repoServer:
-  env:
-    - name: ARGOCD_GIT_MODULES_ENABLED
-      value: "false"
   resources:
     limits:
       cpu: 1000m
