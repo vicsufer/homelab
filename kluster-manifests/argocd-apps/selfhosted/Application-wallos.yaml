@@ -19,7 +19,7 @@ spec:
   source:
     chart: wallos
     repoURL: tccr.io/truecharts
-    targetRevision: 6.7.1
+    targetRevision: 6.8.0
     helm:
       releaseName: wallos
       values: |
