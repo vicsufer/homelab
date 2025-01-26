@@ -17,23 +17,22 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - repoURL: https://github.com/Leantime/leantime
-      targetRevision: v3.3.3
-      path: helm
+    - repoURL: https://github.com/gissilabs/charts.git
+      targetRevision: master
+      path: charts/leantime
       helm:
         releaseName: leantime
         values: |
           image:
             repository: leantime/leantime
             tag: v3.3.3
-          app:
+          internalDatabase:
+            persistence:
+              enabled: true
+          leantime:
             sitename: "Leantime"
             language: "es-ES"
             defaultTimezone: "Europe/Madrid"
-          persistence:
-            enabled: true
-            size: 3Gi
-            storageClass: nfs-csi-retain
           ingress:
             enabled: true
             className: "traefik"
