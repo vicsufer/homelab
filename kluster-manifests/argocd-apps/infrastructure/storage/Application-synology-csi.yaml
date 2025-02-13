@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: synology-csi
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: synology-csi
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - chart: synology-csi
+      repoURL: https://christian-schlichtherle.github.io/synology-csi-chart
+      targetRevision: v1.2.0
+      helm:
+        releaseName: synologoy-csi
+        values: |
+          clientInfoSecret:
+            name: synology-csi-client-info
+    - repoURL: https://github.com/vicsufer/homelab
+      path: kluster-manifests/argocd-apps/infrastructure/storage/synology-csi-extras
+      targetRevision: HEAD

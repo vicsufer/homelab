@@ -66,6 +66,8 @@ spec:
               effect: "NoSchedule"
           service:
             ipFamilyPolicy: "PreferDualStack"
+            labels:
+              metallb.universe.tf/address-pool: private-pool
           extraObjects:
             - |
               apiVersion: cert-manager.io/v1
