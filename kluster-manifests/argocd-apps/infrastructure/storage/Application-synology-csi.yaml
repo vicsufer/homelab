@@ -16,6 +16,10 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+    managedNamespaceMetadata:
+      annotations:
+        pod-security.kubernetes.io/enforce: privileged
+
   sources:
     - chart: synology-csi
       repoURL: https://christian-schlichtherle.github.io/synology-csi-chart
