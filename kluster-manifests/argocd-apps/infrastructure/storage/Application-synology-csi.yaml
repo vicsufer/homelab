@@ -31,11 +31,11 @@ spec:
             name: synology-csi-client-info
           storageClasses:
             iscsi-retain:
-              default: true
+              default: false
               disabled: false
             iscsi-delete:
-              default: true
               disabled: false
+              default: true
             smb-retain:
               disabled: true
             smb-delete:
