@@ -55,7 +55,7 @@ spec:
         statefulset:
           storage:
             enabled: true
-            storageClassName: synologoy-csi-synology-csi-iscsi-retain
+            storageClassName: synology-csi-iscsi-retain
           securityContext:
             privileged: true # TODO Use a device-manager
           extraVolumes:
