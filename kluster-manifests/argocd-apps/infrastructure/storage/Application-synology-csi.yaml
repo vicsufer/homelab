@@ -19,14 +19,14 @@ spec:
     managedNamespaceMetadata:
       labels:
         pod-security.kubernetes.io/enforce: privileged
-
   sources:
     - chart: synology-csi
       repoURL: https://christian-schlichtherle.github.io/synology-csi-chart
       targetRevision: v0.10.1
       helm:
-        releaseName: synologoy-csi
+        releaseName: synology-csi
         values: |
+          fullnameOverride: synology-csi
           clientInfoSecret:
             name: synology-csi-client-info
           storageClasses:
