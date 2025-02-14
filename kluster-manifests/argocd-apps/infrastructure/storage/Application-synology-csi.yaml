@@ -29,6 +29,22 @@ spec:
         values: |
           clientInfoSecret:
             name: synology-csi-client-info
+          storageClasses:
+            iscsi-retain:
+              default: true
+              disabled: false
+            iscsi-delete:
+              default: true
+              disabled: false
+            smb-retain:
+              disabled: true
+            smb-delete:
+              disabled: true
+            nfs-retain:
+              disabled: true
+            nfs-delete:
+              disabled: true
+
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/infrastructure/storage/synology-csi-extras
       targetRevision: HEAD
