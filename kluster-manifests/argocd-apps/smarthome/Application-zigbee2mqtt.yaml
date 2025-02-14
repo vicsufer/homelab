@@ -16,6 +16,9 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
   source:
     repoURL: https://charts.zigbee2mqtt.io
     chart: zigbee2mqtt
