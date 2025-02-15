@@ -31,12 +31,14 @@ spec:
             size: 5Gi
             enabled: true
             mountPath: "/var/www/html/db"
-            storageClassName: iscsi-retain
+            config:
+              storageClass: iscsi-retain
           logos:
             size: 1Gi
             enabled: true
             mountPath: "/var/www/html/images/uploads/logos"
-            storageClassName: iscsi-retain
+            config:
+              storageClass: iscsi-retain
         ingress:
           main:
             enabled: true
