@@ -36,6 +36,8 @@ spec:
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
+            podSecurityContext:
+              fsGroup: 1000
             persistence:
               cache:
                 enabled: true
