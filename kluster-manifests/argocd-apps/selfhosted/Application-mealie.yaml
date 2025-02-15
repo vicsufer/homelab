@@ -68,4 +68,4 @@ spec:
           volumes:
             - name: mealie-data
               persistentVolumeClaim:
-                storageClass: iscsi-retain
+                claimName: mealie-data
