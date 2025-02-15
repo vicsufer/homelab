@@ -29,7 +29,7 @@ spec:
           fullnameOverride: synology-csi
           images:
             plugin:
-              image: ghcr.io/zebernst/synology-csi:edge # Use fork image with support for Talos
+              image: ghcr.io/zebernst/synology-csi
           clientInfoSecret:
             name: synology-csi-client-info
           storageClasses:
