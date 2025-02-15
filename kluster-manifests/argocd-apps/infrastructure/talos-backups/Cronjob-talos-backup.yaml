@@ -67,7 +67,6 @@ spec:
                 - mountPath: /var/run/secrets/talos.dev
                   name: talos-secrets
           restartPolicy: OnFailure
-          serviceAccountName: talos-backups
           volumes:
             - emptyDir: {}
               name: tmp
