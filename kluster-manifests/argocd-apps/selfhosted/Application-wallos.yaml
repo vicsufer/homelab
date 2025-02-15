@@ -28,9 +28,11 @@ spec:
           tag: 2.42.2
         persistence:
           database:
+            size: 5Gi
             enabled: true
             mountPath: "/var/www/html/db"
           logos:
+            size: 1Gi
             enabled: true
             mountPath: "/var/www/html/images/uploads/logos"
         ingress:
