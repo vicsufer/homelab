@@ -43,7 +43,7 @@ spec:
             nfs-retain:
               disabled: true
             nfs-delete:
-              disabled: true
+              disabled: false
 
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/infrastructure/storage/synology-csi-extras
