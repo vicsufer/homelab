@@ -21,15 +21,12 @@ spec:
         pod-security.kubernetes.io/enforce: privileged
   sources:
     - chart: synology-csi
-      repoURL: https://christian-schlichtherle.github.io/synology-csi-chart
+      repoURL: https://zebernst.github.io/synology-csi-talos
       targetRevision: v0.10.1
       helm:
         releaseName: synology-csi
         values: |
           fullnameOverride: synology-csi
-          images:
-            plugin:
-              image: ghcr.io/zebernst/synology-csi
           clientInfoSecret:
             name: synology-csi-client-info
           storageClasses:
