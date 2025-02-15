@@ -38,6 +38,7 @@ spec:
           renovate:
             podSecurityContext:
               fsGroup: 1000
+              runAsUser: 1000
             persistence:
               cache:
                 enabled: true
