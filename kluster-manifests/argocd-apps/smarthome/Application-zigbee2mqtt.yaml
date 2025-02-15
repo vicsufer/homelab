@@ -58,7 +58,7 @@ spec:
             storageClassName: iscsi-retain
           securityContext:
             privileged: true # TODO Use a device-manager
-          extraVolumes:
+          volumes:
             - hostPath:
                 path: >-
                   /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_d460f6a6da1bef119aa3a3d94909ffd0-if00-port0
@@ -69,7 +69,7 @@ spec:
                 secretName: mqtt-zigbee2mqtt-cert
                 defaultMode: 420
                 optional: false
-          extraVolumeMounts:
+          volumeMounts:
             - mountPath: /dev/ttyUSB0
               name: usb
             - name: certificates
