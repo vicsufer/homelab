@@ -68,15 +68,4 @@ spec:
           volumes:
             - name: mealie-data
               persistentVolumeClaim:
-                claimName: mealie-data
-
-          # persistence:
-          #   data:
-          #     enabled: true
-          #     accessMode: ReadWriteOnce
-          #     size: 10Gi
-          #     advancedMounts:
-          #       main:
-          #         main:
-          #           - path: /app/data/
-          #             readOnly: false
+                storageClass: iscsi-retain
