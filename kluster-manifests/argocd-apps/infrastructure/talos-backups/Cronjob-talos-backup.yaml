@@ -1,0 +1,79 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: talos-backup
+spec:
+  schedule: "0 0 * * 7"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: talos-backup
+              image: registry.example.com/myusername/talos-backup:latest
+              workingDir: /tmp
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: AWS_REGION
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: AWS_REGION
+                - name: BUCKET
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: BUCKET
+                - name: CLUSTER_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: CLUSTER_NAME
+                - name: S3_PREFIX
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: S3_PREFIX
+                - name: AGE_X25519_PUBLIC_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-creds
+                      key: AGE_X25519_PUBLIC_KEY
+              securityContext:
+                runAsUser: 1000
+                runAsGroup: 1000
+                allowPrivilegeEscalation: false
+                runAsNonRoot: true
+                capabilities:
+                  drop:
+                    - ALL
+                seccompProfile:
+                  type: RuntimeDefault
+              command:
+                - /talos-backup
+              volumeMounts:
+                - mountPath: /tmp
+                  name: tmp
+                - mountPath: /var/run/secrets/talos.dev
+                  name: service-account-token
+          restartPolicy: OnFailure
+          serviceAccountName: talos-backup
+          volumes:
+            - emptyDir: {}
+              name: tmp
+            - name: service-account-token
+              projected:
+                sources:
+                  - serviceAccountToken:
+                      path: service-account-token
+                      expirationSeconds: 7200
