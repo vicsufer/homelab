@@ -59,7 +59,7 @@ spec:
           persistence:
             enabled: true
             size: 5Gi
-            storageClass: "synology-csi-iscsi-retain"
+            storageClass: "iscsi-retain"
           configuration:
             enabled: true
             forceInit: true

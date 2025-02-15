@@ -42,7 +42,7 @@ spec:
             existingSecret: "database-password"
           primary:
             persistence:
-              storageClass: synology-csi-iscsi-retain
+              storageClass: iscsi-retain
             startupProbe:
               enabled: true
               initialDelaySeconds: 60
