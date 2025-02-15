@@ -39,7 +39,6 @@ spec:
             persistence:
               cache:
                 enabled: true
-                storageClass: 'local-path'
                 storageSize: "1Gi"
             config: |
               {
