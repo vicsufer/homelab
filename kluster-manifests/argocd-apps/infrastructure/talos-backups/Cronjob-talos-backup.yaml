@@ -67,13 +67,10 @@ spec:
                 - mountPath: /var/run/secrets/talos.dev
                   name: service-account-token
           restartPolicy: OnFailure
-          serviceAccount: talos-backups
+          serviceAccountName: talos-backups
           volumes:
             - emptyDir: {}
               name: tmp
-            - name: service-account-token
-              projected:
-                sources:
-                  - serviceAccountToken:
-                      path: service-account-token
-                      expirationSeconds: 7200
+            - name: talos-secrets
+              secret:
+                secretName: talos-backup
