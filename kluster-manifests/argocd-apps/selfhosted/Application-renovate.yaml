@@ -31,15 +31,21 @@ spec:
             failedJobsHistoryLimit: 1
             successfulJobsHistoryLimit: 2
             concurrencyPoligy: Forbid
+            backoffLimitPerIndex: 3
+            jobBackoffLimit: 3
           startingDeadlineSeconds: 3600 # 1h
           existingSecret: "renovate-creds"
           securityContext:
             fsGroup: 1000
+            runAsUser: 1000
+            runAsGroup: 1000
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
             podSecurityContext:
               fsGroup: 1000
+              runAsUser: 1000
+              runAsGroup: 1000
             persistence:
               cache:
                 enabled: true
