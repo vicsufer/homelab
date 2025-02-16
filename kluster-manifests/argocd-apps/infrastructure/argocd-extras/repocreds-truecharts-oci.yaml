@@ -2,7 +2,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: truecharts-helm-oci
   namespace: argocd
 spec:
@@ -13,7 +12,6 @@ spec:
     url: AgApswXA9tHy7DeyFuaq76/ww3PqS74P5UbRMKx8lmzJT9/P/FvxlBJiR37zBaEx8P3MxPehUu0ZIk/HcLneXQFaaFeF0CKy1zVSwF15tnzfjCAZBfsWjxmTuDSWXI3kmCMr3v/jGuFJrWLvOJSldsfrvdpojExphi4CbeNdRLhZXF8ej6WTlieTS9q5SEJVMHTBhNMpc8gQ8wNuQY6zdkLCFVM20m8mIjIbjmPx0hd+hmQ26uAuiu+jrfhZfAHiVBZJzBedyFJk+h2sHRWaJbxV9K8rlbwea1yS4OBlQY+XlO7XK18MKYekIPDIutqtx/txMAY7w4ObCQHCuO138VVG6JArkRPFtIqMJyKLKmt0nFUD7McX1KgJJ6wdU/TuIQl+8JFYlowZUf8G2PPA9vb2UeyExpM6/jRxgbGhpxbR3KFukT/PGqo/DezhAPcT90eINp+12s3BeCjEy9DdsJPSKBuhtvbgN9ILyYnPjELD1gZv28v69+FEyxgpJ+yS/iXldKIc4bhrkzkl20R5ILlMxh9LY+d7kk1WeC//l6wQYjqL18ulbes+eLwLRFVPVZTSr8dsMPYqf283HSTG4xvW5WXL5tm0iuAa+Z/PpcZQYamykzi/t30QhRQivOHQsPdL9fP8Tdyj8iFnImEqbJpENdK6oY48XDKOsrCCzNis3Z1k4u7hQU6fDS+os7hglZzk9UjePFvfq+9O6WOI0Rh9DRhNkPs1dDo=
   template:
     metadata:
-      creationTimestamp: null
       labels:
         argocd.argoproj.io/secret-type: repository
       name: truecharts-helm-oci
