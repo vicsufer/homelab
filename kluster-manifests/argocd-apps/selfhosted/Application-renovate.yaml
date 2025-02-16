@@ -41,7 +41,7 @@ spec:
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
-            podSecurityContext:
+            securityContext:
               fsGroup: 1000
               runAsUser: 1000
               runAsGroup: 1000
