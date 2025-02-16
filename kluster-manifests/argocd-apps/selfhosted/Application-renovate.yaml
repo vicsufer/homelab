@@ -36,12 +36,12 @@ spec:
           existingSecret: "renovate-creds"
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
           renovate:
-            securityContext:
-              fsGroup: 1000
-              runAsGroup: 1000
-              runAsUser: 1000
-              runAsNonRoot: true
             persistence:
               cache:
                 enabled: true
