@@ -33,12 +33,13 @@ spec:
             concurrencyPoligy: Forbid
           startingDeadlineSeconds: 3600 # 1h
           existingSecret: "renovate-creds"
+          securityContext:
+            fsGroup: 1000
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
             podSecurityContext:
               fsGroup: 1000
-              runAsUser: 1000
             persistence:
               cache:
                 enabled: true
