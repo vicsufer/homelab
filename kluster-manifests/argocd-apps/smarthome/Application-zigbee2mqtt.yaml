@@ -22,7 +22,7 @@ spec:
   source:
     repoURL: https://charts.zigbee2mqtt.io
     chart: zigbee2mqtt
-    targetRevision: 2.1.1-patch1
+    targetRevision: 2.1.1
     helm:
       releaseName: zigbee2mqtt
       values: |
