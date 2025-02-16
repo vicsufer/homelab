@@ -44,7 +44,7 @@ spec:
           renovate:
             persistence:
               cache:
-                enabled: true
+                enabled: false # TODO: for some reasson I cant write to the volume
                 storageSize: "1Gi"
             config: |
               {
