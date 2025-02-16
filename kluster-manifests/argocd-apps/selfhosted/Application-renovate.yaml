@@ -34,17 +34,13 @@ spec:
             jobBackoffLimit: 3
           startingDeadlineSeconds: 3600 # 1h
           existingSecret: "renovate-creds"
-          securityContext:
-            fsGroup: 1000
-            runAsUser: 1000
-            runAsGroup: 1000
           env:
             RENOVATE_X_GITHUB_HOST_RULES: true
           renovate:
             securityContext:
               fsGroup: 1000
-              runAsUser: 1000
               runAsGroup: 1000
+              runAsUser: 1000
               runAsNonRoot: true
             persistence:
               cache:
