@@ -22,7 +22,7 @@ spec:
       path: kluster-manifests/argocd-apps/selfhosted/renovate-extras
     - chart: renovate
       repoURL: https://docs.renovatebot.com/helm-charts
-      targetRevision: 39.172.0
+      targetRevision: 39.173.1
       helm:
         releaseName: renovate
         values: |
