@@ -22,57 +22,5 @@ spec:
     targetRevision: v1.17.1
     helm:
       releaseName: cert-manager
-      values: |
-        crds:
-          enabled: true
-          keep: true
-        extraObjects:
-          - |
-            apiVersion: bitnami.com/v1alpha1
-            kind: SealedSecret
-            metadata:
-              name: cloudflare-api-token-secret
-              namespace: cert-manager
-            spec:
-              encryptedData:
-                api-token: AgCVJlng3A7ZDxKo4NXjunTQ++bfH1QQJKFZEMM5wzopu2LVzK2dIU0p2j9eYT+3himqyKQkY34NuMRxgXamt7VBHkCvkPdEZtnlZ09o+yUfDvTSNebgV8RzbU1zBIyo0KOiQcPVxK/tYTpJDvXXgqy0rrzsHpdxLJ5MgSebP8Yp5npQto5jTdiuwGv4GYh+mrWHDqLog+aGw3x7r9USiKmdDXlLQ/nFkhmdpRBMAY2FZuiSS1ouf3TgILaWx98/VOmgB+fHsNX9XklRPp5QTrND9ulGYeMamJoyj5RMG4VPggtofCcRZH0/xnXQgOBdg3jY1e0FlFXvft5YwTk4bzcclxmTNa4UEA2K9Fanc1ev8KX+jQKBFHYFw6bJmoXFtR/6ei+aTRGrYAWSLpm76BHrxWrlCqO9vnwZtgcrr0hl5Q8KtXcYH7dEGEwBfcanTbiPcvNwiSb51cpHtmK7ep5U4EOyh/bolDlHbSzd2ewDPCu/Wuj53E0OBq7rgDBtDeY7YXMcxJF35TKcrTHk8R42EmGUxhH4jCegQyqbgBfWGsojMoUeVYgp9dJ1asS6nF3GlC12dAzzfExLK8S6RzqHKToRzulMOeVORbIQqbUPdDS5yxxvQFfiZjBoEEE3dctr7/e2ErEUnJ1QgG80jhOhQLX+qABL+GLLSrkxdDvIIBvVU9jkaloROWJM5nydwszTGtdO9oa/Xr+9w9v+GSEt1wIWX9ZCMNODWt58hQsOhaj5vwIpLIpy
-              template:
-                metadata:
-                  name: cloudflare-api-token-secret
-                  namespace: cert-manager
-          - |
-            apiVersion: cert-manager.io/v1
-            kind: ClusterIssuer
-            metadata:
-              name: letsencrypt-prod
-              namespace: cert-manager
-            spec:
-              acme:
-                server: https://acme-v02.api.letsencrypt.org/directory
-                email: vicsufer@gmail.com
-                privateKeySecretRef:
-                  name: letsencrypt-prod
-                solvers:
-                  - dns01:
-                      cloudflare:
-                        apiTokenSecretRef:
-                          name: cloudflare-api-token-secret
-                          key: api-token
-          - |
-            apiVersion: cert-manager.io/v1
-            kind: ClusterIssuer
-            metadata:
-              name: letsencrypt-staging
-              namespace: cert-manager
-            spec:
-              acme:
-                server: https://acme-staging-v02.api.letsencrypt.org/directory
-                email: vicsufer@gmail.com
-                privateKeySecretRef:
-                  name: letsencrypt-staging
-                solvers:
-                  - dns01:
-                      cloudflare:
-                        apiTokenSecretRef:
-                          name: cloudflare-api-token-secret
-                          key: api-token
+      valueFiles:
+        - values/certmanager.values.yaml
