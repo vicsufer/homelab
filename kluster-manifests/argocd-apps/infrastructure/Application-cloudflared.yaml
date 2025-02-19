@@ -24,19 +24,5 @@ spec:
       repoURL: https://helm.strrl.dev
       targetRevision: 0.0.18
       helm:
-        values: |
-          cloudflared:
-            image:
-              repository: cloudflare/cloudflared
-              tag: latest
-          ingressClass:
-            name: cloudflare-tunnel
-            controllerValue: strrl.dev/cloudflare-tunnel-ingress-controller
-            isDefaultClass: false
-          cloudflare:
-            secretRef:
-              name: cfd-tken
-              accountIDKey: accountId
-              tunnelNameKey: tunnelName
-              apiTokenKey: apiToken
-          replicaCount: 1
+        valueFiles:
+          - values/cloudflared.values.yaml
