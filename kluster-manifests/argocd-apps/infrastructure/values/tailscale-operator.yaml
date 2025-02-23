@@ -1,0 +1,6 @@
+---
+oauthSecretVolume: {}
+operatorConfig:
+  hostname: nuberu
+apiServerProxyConfig:
+  mode: "true"

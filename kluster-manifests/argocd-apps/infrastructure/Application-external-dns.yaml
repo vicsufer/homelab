@@ -8,6 +8,14 @@ metadata:
   namespace: argocd
 spec:
   project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: external-dns
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
   sources:
     - chart: external-dns
       repoURL: registry-1.docker.io/bitnamicharts
@@ -19,11 +27,3 @@ spec:
     - repoURL: https://github.com/vicsufer/homelab.git
       targetRevision: HEAD
       ref: values
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: external-dns
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true

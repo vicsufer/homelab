@@ -20,14 +20,11 @@ spec:
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/infrastructure/tailscale-operator-extras
       targetRevision: HEAD
+      ref: extras
     - chart: tailscale-operator
       repoURL: https://pkgs.tailscale.com/helmcharts
       targetRevision: 1.80.0
       helm:
         releaseName: tailscale-operator
-        values: |
-          oauthSecretVolume: {}
-          operatorConfig:
-            hostname: nuberu
-          apiServerProxyConfig:
-            mode: "true"
+        valuesFiles:
+          - $extras/../values/tailscale-operator.yaml
