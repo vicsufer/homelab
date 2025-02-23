@@ -1,0 +1,61 @@
+---
+prometheus:
+  kluster-manifests/argocd-apps/monitoring:
+    ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Prometheus"
+        gethomepage.dev/description: "Prometheus"
+        gethomepage.dev/group: "Monitoring"
+        gethomepage.dev/widget.type: "prometheus"
+        gethomepage.dev/widget.url: "https://prometheus.vicsufer.xyz"
+        gethomepage.dev/icon: "prometheus.png"
+      tls:
+        - secretName: prometheus-general-tls
+          hosts:
+            - prometheus.vicsufer.xyz
+      hosts:
+        - prometheus.vicsufer.xyz
+
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Grafana"
+        gethomepage.dev/description: "Grafama"
+        gethomepage.dev/group: "Monitoring"
+        gethomepage.dev/widget.type: "grafana"
+        gethomepage.dev/widget.url: "https://grafana.vicsufer.xyz"
+        gethomepage.dev/widget.username: "admin"
+        gethomepage.dev/widget.password: "prom-operator"
+        gethomepage.dev/icon: "grafana.png"
+      tls:
+        - secretName: grafana-general-tls
+          hosts:
+            - grafana.vicsufer.xyz
+      hosts:
+        - grafana.vicsufer.xyz
+
+  alertmanager:
+    ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Alertmanager"
+        gethomepage.dev/description: "Alertmanager"
+        gethomepage.dev/group: "Monitoring"
+        gethomepage.dev/href: "https://alertmanager.vicsufer.xyz"
+      tls:
+        - secretName: alertmanager-general-tls
+          hosts:
+            - alertmanager.vicsufer.xyz
+      hosts:
+        - alertmanager.vicsufer.xyz
