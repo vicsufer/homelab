@@ -26,5 +26,5 @@ spec:
       targetRevision: 1.80.0
       helm:
         releaseName: tailscale-operator
-        valuesFiles:
+        valueFiles:
           - $extras/../values/tailscale-operator.yaml

@@ -26,5 +26,5 @@ spec:
       targetRevision: 34.3.0
       helm:
         releaseName: traefik
-        valuesFiles:
+        valueFiles:
           - $values/kluster-manifests/argocd-apps/infrastructure/values/traefik.yaml
