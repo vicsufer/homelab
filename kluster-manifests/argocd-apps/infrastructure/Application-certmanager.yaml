@@ -16,11 +16,14 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    chart: cert-manager
-    repoURL: https://charts.jetstack.io
-    targetRevision: v1.17.1
-    helm:
-      releaseName: cert-manager
-      valueFiles:
-        - values/certmanager.values.yaml
+  sources:
+    - repoURL: https://charts.jetstack.io
+      targetRevision: v1.17.1
+      chart: cert-manager
+      helm:
+        releaseName: cert-manager
+        valueFiles:
+          - $values/kluster-manifests/infrastructure/values/certmanager.values.yaml
+    - repoURL: https://github.com/vicsufer/homelab.git
+      targetRevision: HEAD
+      ref: values

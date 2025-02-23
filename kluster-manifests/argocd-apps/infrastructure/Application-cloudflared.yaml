@@ -25,4 +25,7 @@ spec:
       targetRevision: 0.0.18
       helm:
         valueFiles:
-          - values/cloudflared.values.yaml
+          - $values/kluster-manifests/infrastructure/values/cloudflared.values.yaml
+    - repoURL: https://github.com/vicsufer/homelab.git
+      targetRevision: HEAD
+      ref: values
