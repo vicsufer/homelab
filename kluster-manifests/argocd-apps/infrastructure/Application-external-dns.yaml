@@ -15,7 +15,7 @@ spec:
       helm:
         releaseName: external-dns
         valueFiles:
-          - $values/kluster-manifests/infrastructure/values/externa-dns.values.yaml
+          - $values/kluster-manifests/argocd-apps/infrastructure/values/externa-dns.values.yaml
     - repoURL: https://github.com/vicsufer/homelab.git
       targetRevision: HEAD
       ref: values

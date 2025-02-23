@@ -17,15 +17,12 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - repoURL: https://github.com/vicsufer/homelab
-      path: kluster-manifests/argocd-apps/infrastructure/cloudflared-extras
-      targetRevision: HEAD
     - chart: cloudflare-tunnel-ingress-controller
       repoURL: https://helm.strrl.dev
       targetRevision: 0.0.18
       helm:
         valueFiles:
-          - $values/kluster-manifests/infrastructure/values/cloudflared.values.yaml
+          - $values/kluster-manifests/argocd-apps/infrastructure/values/cloudflared.values.yaml
     - repoURL: https://github.com/vicsufer/homelab.git
       targetRevision: HEAD
       ref: values

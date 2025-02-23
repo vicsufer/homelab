@@ -23,7 +23,7 @@ spec:
       helm:
         releaseName: cert-manager
         valueFiles:
-          - $values/kluster-manifests/infrastructure/values/certmanager.values.yaml
+          - $values/kluster-manifests/certmanager.values.yaml
     - repoURL: https://github.com/vicsufer/homelab.git
       targetRevision: HEAD
       ref: values
