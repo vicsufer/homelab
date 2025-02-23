@@ -25,26 +25,9 @@ spec:
       targetRevision: 0.9.5-pre.1
       helm:
         releaseName: synology-csi
-        values: |
-          fullnameOverride: synology-csi
-          clientInfoSecret:
-            name: synology-csi-client-info
-          storageClasses:
-            iscsi-retain:
-              isDefault: false
-              disabled: false
-            iscsi-delete:
-              isDefault: true
-              disabled: false
-            smb-retain:
-              disabled: true
-            smb-delete:
-              disabled: true
-            nfs-retain:
-              disabled: true
-            nfs-delete:
-              disabled: false
-
+        valueFiles:
+          - $extras/kluster-manifests/argocd-apps/infrastructure/storage/values/synology-csi.yaml
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/infrastructure/storage/synology-csi-extras
       targetRevision: HEAD
+      ref: extras
