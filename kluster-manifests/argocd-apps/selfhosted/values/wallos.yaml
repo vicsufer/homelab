@@ -1,0 +1,41 @@
+---
+image:
+  repository: ghcr.io/ellite/wallos
+  tag: 2.42.2
+persistence:
+  database:
+    size: 5Gi
+    enabled: true
+    mountPath: "/var/www/html/db"
+    storageClass: iscsi-retain
+  logos:
+    size: 1Gi
+    enabled: true
+    mountPath: "/var/www/html/images/uploads/logos"
+    storageClass: iscsi-retain
+ingress:
+  main:
+    enabled: true
+    integrations:
+      traefik:
+        enableFixedMiddlewares: false
+        enabled: true
+        entrypoints:
+          - websecure
+        forceTLS: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Subscripciones"
+      gethomepage.dev/description: "Registro subscripciones"
+      gethomepage.dev/group: "k3s"
+      gethomepage.dev/icon: "wallos.png"
+    tls:
+      - hosts:
+          - &host wallos.vicsufer.xyz
+        secretName: wallos-general-tls
+    hosts:
+      - host: *host
+        paths:
+          - path: /
+            pathType: Prefix

@@ -1,0 +1,31 @@
+---
+image:
+  repository: leantime/leantime
+  tag: v3.3.3
+internalDatabase:
+  persistence:
+    enabled: true
+leantime:
+  sitename: "Leantime"
+  language: "es-ES"
+  defaultTimezone: "Europe/Madrid"
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Leantime"
+    gethomepage.dev/description: "Planificador de proyectos"
+    gethomepage.dev/group: "k3s"
+    gethomepage.dev/icon: "leantime.png"
+  tls:
+    - secretName: leantime-general-tls
+      hosts:
+        - leantime.vicsufer.xyz
+  hosts:
+    - host: leantime.vicsufer.xyz
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
