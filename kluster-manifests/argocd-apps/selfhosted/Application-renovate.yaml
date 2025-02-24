@@ -20,41 +20,11 @@ spec:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/renovate-extras
+      ref: extras
     - chart: renovate
       repoURL: https://docs.renovatebot.com/helm-charts
       targetRevision: 39.173.1
       helm:
         releaseName: renovate
-        values: |
-          cronjob:
-            schedule: "0 */2 * * *"
-            failedJobsHistoryLimit: 1
-            successfulJobsHistoryLimit: 2
-            concurrencyPoligy: Forbid
-            jobBackoffLimit: 3
-          startingDeadlineSeconds: 3600 # 1h
-          existingSecret: "renovate-creds"
-          env:
-            RENOVATE_X_GITHUB_HOST_RULES: true
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-          renovate:
-            persistence:
-              cache:
-                enabled: false # TODO: for some reasson I cant write to the volume
-                storageSize: "1Gi"
-            config: |
-              {
-                "platform": "github",
-                "autodiscover": false,
-                "repositories": ["vicsufer/homelab"]
-              }
-          resources:
-            limits:
-              memory: 5Gi
-            requests:
-              cpu: 500m
-              memory: 1Gi
+        valueFiles:
+          - $extras/kluster-manifests/argocd-apps/selfhosted/values/renovate.yaml
