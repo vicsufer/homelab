@@ -1,7 +1,4 @@
 ---
-prometheusOperator:
-  admissionWebhooks:
-    enabled: false
 prometheus:
   kluster-manifests/argocd-apps/monitoring:
     ingress:
