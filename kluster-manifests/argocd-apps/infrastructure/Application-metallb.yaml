@@ -16,6 +16,11 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+  ignoreDifferences:
+    - name: bgppeers.metallb.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
   sources:
     - chart: metallb
       repoURL: https://metallb.github.io/metallb
