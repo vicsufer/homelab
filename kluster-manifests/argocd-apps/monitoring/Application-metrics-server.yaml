@@ -22,9 +22,9 @@ spec:
       repoURL: https://kubernetes-sigs.github.io/metrics-server/
       targetRevision: 3.12.2
       helm:
-      releaseName: metrics-server
-      valueFiles:
-        - $values/kluster-manifests/argocd-apps/monitoring/values/metricserver.yaml
+        releaseName: metrics-server
+        valueFiles:
+          - $values/kluster-manifests/argocd-apps/monitoring/values/metricserver.yaml
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/monitoring/values
       targetRevision: HEAD
