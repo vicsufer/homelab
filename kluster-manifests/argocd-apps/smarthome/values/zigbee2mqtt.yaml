@@ -1,0 +1,113 @@
+---
+image:
+  repository: koenkk/zigbee2mqtt
+  tag: "2.1.1"
+  pullPolicy: IfNotPresent
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Zigbee2MQTT"
+    gethomepage.dev/description: "Zigbee Bridge"
+    gethomepage.dev/group: "Smart Home"
+    gethomepage.dev/icon: "zigbee2mqtt.png"
+  hosts:
+    - host: zigbee2mqtt.vicsufer.xyz
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+        - path: /api
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: zigbee2mqtt-tls-secret
+      hosts:
+        - zigbee2mqtt.vicsufer.xyz
+statefulset:
+  storage:
+    enabled: true
+    storageClassName: iscsi-retain
+  securityContext:
+    privileged: true # TODO Use a device-manager
+  volumes:
+    - hostPath:
+        path: >-
+          /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_d460f6a6da1bef119aa3a3d94909ffd0-if00-port0
+        type: CharDevice
+      name: usb
+    - name: certificates
+      secret:
+        secretName: mqtt-zigbee2mqtt-cert
+        defaultMode: 420
+        optional: false
+  volumeMounts:
+    - mountPath: /dev/ttyUSB0
+      name: usb
+    - name: certificates
+      mountPath: "/tmp/certificates"
+      readOnly: true
+service:
+  type: ClusterIP
+nodeSelector:
+  kubernetes.io/hostname: nuc-0
+zigbee2mqtt:
+  serial:
+    # Required: location of the adapter (e.g. CC2531).
+    # USB adapters - use format "port: /dev/ttyACM0"
+    # To autodetect the USB port, set 'port: null'.
+    # Ethernet adapters - use format "port: tcp://192.168.1.12:6638"
+    port: /dev/ttyUSB0
+    # Optional: disable LED of the adapter if supported (default: false)
+    disable_led: false
+    # Optional: adapter type, specify if you are experiencing startup problems (default: shown below, options: zstack, deconz, ember, zigate)
+    adapter: zstack
+    # Optional: Baud rate speed for serial port, this can be anything firmware support but default is 115200 for Z-Stack and EZSP, 38400 for Deconz, however note that some EZSP firmware need 57600.
+    # baudrate: 115200
+    # Optional: RTS / CTS Hardware Flow Control for serial port (default: false)
+    # rtscts: false
+  # Required: MQTT settings
+  mqtt:
+    # Required: MQTT server URL (use mqtts:// for SSL/TLS connection)
+    server: "mqtt://mosquitto.zigbee.svc.cluster.local:1883"
+    # Optional: MQTT base topic for Zigbee2MQTT MQTT messages (default: zigbee2mqtt)
+    base_topic: zigbee2mqtt
+    # Optional: absolute path to SSL/TLS certificate of CA used to sign server and client certificates (default: nothing)
+    # ca: '/tmp/certificates/ca.crt'
+    # key: '/tmp/certificates/tls.key'
+    # cert: '/tmp/certificates/tls.crt'
+    client_id: "zigbee2mqtt"
+    # user: 'zigbee2mqtt'
+    include_device_information: true
+    keepalive: 60
+    # Optional: MQTT protocol version (default: 4), set this to 5 if you
+    # use the 'retention' device specific configuration
+    # version: 4
+    # Optional: Disable retain for all send messages. ONLY enable if you MQTT broker doesn't
+    # support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform).
+    # Enabling will break the Home Assistant integration. (default: false)
+    force_disable_retain: false
+  homeassistant:
+    legacy_entity_attributes: false
+    legacy_triggers: false
+  availability:
+    active:
+      timeout: 10
+    passive:
+      timeout: 1500
+  device_options:
+    legacy: false
+  frontend:
+    url: "https://zigbee2mqtt.vicsufer.xyz"
+    # base_url: /zigbee2mqtt
+  advanced:
+    # Optional: Logging level, options: debug, info, warning, error (default: info)
+    log_level: info
+    homeassistant_legacy_entity_attributes: false
+    homeassistant_legacy_triggers: false
+    legacy_api: false
+    legacy_availability_payload: false
+    # report: null
+  ota:
+    legacy: false
