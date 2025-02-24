@@ -1,0 +1,32 @@
+---
+env:
+  TZ: Europe/Madrid
+image:
+  repository: ghcr.io/onedr0p/prowlarr-develop
+  tag: 1.26.0
+ingress:
+  main:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Prowlarr"
+      gethomepage.dev/description: "Rastreador torrent"
+      gethomepage.dev/group: "Media"
+      gethomepage.dev/widget.type: "prowlarr"
+      gethomepage.dev/widget.url: "http://prowlarr.mediaserver.svc:9696"
+      gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+      gethomepage.dev/icon: "prowlarr.png"
+    tls:
+      - secretName: prowlarr-general-tls
+        hosts:
+          - prowlarr.vicsufer.xyz
+    hosts:
+      - host: prowlarr.vicsufer.xyz
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+persistence:
+  config:
+    enabled: true

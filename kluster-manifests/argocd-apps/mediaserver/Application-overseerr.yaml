@@ -16,38 +16,15 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    repoURL: https://charts.pree.dev
-    chart: overseerr
-    targetRevision: 1.0.2
-    helm:
-      releaseName: overseerr
-      values: |
-        env:
-          TZ: Europe/Madrid
-          LOG_LEVEL: "info"
-        ingress:
-          main:
-            enabled: true
-            annotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-              cert-manager.io/cluster-issuer: "letsencrypt-prod"
-              gethomepage.dev/enabled: "true"
-              gethomepage.dev/name: "Overseerr"
-              gethomepage.dev/description: "Peticiones mediaserver"
-              gethomepage.dev/group: "Media"
-              gethomepage.dev/widget.type: "Overseerr"
-              gethomepage.dev/widget.url: "https://overseerr.vicsufer.xyz"
-              gethomepage.dev/icon: "overseerr.png"
-            tls:
-              - secretName: overseerr-general-tls
-                hosts:
-                  - overseerr.vicsufer.xyz
-            hosts:
-              - host: overseerr.vicsufer.xyz
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-        persistence:
-          config:
-            enabled: true
+  sources:
+    - repoURL: https://charts.pree.dev
+      chart: overseerr
+      targetRevision: 1.0.2
+      helm:
+        releaseName: overseerr
+        valueFiles:
+          - $values/kluster-manifests/argocd-apps/mediaserver/values/overseerr.yaml
+    - repoURL: https://github.com/vicsufer/homelab
+      path: kluster-manifests/argocd-apps/mediaserver/values
+      targetRevision: HEAD
+      ref: values
