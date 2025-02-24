@@ -1,0 +1,33 @@
+---
+cronjob:
+  schedule: "0 */2 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 2
+  concurrencyPoligy: Forbid
+  jobBackoffLimit: 3
+startingDeadlineSeconds: 3600 # 1h
+existingSecret: "renovate-creds"
+env:
+  RENOVATE_X_GITHUB_HOST_RULES: true
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  fsGroup: 1000
+renovate:
+  persistence:
+    cache:
+      enabled: false # TODO: for some reasson I cant write to the volume
+      storageSize: "1Gi"
+  config: |
+    {
+      "platform": "github",
+      "autodiscover": false,
+      "repositories": ["vicsufer/homelab"]
+    }
+resources:
+  limits:
+    memory: 5Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
