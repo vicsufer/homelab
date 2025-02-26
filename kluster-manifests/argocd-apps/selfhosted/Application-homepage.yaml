@@ -20,11 +20,11 @@ spec:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/homepage-extras
-      ref: values
+      ref: extras
     - chart: homepage
       repoURL: https://jameswynn.github.io/helm-charts
       targetRevision: 2.0.1
       helm:
         releaseName: homepage
         valueFiles:
-          - $values/kluster-manifests/argocd-apps/selfhosted/values/homepage.yaml
+          - $extras/kluster-manifests/argocd-apps/selfhosted/values/homepage.yaml
