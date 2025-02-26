@@ -1,4 +1,3 @@
----
 deployment:
   repository: ghcr.io/maybe-finance/maybe
   tag: 0.0.3
