@@ -17,10 +17,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - repoURL: https://github.com/vicsufer/homelab
-      targetRevision: HEAD
-      path: kluster-manifests/argocd-apps/selfhosted/values
-      ref: values
     - chart: maybe-finance
       repoURL: https://charts.vicsufer.dev
       targetRevision: 0.1.0
@@ -28,3 +24,7 @@ spec:
         releaseName: maybefinance
         valueFiles:
           - $values/kluster-manifests/argocd-apps/selfhosted/values/maybe-finance.yaml
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/selfhosted/values
+      ref: values
