@@ -20,52 +20,11 @@ spec:
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/mealie-extras
+      ref: extras
     - repoURL: https://github.com/ben-kemister/mealie-helm-chart.git
       targetRevision: main
       path: mealie
       helm:
         releaseName: mealie
-        values: |
-          mealie:
-            repository: ghcr.io/mealie-recipes/mealie
-            tag: v2.2.0
-            env:
-              - name: BASE_URL
-                value: https://recetas.vicsufer.xyz
-              - name: TZ
-                value: Europe/Madrid
-              - name: DEFAULT_EMAIL
-                value: vicsufer+mealie.vicsufer.xyz
-              - name: DEFAULT_GROUP
-                value: Familia
-              - name: DEFAULT_HOUSEHOLD
-                value: Hogar
-          ingress:
-            enabled: true
-            className: "traefik"
-            annotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-              cert-manager.io/cluster-issuer: "letsencrypt-prod"
-              gethomepage.dev/enabled: "true"
-              gethomepage.dev/name: "Recetas"
-              gethomepage.dev/description: "Recetario"
-              gethomepage.dev/group: "k3s"
-              gethomepage.dev/widget.type: "mealie"
-              gethomepage.dev/widget.url: "http://mealie.mealie.svc:9000"
-              gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_MEALIE_KEY}}"
-              gethomepage.dev/widget.version: "2"
-              gethomepage.dev/icon: "mealie.png"
-            tls:
-              - secretName: mealie-general-tls
-                hosts:
-                  - recetas.vicsufer.xyz
-            hosts:
-              - host: recetas.vicsufer.xyz
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-
-          volumes:
-            - name: mealie-data
-              persistentVolumeClaim:
-                claimName: mealie-data
+        valueFiles:
+          - $extras/kluster-manifests/argocd-apps/selfhosted/values/mealie.yaml
