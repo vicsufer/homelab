@@ -1,3 +1,4 @@
+---
 deployment:
   repository: ghcr.io/maybe-finance/maybe
   tag: 0.0.3
@@ -47,8 +48,7 @@ ingress:
           pathType: ImplementationSpecific
 
 extraObjects:
-  - |
-    apiVersion: bitnami.com/v1alpha1
+  - apiVersion: bitnami.com/v1alpha1
     kind: SealedSecret
     metadata:
       name: maybe-secrets
@@ -60,8 +60,7 @@ extraObjects:
         metadata:
           name: maybe-secrets
           namespace: maybefinance
-  - |
-    apiVersion: bitnami.com/v1alpha1
+  - apiVersion: bitnami.com/v1alpha1
     kind: SealedSecret
     metadata:
       name: database-password
