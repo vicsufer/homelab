@@ -16,81 +16,15 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    chart: maybe-finance
-    repoURL: https://charts.vicsufer.dev
-    targetRevision: 0.1.0
-    helm:
-      releaseName: maybefinance
-      values: |
-        deployment:
-          repository: ghcr.io/maybe-finance/maybe
-          tag: 0.0.3
-          env:
-            - name: RAILS_ASSUME_SSL
-              value: false
-            - name: RAILS_FORCE_SSL
-              value: false
-            - name: GOOD_JOB_EXECUTION_MODE
-              value: async
-            - name: SELF_HOSTING_ENABLED
-              value: true
-          extraEnvsFromSecret: "maybe-secrets"
-
-        postgresql:
-          auth:
-            existingSecret: "database-password"
-          primary:
-            persistence:
-              storageClass: iscsi-retain
-            startupProbe:
-              enabled: true
-              initialDelaySeconds: 60
-              periodSeconds: 15
-              timeoutSeconds: 1
-              failureThreshold: 60
-              successThreshold: 1
-
-        ingress:
-          create: true
-          annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          tls:
-            - secretName: maybe-general-tls
-              hosts:
-                - maybe.vicsufer.xyz
-          hosts:
-            - host: maybe.vicsufer.xyz
-              paths:
-                - path: /
-                  pathType: ImplementationSpecific
-
-        extraObjects:
-          - |
-            apiVersion: bitnami.com/v1alpha1
-            kind: SealedSecret
-            metadata:
-              name: maybe-secrets
-              namespace: maybefinance
-            spec:
-              encryptedData:
-                SECRET_KEY_BASE: AgBfcW5UIazod/th2IgKVRevCQJ+7nQpEhePqUhd91gawMpztUQBImOZuN2l0O5SkIL4Xm9Wk8+4O5pr6zWgwPwgziNW8LdfGzY3bakb0OmChkXPrztVsDyjcHxif23+yGZT94oQd4DYbr664rCsv03l7r1qa2CtycAkU98ncwncf4t08piVljQDqcqzAXzVcElaE8trBaQW49lLp7ztmkz/uASZskjMzX7rt5RNdxZb160EP+iKU4fSquSMEOunv9hwI/ZPRBZD/KuzY842rjUmSP/mi7HO0RCZwYHX5uO0XvwiCCsugvgQbmO63gWIfaIxdgU7c+bcnUhMHsYvDClgJu26DPhcDVrpxnNppbqavBwY023d1D/dKWpQp2G8OIcEg599uPxVIlBeWhnUFZ5OAxj2esYK3gUEUENjeqbJn865NHUiz8+wzOL4ymuxUB6BYVStp5bAMlTKXV2p01fW+VBpiQqTV6mdioe8wOlxPAsYDH65CzIhiYmjrWk0R8khiimv3aSi1riWz9hbHAzXH2LHvjPqNf4M4N9urZlaHPOeCashzmBZkrt2hZee4/jH6m5K6RrZVpmPhy0/t64wHSq3r0TmffFH73IX/+C1qgZzwZcBCBJU7pfOf8DTadpLEnBsHtP6Mx9ZQ1MYTNvogS4B04Qc9NN+T1pOBPvkakWJVwaQkfya/rXnNAwpTrhcQMpGayR1CdkuZ/Y/kWmkApAgwzetXJZgoLWk21eOAQ7IGpKcEntKPa55JfEvLlSGEmhvSO+X2M0adH3ujTzmtpmjFFnqy2Y7A8y2UXYNasruZQwME4b3ye4Yl0ZyNJaOKZBqdZScp9a02d1aYC9cdl9iDniTHzejRhh8z6tPkw==
-              template:
-                metadata:
-                  name: maybe-secrets
-                  namespace: maybefinance
-          - |
-            apiVersion: bitnami.com/v1alpha1
-            kind: SealedSecret
-            metadata:
-              name: database-password
-              namespace: maybefinance
-            spec:
-              encryptedData:
-                postgres-password: AgBFerWrxWfNFLtjC3/xxUgmBv9A1z8HBZU7ufhs4sk8aS4B6lT94XNvucMhRQSPCxYMWIMKWQ6KLKwEOXEkqUGAJiBe1qNam3LZN2lgkh6/1OliUUYMiOY25ThZMf4ULR48sKaRFfe1MKbm1Z4BuTzwB4be1S1hBIQ/JJoI7qH/rCIceR/l3kGtizjpSGTTr1e8a693m5LZQ9yHUSw79K6xDVkDNRj4tB/PWP6F52e5jnzvclwd8JXc0rsDqIGF99Xz4m8BTqz4iZmfX2E453NnCs6cyVmkKojulQuvtzWVhSGKfujgtIMss6KnpwWfkV11+k2PiphcVwdx7/Lnq910M6eKX8Z1RRovj+vbXSO07EzJH3VWHd04wOEQmWFXCFCFmoMVVHeYi7pH97NEeJwnlWim1nNNKIF5U3tmsqQeI7eiZ9fI+nypoUHiJwyMTfUx8uJUdiu/F6fDCwmHiTMwJkkfe1Dyw29BUdQ2qQVsIjo3ju0ujrY1rf145XwOvEXEfVSE+EbqEkMyR8hlijkVWW43S/U+l0U6KKdTLlPVX3F7tQvFch7W80zBjyXVQmomPjnFtKejFZbhX2JA4MKjEL14V1reLwTKHn1WXSSpxZdgYxjXCA1mH75NqmI5T1Mg2FDx4ueDCcINbL41gYAK61KDYZhgumcja1pPGP3eWauEjN2zxCjZaZcfFJssD8dQp0jP0A==
-                password: AgBFerWrxWfNFLtjC3/xxUgmBv9A1z8HBZU7ufhs4sk8aS4B6lT94XNvucMhRQSPCxYMWIMKWQ6KLKwEOXEkqUGAJiBe1qNam3LZN2lgkh6/1OliUUYMiOY25ThZMf4ULR48sKaRFfe1MKbm1Z4BuTzwB4be1S1hBIQ/JJoI7qH/rCIceR/l3kGtizjpSGTTr1e8a693m5LZQ9yHUSw79K6xDVkDNRj4tB/PWP6F52e5jnzvclwd8JXc0rsDqIGF99Xz4m8BTqz4iZmfX2E453NnCs6cyVmkKojulQuvtzWVhSGKfujgtIMss6KnpwWfkV11+k2PiphcVwdx7/Lnq910M6eKX8Z1RRovj+vbXSO07EzJH3VWHd04wOEQmWFXCFCFmoMVVHeYi7pH97NEeJwnlWim1nNNKIF5U3tmsqQeI7eiZ9fI+nypoUHiJwyMTfUx8uJUdiu/F6fDCwmHiTMwJkkfe1Dyw29BUdQ2qQVsIjo3ju0ujrY1rf145XwOvEXEfVSE+EbqEkMyR8hlijkVWW43S/U+l0U6KKdTLlPVX3F7tQvFch7W80zBjyXVQmomPjnFtKejFZbhX2JA4MKjEL14V1reLwTKHn1WXSSpxZdgYxjXCA1mH75NqmI5T1Mg2FDx4ueDCcINbL41gYAK61KDYZhgumcja1pPGP3eWauEjN2zxCjZaZcfFJssD8dQp0jP0A==
-              template:
-                metadata:
-                  name: database-password
-                  namespace: maybefinance
+  sources:
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/selfhosted/values
+      ref: values
+    - chart: maybe-finance
+      repoURL: https://charts.vicsufer.dev
+      targetRevision: 0.1.0
+      helm:
+        releaseName: maybefinance
+        valueFiles:
+          - $values/kluster-manifests/argocd-apps/selfhosted/values/maybe-finance.yaml
