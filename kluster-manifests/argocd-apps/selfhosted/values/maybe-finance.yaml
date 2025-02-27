@@ -22,7 +22,7 @@ postgresql:
     podSecurityContext:
       fsGroup: 1000
     containerSecurityContext:
-      runAsUser: 1000
+      runAsUser: 0
       runAsGroup: 1000
     startupProbe:
       enabled: true
