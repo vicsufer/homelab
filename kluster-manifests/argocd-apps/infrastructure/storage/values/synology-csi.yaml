@@ -6,6 +6,8 @@ storageClasses:
   iscsi-retain:
     isDefault: false
     disabled: false
+    parameters:
+      fsType: ext4
   iscsi-delete:
     isDefault: true
     disabled: false
@@ -16,4 +18,4 @@ storageClasses:
   nfs-retain:
     disabled: true
   nfs-delete:
-    disabled: false
+    disabled: true
