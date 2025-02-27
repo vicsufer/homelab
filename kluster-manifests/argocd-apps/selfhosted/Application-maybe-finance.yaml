@@ -23,7 +23,7 @@ spec:
       helm:
         releaseName: maybefinance
         valueFiles:
-          - $values/klusuter-manifests/argocd-apps/selfhosted/values/maybe-finance.yaml
+          - $values/kluster-manifests/argocd-apps/selfhosted/values/.yaml
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/values
