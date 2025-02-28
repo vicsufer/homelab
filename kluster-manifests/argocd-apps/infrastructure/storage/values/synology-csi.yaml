@@ -11,6 +11,8 @@ storageClasses:
   iscsi-delete:
     isDefault: true
     disabled: false
+    parameters:
+      fsType: ext4
   smb-retain:
     disabled: true
   smb-delete:
