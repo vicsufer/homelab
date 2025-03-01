@@ -11,7 +11,7 @@ deployment:
       value: async
     - name: SELF_HOSTING_ENABLED
       value: true
-  extraEnvsFromSecret: "maybe-secrets"
+  extraEnvVarsSecret: "maybe-secrets"
 
 postgresql:
   auth:
