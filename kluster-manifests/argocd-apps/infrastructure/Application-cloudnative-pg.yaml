@@ -10,7 +10,7 @@ spec:
   project: homelab
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: cloudnative-pg
+    namespace: cnpg-system
   syncPolicy:
     automated:
       prune: true
@@ -18,13 +18,12 @@ spec:
       - CreateNamespace=true
   sources:
     - repoURL: https://github.com/vicsufer/homelab
-      path: kluster-manifests/argocd-apps/infrastructure/values
       targetRevision: HEAD
       ref: values
     - chart: cloudnative-pg
       repoURL: https://cloudnative-pg.github.io/charts
       targetRevision: 0.23.0
       helm:
-        releaseName: traefik
+        releaseName: cloudnative-pg
         valueFiles:
           - $extras/kluster-manifests/argocd-apps/infrastructure/values/cloudnative-pg.values.yaml
