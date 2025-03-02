@@ -1,7 +1,7 @@
 ---
 image:
   repository: linuxserver/prowlarr
-  tag: 1.32.1
+  tag: 1.32.1-nightly
 env:
   TZ: Europe/Madrid
 ingress:
