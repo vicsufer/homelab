@@ -1,7 +1,7 @@
 ---
 deployment:
   repository: ghcr.io/maybe-finance/maybe
-  tag: sha-e4a374772ab2d3341c7ce73d29a1edb902eeafbb
+  tag: v0.4.3
   env:
     - name: RAILS_ASSUME_SSL
       value: false
@@ -19,11 +19,6 @@ postgresql:
   primary:
     persistence:
       storageClass: iscsi-retain
-    # podSecurityContext:
-    #   fsGroup: 1000
-    # containerSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 1000
     startupProbe:
       enabled: true
       initialDelaySeconds: 60
