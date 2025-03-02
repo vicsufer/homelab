@@ -1,4 +1,7 @@
 ---
+image:
+  repository: ghcr.io/sct/overseerr
+  tag: v1.33.2
 env:
   TZ: Europe/Madrid
   LOG_LEVEL: "info"

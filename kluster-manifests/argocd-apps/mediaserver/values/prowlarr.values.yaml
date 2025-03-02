@@ -1,9 +1,9 @@
 ---
+image:
+  repository: linuxserver/prowlarr
+  tag: 1.32.1
 env:
   TZ: Europe/Madrid
-image:
-  repository: ghcr.io/onedr0p/prowlarr-develop
-  tag: 1.26.0
 ingress:
   main:
     enabled: true
