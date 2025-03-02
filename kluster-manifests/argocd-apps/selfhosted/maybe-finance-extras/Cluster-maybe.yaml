@@ -1,0 +1,30 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-maybefinance
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  storage:
+    size: 5Gi
+    storageClass: iscsi-retain
+  monitoring:
+    enablePodMonitor: true
+  bootstrap:
+    initdb:
+      import:
+        type: microservice
+        databases:
+          - maybe
+        source:
+          externalCluster: maybe
+  externalClusters:
+    - name: maybe
+      connectionParameters:
+        host: maybefinance-postgresql.maybefinance.svc.local
+        user: maybe
+        dbname: maybe
+      password:
+        name: database-password
+        key: password
