@@ -23,7 +23,7 @@ spec:
       helm:
         releaseName: mosquitto
         valueFiles:
-          - $values/kluster-manifests/argocd-apps/smarthome/values/mosquitto.yaml
+          - $values/kluster-manifests/argocd-apps/smarthome/values/mosquitto.values.yaml
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/smarthome/values
       targetRevision: HEAD

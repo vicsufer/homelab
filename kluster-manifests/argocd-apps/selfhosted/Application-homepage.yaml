@@ -27,4 +27,4 @@ spec:
       helm:
         releaseName: homepage
         valueFiles:
-          - $extras/kluster-manifests/argocd-apps/selfhosted/values/homepage.yaml
+          - $extras/kluster-manifests/argocd-apps/selfhosted/values/homepage.values.yaml

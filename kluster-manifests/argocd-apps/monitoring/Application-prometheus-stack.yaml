@@ -27,7 +27,7 @@ spec:
       helm:
         releaseName: prometheus-stack
         valueFiles:
-          - $values/kluster-manifests/argocd-apps/monitoring/values/prometheus-stack.yaml
+          - $values/kluster-manifests/argocd-apps/monitoring/values/prometheus-stack.values.yaml
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/monitoring/values
       targetRevision: HEAD

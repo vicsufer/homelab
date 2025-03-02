@@ -23,7 +23,7 @@ spec:
       helm:
         releaseName: leantime
         valueFiles:
-          - $values/kluster-manifests/argocd-apps/selfhosted/values/leantime.yaml
+          - $values/kluster-manifests/argocd-apps/selfhosted/values/leantime.values.yaml
     - repoURL: https://github.com/vicsufer/homelab
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/values

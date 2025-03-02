@@ -28,4 +28,4 @@ spec:
       helm:
         releaseName: home-assistant
         valueFiles:
-          - $extras/kluster-manifests/argocd-apps/smarthome/values/homeassistant.yaml
+          - $extras/kluster-manifests/argocd-apps/smarthome/values/homeassistant.values.yaml

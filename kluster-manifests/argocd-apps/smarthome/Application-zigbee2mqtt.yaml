@@ -26,7 +26,7 @@ spec:
       helm:
         releaseName: zigbee2mqtt
         valueFiles:
-          - $values/kluster-manifests/argocd-apps/smarthome/values/zigbee2mqtt.yaml
+          - $values/kluster-manifests/argocd-apps/smarthome/values/zigbee2mqtt.values.yaml
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/smarthome/values
       targetRevision: HEAD

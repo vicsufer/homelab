@@ -24,7 +24,7 @@ spec:
       helm:
         releaseName: metrics-server
         valueFiles:
-          - $values/kluster-manifests/argocd-apps/monitoring/values/metricserver.yaml
+          - $values/kluster-manifests/argocd-apps/monitoring/values/metricserver.values.yaml
     - repoURL: https://github.com/vicsufer/homelab
       path: kluster-manifests/argocd-apps/monitoring/values
       targetRevision: HEAD

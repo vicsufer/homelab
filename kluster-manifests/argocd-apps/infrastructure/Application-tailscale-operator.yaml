@@ -27,4 +27,4 @@ spec:
       helm:
         releaseName: tailscale-operator
         valueFiles:
-          - $extras/../values/tailscale-operator.yaml
+          - $extras/../values/tailscale-operator.values.yaml

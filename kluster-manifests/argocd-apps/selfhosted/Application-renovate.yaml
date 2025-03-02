@@ -27,4 +27,4 @@ spec:
       helm:
         releaseName: renovate
         valueFiles:
-          - $extras/kluster-manifests/argocd-apps/selfhosted/values/renovate.yaml
+          - $extras/kluster-manifests/argocd-apps/selfhosted/values/renovate.values.yaml

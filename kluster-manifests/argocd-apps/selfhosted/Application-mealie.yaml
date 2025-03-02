@@ -27,4 +27,4 @@ spec:
       helm:
         releaseName: mealie
         valueFiles:
-          - $extras/kluster-manifests/argocd-apps/selfhosted/values/mealie.yaml
+          - $extras/kluster-manifests/argocd-apps/selfhosted/values/mealie.values.yaml
