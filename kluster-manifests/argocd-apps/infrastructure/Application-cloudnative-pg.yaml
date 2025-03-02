@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: cloudnative-pg
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cloudnative-pg
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+    - repoURL: https://github.com/vicsufer/homelab
+      path: kluster-manifests/argocd-apps/infrastructure/values
+      targetRevision: HEAD
+      ref: values
+    - chart: cloudnative-pg
+      repoURL: https://cloudnative-pg.github.io/charts
+      targetRevision: 0.23.0
+      helm:
+        releaseName: traefik
+        valueFiles:
+          - $extras/kluster-manifests/argocd-apps/infrastructure/values/cloudnative-pg.values.yaml
