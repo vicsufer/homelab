@@ -17,7 +17,7 @@ securityContext:
 renovate:
   persistence:
     cache:
-      enabled: false # TODO: for some reasson I cant write to the volume
+      enabled: true
       storageSize: "1Gi"
   config: |
     {
