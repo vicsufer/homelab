@@ -22,7 +22,7 @@ spec:
   externalClusters:
     - name: maybe
       connectionParameters:
-        host: maybefinance-postgresql.maybefinance.svc.local
+        host: maybefinance-postgresql.maybefinance.svc.cluster.local
         user: maybe
         dbname: maybe
       password:
