@@ -22,7 +22,7 @@ spec:
   sources:
     - chart: synology-csi
       repoURL: https://zebernst.github.io/synology-csi-talos
-      targetRevision: 0.9.5-pre.2
+      targetRevision: 0.9.5-pre.4
       helm:
         releaseName: synology-csi
         valueFiles:
