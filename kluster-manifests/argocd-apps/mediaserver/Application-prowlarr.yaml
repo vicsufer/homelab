@@ -19,7 +19,7 @@ spec:
   sources:
     - repoURL: https://charts.pree.dev
       chart: prowlarr
-      targetRevision: 1.40.0
+      targetRevision: 1.42.0
       helm:
         releaseName: prowlarr
         valueFiles:
