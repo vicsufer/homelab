@@ -2,7 +2,7 @@
 image:
   repository: eclipse-mosquitto
   pullPolicy: IfNotPresent
-  tag: "2.0.20-openssl"
+  tag: "2.0.20-openssl@sha256:21421af7b32bf9ce508e9090c8eb13bb81f410ca778dc205506180a6f862d0eb"
 
 ingress:
   enabled: true
