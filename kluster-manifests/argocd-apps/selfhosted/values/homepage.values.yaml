@@ -1,7 +1,7 @@
 ---
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v0.10.5@sha256:e11966baac52469ca510dee04281713e8d66bd58f9e3ac9d224f0caf536851b4
+  tag: v0.10.9@sha256:b6d732817572f9af99ec168b10641b8f7820f30cfa5a5cc5c68f1e291804bec8
 config:
   background:
     blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
