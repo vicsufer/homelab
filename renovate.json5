@@ -12,6 +12,10 @@
     "fileMatch": ["kluster-manifests/argocd-apps/.*Application.+\.yaml$"],
     "labels": ["renovate", "ArgoCD Application"],
   },
+  "helm": {
+    "fileMatch": ["kluster-manifests/argocd-apps/**/.*values.+\.yaml$"],
+    "labels": ["renovate", "helm"],
+  },
   "labels": ["dependencies", "renovate"],
   "ignorePaths": [
     "**/ansible/**"
