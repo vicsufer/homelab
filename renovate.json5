@@ -12,7 +12,7 @@
     "fileMatch": ["kluster-manifests/argocd-apps/.*Application.+\.yaml$"],
     "labels": ["renovate", "ArgoCD Application"],
   },
-  "helm": {
+  "helm-values": {
     "fileMatch": ["kluster-manifests/argocd-apps/**/.*values.+\.yaml$"],
     "labels": ["renovate", "helm"],
   },
