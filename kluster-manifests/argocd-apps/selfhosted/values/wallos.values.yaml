@@ -1,7 +1,7 @@
 ---
 image:
   repository: ghcr.io/ellite/wallos
-  tag: 2.42.2@sha256:20a05291f8b470eb13efa645fe4a42221b89b119fb4b9f81f6ef8efb79914b85
+  tag: 2.52.0@sha256:fe34f19e958fc486767d2e998a6bc4f37ba81609d3dc0540d98b9ebc05fa1c3c
 persistence:
   database:
     size: 5Gi
