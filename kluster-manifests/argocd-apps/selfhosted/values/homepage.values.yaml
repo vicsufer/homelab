@@ -109,6 +109,9 @@ enableRbac: true
 envFrom:
   - secretRef:
       name: homepage-secrets
+env:
+  - name: HOMEPAGE_ALLOWED_HOSTS
+    value: "*"
 
 ingress:
   main:
