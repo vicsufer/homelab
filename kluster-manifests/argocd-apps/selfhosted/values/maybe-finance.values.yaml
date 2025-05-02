@@ -14,18 +14,7 @@ deployment:
   extraEnvVarsSecret: "maybe-secrets"
 
 postgresql:
-  auth:
-    existingSecret: "database-password"
-  primary:
-    persistence:
-      storageClass: iscsi-retain
-    startupProbe:
-      enabled: true
-      initialDelaySeconds: 60
-      periodSeconds: 15
-      timeoutSeconds: 1
-      failureThreshold: 60
-      successThreshold: 1
+  enabled: false
 
 ingress:
   create: true
