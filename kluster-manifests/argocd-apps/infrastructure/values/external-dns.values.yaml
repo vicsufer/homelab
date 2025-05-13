@@ -18,7 +18,7 @@ image:
   # tag: 0.16.1-debian-12-r5
   registry: gcr.io
   repository: k8s-staging-external-dns/external-dns
-  tag: v20250402-v0.16.1-48-g1efdf416
+  tag: v20250402-v0.16.1-48-g1efdf416@sha256:36adcc1c1c3a3944d901f47c560a2d0c6f97f4d2c5e1378850af54789a8a1d0a
 
 extraArgs:
   - --pihole-api-version
