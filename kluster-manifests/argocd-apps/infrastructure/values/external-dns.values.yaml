@@ -13,12 +13,9 @@ sources:
 annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"
 
 image:
-  # registry: docker.io
-  # repository: bitnami/external-dns
-  # tag: 0.16.1-debian-12-r5
-  registry: gcr.io
-  repository: k8s-staging-external-dns/external-dns
-  tag: v20250402-v0.16.1-48-g1efdf416
+  registry: docker.io
+  repository: bitnami/external-dns
+  tag: 0.17.0
 
 extraArgs:
   - --pihole-api-version
