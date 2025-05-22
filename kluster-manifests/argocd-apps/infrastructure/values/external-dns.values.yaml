@@ -17,6 +17,9 @@ image:
   repository: bitnami/external-dns
   tag: 0.17.0
 
+extraArgs:
+  - --pihole-api-version=6
+
 extraDeploy:
   - |
     apiVersion: bitnami.com/v1alpha1
