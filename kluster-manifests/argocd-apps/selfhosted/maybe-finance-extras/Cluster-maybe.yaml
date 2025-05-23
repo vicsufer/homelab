@@ -17,12 +17,12 @@ spec:
       owner: maybe
       secret:
         name: database-password
-      import:
-        type: microservice
-        databases:
-          - maybe
-        source:
-          externalCluster: maybe
+      # import:
+      #   type: microservice
+      #   databases:
+      #     - maybe
+      #   source:
+      #     externalCluster: maybe
   externalClusters:
     - name: maybe
       connectionParameters:
