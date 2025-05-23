@@ -13,10 +13,15 @@ deployment:
       value: true
     - name: REDIS_HOST
       value: maybefinance-redis-master
+    - name: DB_HOST
+      value: cluster-maybefinance-rw
   extraEnvVarsSecret: "maybe-secrets"
 
 postgresql:
   enabled: false
+  auth:
+    existingSecret: database-password
+
 
 redis:
   enabled: false
