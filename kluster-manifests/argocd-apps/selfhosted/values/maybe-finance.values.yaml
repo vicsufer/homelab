@@ -11,10 +11,16 @@ deployment:
       value: async
     - name: SELF_HOSTING_ENABLED
       value: true
+    - name: REDIS_HOST
+      value: maybefinance-redis-master
   extraEnvVarsSecret: "maybe-secrets"
 
 postgresql:
   enabled: false
+
+redis:
+  enabled: false
+  architecture: standalone
 
 ingress:
   create: true
