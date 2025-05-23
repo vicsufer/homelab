@@ -13,6 +13,10 @@ spec:
     enablePodMonitor: true
   bootstrap:
     initdb:
+      database: maybe
+      owner: maybe
+      secret:
+        name: database-password
       import:
         type: microservice
         databases:
