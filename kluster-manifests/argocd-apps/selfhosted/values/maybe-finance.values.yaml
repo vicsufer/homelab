@@ -22,9 +22,8 @@ postgresql:
   auth:
     existingSecret: database-password
 
-
 redis:
-  enabled: false
+  enabled: true
   architecture: standalone
 
 ingress:
