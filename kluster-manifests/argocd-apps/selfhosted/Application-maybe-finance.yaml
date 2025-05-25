@@ -17,12 +17,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    # - chart: maybe-finance
-      # repoURL: https://charts.vicsufer.dev
-      # targetRevision: 0.2.1
-    - repoURL: https://github.com/vicsufer/charts.git
-      targetRevision: feature/maybe-sidekiq
-      path: charts/maybe-finance
+    - chart: maybe-finance
+      repoURL: https://charts.vicsufer.dev
+      targetRevision: 0.2.2
       helm:
         releaseName: maybefinance
         valueFiles:
