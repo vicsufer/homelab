@@ -18,8 +18,11 @@ spec:
       - CreateNamespace=true
   sources:
     - chart: maybe-finance
-      repoURL: https://charts.vicsufer.dev
-      targetRevision: 0.2.1
+      # repoURL: https://charts.vicsufer.dev
+      # targetRevision: 0.2.1
+      repoURL: https://github.com/vicsufer/charts.git
+      targetRevision: feature/maybe-sidekiq
+      path: charts/maybe-finance
       helm:
         releaseName: maybefinance
         valueFiles:
