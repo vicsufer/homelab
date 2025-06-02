@@ -1,7 +1,7 @@
 ---
 deployment:
   repository: ghcr.io/maybe-finance/maybe
-  tag: sha-ee9fe1b62db55db7616910a9c57149195386c1c0
+  tag: sha-a76cc2dff8903f174b24d4648ad86267e667b82f
   env:
     - name: RAILS_ASSUME_SSL
       value: false
