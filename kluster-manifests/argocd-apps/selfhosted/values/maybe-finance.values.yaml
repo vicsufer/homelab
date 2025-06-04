@@ -18,7 +18,7 @@ deployment:
   extraEnvVarsSecret: "maybe-secrets"
 
 postgresql:
-  enabled: true
+  enabled: false
   auth:
     existingSecret: database-password
 
