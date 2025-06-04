@@ -24,7 +24,7 @@ spec:
   sources:
     - chart: metallb
       repoURL: https://metallb.github.io/metallb
-      targetRevision: 0.14.9
+      targetRevision: 0.15.2
       helm:
         releaseName: metallb
     - repoURL: https://github.com/vicsufer/homelab
