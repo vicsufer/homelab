@@ -1,7 +1,7 @@
 ---
 image:
   repository: linuxserver/prowlarr
-  tag: 1.37.0-nightly@sha256:b031cee2fda93b26906b14b1df0ae4a6b9144ba8213fd5a8f76fad24f8a43ce5
+  tag: 1.37.0-nightly@sha256:e14663e631021e1adc75a21f1d6bb701b3203082a716928f92208f4a6e70cde7
 env:
   TZ: Europe/Madrid
 ingress:
