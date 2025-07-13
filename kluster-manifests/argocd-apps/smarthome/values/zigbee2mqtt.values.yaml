@@ -48,10 +48,10 @@ statefulset:
     - name: certificates
       mountPath: "/tmp/certificates"
       readOnly: true
+  nodeSelector:
+    zigbeeGateway: "true"
 service:
   type: ClusterIP
-nodeSelector:
-  zigbeeGateway: "true"
 zigbee2mqtt:
   serial:
     # Required: location of the adapter (e.g. CC2531).
