@@ -1,6 +1,6 @@
 ---
 cronjob:
-  schedule: "0 */2 * * *"
+  schedule: "0 0 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 2
   concurrencyPoligy: Forbid
