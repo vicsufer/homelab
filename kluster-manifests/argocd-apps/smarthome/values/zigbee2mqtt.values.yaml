@@ -51,7 +51,7 @@ statefulset:
 service:
   type: ClusterIP
 nodeSelector:
-  kubernetes.io/hostname: nuc-0
+  zigbeeGateway: "true"
 zigbee2mqtt:
   serial:
     # Required: location of the adapter (e.g. CC2531).
