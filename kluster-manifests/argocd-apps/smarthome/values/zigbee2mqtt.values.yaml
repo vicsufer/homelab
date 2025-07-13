@@ -47,9 +47,9 @@ statefulset:
       name: usb
     - name: certificates
       mountPath: "/tmp/certificates"
-      readOnly: "true"
+      readOnly: true
   nodeSelector:
-    zigbeeGateway: "true"
+    zigbeeGateway: true
 service:
   type: ClusterIP
 zigbee2mqtt:
