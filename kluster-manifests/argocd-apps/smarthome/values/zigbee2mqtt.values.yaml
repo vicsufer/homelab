@@ -49,7 +49,7 @@ statefulset:
       mountPath: "/tmp/certificates"
       readOnly: true
   nodeSelector:
-    zigbeeGateway: "true"
+    zigbeeGateway: present
 service:
   type: ClusterIP
 zigbee2mqtt:
