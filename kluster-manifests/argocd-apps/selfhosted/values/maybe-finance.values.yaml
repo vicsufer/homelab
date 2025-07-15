@@ -11,7 +11,9 @@ deployment:
       value: async
     - name: SELF_HOSTED
       value: "true"
-    - name: REDIS_URL
+    - name: REDIS_USER
+      value: default
+    - name: REDIS_HOST
       value: maybefinance-redis-master
     - name: DB_HOST
       value: cluster-maybefinance-rw
