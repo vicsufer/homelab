@@ -9,7 +9,7 @@ deployment:
       value: false
     - name: GOOD_JOB_EXECUTION_MODE
       value: async
-    - name: SELF_HOSTED_ENABLED
+    - name: SELF_HOSTED
       value: "true"
     - name: REDIS_HOST
       value: maybefinance-redis-master
