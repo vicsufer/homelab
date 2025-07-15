@@ -12,7 +12,7 @@ deployment:
     - name: SELF_HOSTED
       value: "true"
     - name: REDIS_URL
-      value: maybefinance-redis-master
+      value: redis://maybefinance-redis-master:6379§
     - name: DB_HOST
       value: cluster-maybefinance-rw
   extraEnvVarsSecret: "maybe-secrets"
