@@ -19,7 +19,7 @@ spec:
   sources:
     - chart: maybe-finance
       repoURL: https://charts.vicsufer.dev
-      targetRevision: 0.2.5
+      targetRevision: 0.2.6
       helm:
         releaseName: maybefinance
         valueFiles:
