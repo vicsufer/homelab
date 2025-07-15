@@ -11,8 +11,6 @@ deployment:
       value: async
     - name: SELF_HOSTED
       value: "true"
-    - name: REDIS_USER
-      value: default
     - name: REDIS_HOST
       value: maybefinance-redis-master
     - name: DB_HOST
@@ -26,6 +24,8 @@ postgresql:
 
 redis:
   enabled: true
+  auth:
+    enabled: false
   architecture: standalone
 
 ingress:
