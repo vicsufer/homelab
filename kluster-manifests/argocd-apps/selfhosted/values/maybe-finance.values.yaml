@@ -1,7 +1,7 @@
 ---
 deployment:
   repository: ghcr.io/we-promise/sure
-  tag: 0.6.0
+  tag: 0.6.1
   env:
     - name: RAILS_ASSUME_SSL
       value: false
