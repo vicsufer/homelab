@@ -2,7 +2,7 @@
 cloudflared:
   image:
     repository: cloudflare/cloudflared
-    tag: latest@sha256:f9d5c5b94cd7337c0c939a6dbf5537db34030828c243fca6b589fd85ab25d43b
+    tag: latest@sha256:eb5c9324efe3b8e8a48612423dd912f76fa93cf138923e7eda5d1a9805057757
 ingressClass:
   name: cloudflare-tunnel
   controllerValue: strrl.dev/cloudflare-tunnel-ingress-controller
