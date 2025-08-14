@@ -15,7 +15,7 @@ annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"
 image:
   registry: docker.io
   repository: bitnami/external-dns
-  tag: 0.17.0@sha256:ba28ac5046f7cd22ce8487c1251882aa9c94be8d1a7526c3467ed1f16a34483b
+  tag: 0.18.0@sha256:c48c05d87d2d2f4ba547430c37dd2d587c3d37ddf35fa22a33bec27bb1ecad2d
 
 extraArgs:
   pihole-api-version: 6
