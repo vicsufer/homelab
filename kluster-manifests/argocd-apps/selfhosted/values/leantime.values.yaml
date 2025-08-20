@@ -1,7 +1,7 @@
 ---
 image:
   repository: leantime/leantime
-  tag: 3.5.11@sha256:a0340963c0ea8b9e6875412d10506606d769cf0f391cb8a7c810fa8eefc4b654
+  tag: 3.5.12@sha256:9fba9c119d5a8f4c53e05fba822ed2d066f7ecfec29d13f218a42aab302a445b
 internalDatabase:
   persistence:
     enabled: true
