@@ -17,9 +17,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   sources:
-    - repoURL: https://github.com/gissilabs/charts.git
-      targetRevision: master
-      path: charts/leantime
+    - repoURL: https://gissilabs.github.io/charts
+      chart: leantime
+      targetRevision: 1.3.3
       helm:
         releaseName: leantime
         valueFiles:

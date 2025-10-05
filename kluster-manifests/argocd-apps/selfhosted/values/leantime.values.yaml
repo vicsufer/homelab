@@ -2,9 +2,6 @@
 image:
   repository: leantime/leantime
   tag: 3.5.12@sha256:9fba9c119d5a8f4c53e05fba822ed2d066f7ecfec29d13f218a42aab302a445b
-internalDatabase:
-  persistence:
-    enabled: true
 leantime:
   sitename: "Leantime"
   language: "es-ES"
