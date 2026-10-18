@@ -5,7 +5,7 @@ metadata:
   name: external-pihole
 spec:
   type: ExternalName
-  externalName: 192.168.0.20
+  externalName: 192.168.1.20
   ports:
     - port: 80
 ---

@@ -1,0 +1,6 @@
+---
+# Classic interface names (eth0) on every node
+machine:
+  install:
+    extraKernelArgs:
+      - net.ifnames=0

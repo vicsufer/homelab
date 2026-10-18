@@ -1,0 +1,15 @@
+# Key material and anything rendered from it: never commit
+secrets.yaml*
+talosconfig
+_out/
+homelab/
+
+# Legacy files generated before this layout (contain secrets)
+controlplane.yaml
+worker.yaml
+secret.yaml
+sealed-*.yaml
+*.age
+*.snap
+*.backup
+*.raw
