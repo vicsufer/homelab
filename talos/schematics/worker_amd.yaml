@@ -1,6 +1,0 @@
----
-# curl -X POST --data-binary @worker_amd.yaml https://factory.talos.dev/schematics
-customization:
-  systemExtensions:
-    officialExtensions:
-      - siderolabs/iscsi-tools

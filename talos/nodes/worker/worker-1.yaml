@@ -1,0 +1,27 @@
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: enp86s0
+addresses:
+  - address: 192.168.1.41/24
+routes:
+  - gateway: 192.168.1.1
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: "off"
+hostname: worker-1
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  homelab/hardware: nuc
+  zigbeeGateway: present
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer-secureboot/461f6e9f46e7f550e91f65389850e6d959f2785f66f6127e46a116e5ea2fad88:v1.14.4
+provisioning:
+  diskSelector:
+    match: disk.transport == "nvme"

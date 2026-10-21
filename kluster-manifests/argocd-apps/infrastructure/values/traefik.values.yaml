@@ -41,6 +41,8 @@ service:
   ipFamilyPolicy: "PreferDualStack"
   labels:
     metallb.universe.tf/address-pool: private-pool
+  annotations:
+    metallb.io/loadBalancerIPs: 192.168.1.50
 extraObjects:
   - |
     apiVersion: cert-manager.io/v1

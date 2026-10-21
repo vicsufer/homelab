@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: coredns
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+  source:
+    repoURL: https://github.com/vicsufer/homelab
+    path: kluster-manifests/argocd-apps/infrastructure/coredns
+    targetRevision: HEAD

@@ -1,0 +1,7 @@
+---
+customization:
+  extraKernelArgs:
+    - ip=192.168.1.41::192.168.1.1:255.255.255.0:worker-1:enp86s0:off:192.168.1.20
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools

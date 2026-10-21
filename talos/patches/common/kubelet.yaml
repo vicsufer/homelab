@@ -1,7 +1,6 @@
 ---
-# Pin kubelet/etcd to the LAN so pod or tailscale addresses are never picked as node IP
-machine:
-  kubelet:
-    nodeIP:
-      validSubnets:
-        - 192.168.1.0/24
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+nodeIP:
+  validSubnets:
+    - 192.168.1.0/24

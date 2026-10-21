@@ -1,9 +1,10 @@
 ---
-# curl -X POST --data-binary @rpi_generic.yaml https://factory.talos.dev/schematics
 overlay:
   name: rpi_generic
   image: siderolabs/sbc-raspberrypi
 customization:
+  extraKernelArgs:
+    - ip=192.168.1.31::192.168.1.1:255.255.255.0:cp-1:end0:off:192.168.1.20
   systemExtensions:
     officialExtensions:
       - siderolabs/iscsi-tools

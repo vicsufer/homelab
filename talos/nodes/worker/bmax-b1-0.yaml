@@ -1,9 +1,0 @@
----
-# ip: 192.168.1.47
-machine:
-  network:
-    # Existing Kubernetes node name; changing it registers a new node
-    hostname: talos-iyf-r5c
-  install:
-    disk: /dev/mmcblk0
-    image: factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba:v1.10.2

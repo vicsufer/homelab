@@ -1,0 +1,31 @@
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: end0
+addresses:
+  - address: 192.168.1.31/24
+routes:
+  - gateway: 192.168.1.1
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 192.168.1.30
+link: end0
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: "off"
+hostname: cp-1
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  homelab/hardware: rpi-4b
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/66c7c28ce4a97c2d20daaa404e5946258537300fef6358cbd90e64d8fca892c6:v1.14.4
+provisioning:
+  diskSelector:
+    match: disk.transport == "mmc" && !disk.readonly
