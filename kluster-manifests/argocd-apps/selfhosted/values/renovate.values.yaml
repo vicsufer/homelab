@@ -3,7 +3,7 @@ cronjob:
   schedule: "0 0 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 2
-  concurrencyPoligy: Forbid
+  concurrencyPolicy: Forbid
   jobBackoffLimit: 3
 startingDeadlineSeconds: 3600 # 1h
 existingSecret: "renovate-creds"
