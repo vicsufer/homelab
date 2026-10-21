@@ -1,5 +1,4 @@
 ---
-# Lets the talos-backup CronJob (namespace talos-backups) take etcd snapshots via the Talos API
 apiVersion: v1alpha1
 kind: KubeTalosAPIAccessConfig
 allowedRoles:

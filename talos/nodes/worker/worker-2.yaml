@@ -1,6 +1,4 @@
 ---
-# ip: 192.168.1.42
-# BMAX B1 (bmax-b1-0). Image: schematics/worker-2.yaml (Secure Boot installer; bakes the address into the kernel args).
 apiVersion: v1alpha1
 kind: LinkConfig
 name: enp2s0

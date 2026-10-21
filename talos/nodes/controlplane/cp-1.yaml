@@ -1,6 +1,4 @@
 ---
-# ip: 192.168.1.31
-# Raspberry Pi 4B (rpi-4b-0). Image: schematics/cp-1.yaml (also bakes the address into the kernel args).
 apiVersion: v1alpha1
 kind: LinkConfig
 name: end0
@@ -9,7 +7,6 @@ addresses:
 routes:
   - gateway: 192.168.1.1
 ---
-# Kubernetes API endpoint (render.sh ENDPOINT); moves with the active control plane
 apiVersion: v1alpha1
 kind: Layer2VIPConfig
 name: 192.168.1.30

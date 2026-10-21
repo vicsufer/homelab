@@ -1,6 +1,4 @@
 ---
-# ip: 192.168.1.41
-# Intel NUC (nuc-0), Sonoff Zigbee dongle attached. Image: schematics/worker-1.yaml (Secure Boot installer; bakes the address into the kernel args).
 apiVersion: v1alpha1
 kind: LinkConfig
 name: enp86s0
@@ -18,7 +16,6 @@ apiVersion: v1alpha1
 kind: KubeNodeConfig
 labels:
   homelab/hardware: nuc
-  # zigbee2mqtt nodeSelector (kluster-manifests/argocd-apps/smarthome/values/zigbee2mqtt.values.yaml)
   zigbeeGateway: present
 ---
 apiVersion: v1alpha1

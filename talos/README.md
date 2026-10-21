@@ -17,7 +17,7 @@ Kubernetes API: `https://192.168.1.30:6443` (Layer2 VIP on the control plane). A
 patches/common/        every node
 patches/controlplane/  control plane nodes
 patches/worker/        worker nodes (none yet)
-nodes/<role>/<node>.yaml  per-node overlay (disk, installer image, network); `# ip:` header is used by apply.sh
+nodes/<role>/<node>.yaml  per-node overlay (disk, installer image, network); apply.sh targets the LinkConfig address
 schematics/            Image Factory schematics (curl -X POST --data-binary @file https://factory.talos.dev/schematics)
 render.sh              secrets.yaml + patches -> _out/<node>.yaml and _out/talosconfig
 apply.sh               talosctl apply-config for one node

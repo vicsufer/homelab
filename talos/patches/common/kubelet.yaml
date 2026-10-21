@@ -1,5 +1,4 @@
 ---
-# Pin kubelet to the LAN so pod or tailscale addresses are never picked as node IP
 apiVersion: v1alpha1
 kind: KubeNodeConfig
 nodeIP:

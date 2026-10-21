@@ -1,6 +1,4 @@
 ---
-# Explicit NTP servers: otherwise Talos takes the one Pi-hole's DHCP advertises (itself),
-# which doesn't answer, and kubelet waits forever on "Waiting for time sync".
 apiVersion: v1alpha1
 kind: TimeSyncConfig
 ntp:

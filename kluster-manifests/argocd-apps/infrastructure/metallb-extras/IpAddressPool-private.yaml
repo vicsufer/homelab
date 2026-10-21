@@ -1,5 +1,4 @@
 ---
-# LoadBalancer addresses, outside Pi-hole's DHCP range (see /network.md)
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
