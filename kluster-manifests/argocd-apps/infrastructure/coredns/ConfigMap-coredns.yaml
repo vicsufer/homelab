@@ -1,0 +1,37 @@
+---
+# Talos creates this ConfigMap and `talosctl upgrade-k8s` resets it to the default; ArgoCD puts this version back.
+# Change from the Talos default: no `fallthrough in-addr.arpa ip6.arpa`, so every reverse (PTR) lookup is answered
+# here (NXDOMAIN outside the cluster) instead of being forwarded to Pi-hole, which used to get flooded by them.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+data:
+  Corefile: |-
+    .:53 {
+        errors
+        health {
+            lameduck 5s
+        }
+        ready
+        log . {
+            class error
+        }
+        prometheus :9153
+
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+            pods insecure
+            ttl 30
+        }
+        forward . /etc/resolv.conf {
+           max_concurrent 1000
+        }
+        cache 30 {
+           disable success cluster.local
+           disable denial cluster.local
+        }
+        loop
+        reload
+        loadbalance
+    }

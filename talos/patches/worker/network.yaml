@@ -1,8 +1,0 @@
----
-# Workers take their address from the Pi-hole DHCP reservation (by MAC)
-machine:
-  network:
-    interfaces:
-      - deviceSelector:
-          physical: true
-        dhcp: true

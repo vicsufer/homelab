@@ -1,0 +1,14 @@
+---
+# cp-1 (Raspberry Pi 4B). The ip= kernel arg bakes the static address into the image,
+# so the node boots straight onto it, even in maintenance mode.
+# curl -X POST --data-binary @cp-1.yaml https://factory.talos.dev/schematics
+overlay:
+  name: rpi_generic
+  image: siderolabs/sbc-raspberrypi
+customization:
+  extraKernelArgs:
+    # ip=<addr>::<gateway>:<netmask>:<hostname>:<link>:off:<dns>
+    - ip=192.168.1.31::192.168.1.1:255.255.255.0:cp-1:end0:off:192.168.1.20
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools

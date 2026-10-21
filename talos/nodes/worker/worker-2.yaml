@@ -1,0 +1,28 @@
+---
+# ip: 192.168.1.42
+# BMAX B1 (bmax-b1-0). Image: schematics/worker-2.yaml (Secure Boot installer; bakes the address into the kernel args).
+apiVersion: v1alpha1
+kind: LinkConfig
+name: enp2s0
+addresses:
+  - address: 192.168.1.42/24
+routes:
+  - gateway: 192.168.1.1
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: "off"
+hostname: worker-2
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  homelab/hardware: bmax-b1
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer-secureboot/4c6ca1705412ff4974123a64d6da4a0fa14524b727c9cd52f0aa3f238b5f4a7c:v1.14.4
+provisioning:
+  diskSelector:
+    match: disk.transport == "mmc" && disk.size > 64u * GB

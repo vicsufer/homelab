@@ -1,10 +1,9 @@
 ---
+# LoadBalancer addresses, outside Pi-hole's DHCP range (see /network.md)
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: private-pool
 spec:
   addresses:
-    - 192.168.1.40/32
-    - 192.168.1.47/32
-    - 192.168.1.67/32
+    - 192.168.1.50-192.168.1.54

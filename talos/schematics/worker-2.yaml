@@ -1,0 +1,10 @@
+---
+# worker-2 (BMAX B1). Secure Boot: kernel args are baked into the signed UKI, including the static address.
+# curl -X POST --data-binary @worker-2.yaml https://factory.talos.dev/schematics
+customization:
+  extraKernelArgs:
+    # ip=<addr>::<gateway>:<netmask>:<hostname>:<link>:off:<dns>
+    - ip=192.168.1.42::192.168.1.1:255.255.255.0:worker-2:enp2s0:off:192.168.1.20
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools
