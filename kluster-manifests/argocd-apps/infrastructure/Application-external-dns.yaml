@@ -16,6 +16,12 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
   sources:
     - chart: external-dns
       repoURL: https://kubernetes-sigs.github.io/external-dns/

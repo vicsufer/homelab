@@ -42,7 +42,7 @@ dex:
 
 server:
   ingress:
-    # -- Enable an ingress resource for the Argo CD server
+    # Routed via Gateway API (listenerset/httproute below)
     enabled: false
   listenerset:
     enabled: true

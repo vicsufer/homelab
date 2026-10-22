@@ -22,8 +22,4 @@ env:
         name: pihole-secret
         key: EXTERNAL_DNS_PIHOLE_SERVER
 
-rbac:
-  additionalPermissions:
-    - apiGroups: [gateway.networking.k8s.io]
-      resources: [listenersets]
-      verbs: [get, list, watch]
+enableGatewayListenerSets: true

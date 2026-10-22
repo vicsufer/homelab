@@ -16,6 +16,12 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
   sources:
     - repoURL: https://charts.vicsufer.dev
       chart: mosquitto

@@ -164,7 +164,7 @@ Expected: args include `--feature-gates=ListenerSets=true` and the config mount;
 - Rewrite: `infrastructure/values/external-dns.values.yaml`
 - Create: `infrastructure/external-dns-extras/SealedSecret-pihole.yaml` (move the SealedSecret from current `extraDeploy` verbatim — same name/namespace, it's scope-bound)
 
-- [ ] **Step 1: Values** — `provider.name: pihole`; `sources: [gateway-httproute]`; `policy: sync`; `extraArgs: [--pihole-api-version=6, --pihole-tls-skip-verify]`; `env` with `EXTERNAL_DNS_PIHOLE_PASSWORD` and `EXTERNAL_DNS_PIHOLE_SERVER` from `secretKeyRef` `pihole-secret`; `rbac.additionalPermissions: [{apiGroups: [gateway.networking.k8s.io], resources: [listenersets], verbs: [get, list, watch]}]`. Keep registry `txt` and no txtOwnerId (matches live: owner `default`, so existing records stay owned). **No annotationFilter.**
+- [ ] **Step 1: Values** — `provider.name: pihole`; `sources: [gateway-httproute]`; `policy: sync`; `extraArgs: [--pihole-api-version=6, --pihole-tls-skip-verify]`; `env` with `EXTERNAL_DNS_PIHOLE_PASSWORD` and `EXTERNAL_DNS_PIHOLE_SERVER` from `secretKeyRef` `pihole-secret`; `rbac.additionalPermissions: [{apiGroups: [gateway.networking.k8s.io], resources: [listenersets], verbs: [get, list, watch]}]`. Keep registry `txt` and no txtOwnerId. Note: Pi-hole keeps no TXT ownership records, so external-dns effectively only creates records there (never updates/deletes). Also set `enableGatewayListenerSets: true` (adds `--gateway-listener-sets` and RBAC) instead of `rbac.additionalPermissions`. **No annotationFilter.**
 
 - [ ] **Step 2: Verify**
 
@@ -213,9 +213,12 @@ Expected: contains `--source=gateway-httproute`, `--policy=sync`, `--provider=pi
 
 - [ ] **Step 1:** Open PR; Victor merges.
 - [ ] **Step 2:** Watch Argo: `gateway-api-crds` then `kgateway` Healthy. `kubectl get crd listenersets.gateway.networking.k8s.io` exists.
-- [ ] **Step 3: Remove orphaned Traefik** (confirm with Victor first): `kubectl delete ns traefik` and Traefik's own CRDs only: `kubectl get crd -o name | grep -E 'traefik\.(io|containo\.us)' | xargs kubectl delete`. Do **not** delete `*.gateway.networking.k8s.io` CRDs.
+- [ ] **Step 3: Remove orphaned Traefik** (confirm with Victor first): `kubectl delete ns traefik` and Traefik's own CRDs only: `kubectl get crd -o name | grep -E 'traefik\.(io|containo\.us)' | xargs kubectl delete`. Also delete `clusterrole/traefik-traefik`, `clusterrolebinding/traefik-traefik` and `ingressclass/traefik` (check names with `kubectl get clusterrole,clusterrolebinding,ingressclass | grep traefik` first). Do **not** delete `*.gateway.networking.k8s.io` CRDs.
+  - Note: if a CRD sync fails with "Installing experimental CRDs on top of standard channel CRDs is prohibited", delete the safe-upgrades ValidatingAdmissionPolicy + its binding and resync.
+  - Stuck app recovery (Argo UI down): `kubectl -n argocd patch app <x> --type merge -p '{"operation":{"sync":{}}}'`.
 - [ ] **Step 4:** `kubectl -n kgateway-system get svc` → EXTERNAL-IP `192.168.1.50`, ports 80 and 443.
 - [ ] **Step 5:** Victor runs `helm upgrade argocd argo/argo-cd --version 10.10.5 -f kluster-manifests/argocd.values.yaml --install --namespace argocd`.
-- [ ] **Step 6:** `kubectl get gateway,listenerset,httproute -A` → all Accepted/Programmed; `kubectl get certificate -A` → all Ready.
-- [ ] **Step 7:** For every host in the Inventory: `curl -sI https://<host> | head -1` → 2xx/3xx from the app; `curl -sI http://<host> | head -1` → `301`; `dig +short <host> @192.168.1.20` → `192.168.1.50`.
+- [ ] **Step 6:** `kubectl get gateway,listenerset,httproute -A` → all Accepted/Programmed; `kubectl get certificate -A` → all Ready; `kubectl get listenerpolicy -A` shows `internal`; check each Certificate's ownerReference is now the ListenerSet.
+- [ ] **Step 7:** For every host in the Inventory: `curl -sI https://<host> | head -1` → 2xx/3xx from the app; `curl -sI http://<host> | head -1` → `301`; `dig +short <host> @192.168.1.20` → `192.168.1.50`. Websocket check: `curl -i -N -H 'Connection: Upgrade' -H 'Upgrade: websocket' -H 'Sec-WebSocket-Version: 13' -H 'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==' https://home-assistant.vicsufer.xyz/api/websocket` → `101`. Leantime is expected to fail (chart 1.3.3 missing, out of scope).
+- [ ] **Step 7b:** Remove the stale `traefik.vicsufer.xyz` record from Pi-hole by hand (the Pi-hole provider can't store TXT ownership, so external-dns never deletes/updates records).
 - [ ] **Step 8:** Victor checks Home Assistant, zigbee2mqtt UIs stay connected; Home Assistant via Cloudflare still works; homepage lists every service.

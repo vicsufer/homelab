@@ -18,6 +18,12 @@ spec:
       - CreateNamespace=true
       - SkipDryRunOnMissingResource=true
       - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
   sources:
     - repoURL: cr.kgateway.dev/kgateway-dev/charts
       chart: kgateway-crds
