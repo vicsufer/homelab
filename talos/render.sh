@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 CLUSTER=homelab
 ENDPOINT=https://192.168.1.30:6443
 TALOS_VERSION=v1.14.4
-K8S_VERSION=1.33.0
+K8S_VERSION=1.37.1
 
 [ -f secrets.yaml ] || { echo "secrets.yaml missing (kept out of git, see README)" >&2; exit 1; }
 
