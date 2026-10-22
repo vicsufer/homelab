@@ -32,3 +32,6 @@ spec:
       path: kluster-manifests/argocd-apps/monitoring/values
       targetRevision: HEAD
       ref: values
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/monitoring/prometheus-stack-extras
