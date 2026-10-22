@@ -28,3 +28,6 @@ spec:
       targetRevision: HEAD
       path: kluster-manifests/argocd-apps/selfhosted/values
       ref: values
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/selfhosted/wallos-extras

@@ -87,6 +87,7 @@ config:
         targewidget:
   kubernetes:
     mode: cluster
+    gateway: true
 
   settings:
     headerStyle: boxedWidgets
@@ -112,24 +113,3 @@ enableRbac: true
 env:
   - name: HOMEPAGE_ALLOWED_HOSTS
     value: "*"
-
-ingress:
-  main:
-    enabled: true
-    ingressClassName: "traefik"
-    annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    tls:
-      - hosts:
-          - &host homepage.vicsufer.xyz
-        secretName: homepage-general-tls
-    hosts:
-      - host: *host
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: homepage
-                port: 3000

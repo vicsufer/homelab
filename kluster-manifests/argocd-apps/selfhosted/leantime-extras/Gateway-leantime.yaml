@@ -1,0 +1,51 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: leantime
+  namespace: leantime
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: internal
+    namespace: kgateway-system
+  listeners:
+    - name: https
+      hostname: leantime.vicsufer.xyz
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: leantime-general-tls
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: leantime
+  namespace: leantime
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Leantime"
+    gethomepage.dev/description: "Planificador de proyectos"
+    gethomepage.dev/group: "k3s"
+    gethomepage.dev/icon: "leantime.png"
+    gethomepage.dev/href: "https://leantime.vicsufer.xyz"
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: ListenerSet
+      name: leantime
+      sectionName: https
+  hostnames:
+    - leantime.vicsufer.xyz
+  rules:
+    - backendRefs:
+        - name: leantime
+          port: 80

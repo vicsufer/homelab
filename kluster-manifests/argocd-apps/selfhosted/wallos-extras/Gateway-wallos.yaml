@@ -1,0 +1,51 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: wallos
+  namespace: wallos
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: internal
+    namespace: kgateway-system
+  listeners:
+    - name: https
+      hostname: wallos.vicsufer.xyz
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: wallos-general-tls
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: wallos
+  namespace: wallos
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Subscripciones"
+    gethomepage.dev/description: "Registro subscripciones"
+    gethomepage.dev/group: "k3s"
+    gethomepage.dev/icon: "wallos.png"
+    gethomepage.dev/href: "https://wallos.vicsufer.xyz"
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: ListenerSet
+      name: wallos
+      sectionName: https
+  hostnames:
+    - wallos.vicsufer.xyz
+  rules:
+    - backendRefs:
+        - name: wallos
+          port: 8282

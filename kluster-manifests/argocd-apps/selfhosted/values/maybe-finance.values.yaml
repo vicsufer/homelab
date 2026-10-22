@@ -27,18 +27,3 @@ redis:
   auth:
     enabled: false
   architecture: standalone
-
-ingress:
-  create: true
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-  tls:
-    - secretName: maybe-general-tls
-      hosts:
-        - maybe.vicsufer.xyz
-  hosts:
-    - host: maybe.vicsufer.xyz
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
