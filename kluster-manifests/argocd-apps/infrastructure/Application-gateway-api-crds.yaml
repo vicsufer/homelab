@@ -1,0 +1,23 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: gateway-api-crds
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kgateway-system
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+      - ServerSideApply=true
+      - Replace=false
+  source:
+    repoURL: https://github.com/kubernetes-sigs/gateway-api
+    path: config/crd/experimental
+    targetRevision: v1.6.3
