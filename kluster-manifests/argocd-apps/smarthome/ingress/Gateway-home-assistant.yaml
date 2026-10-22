@@ -1,0 +1,54 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: internal
+    namespace: kgateway-system
+  listeners:
+    - name: https
+      hostname: home-assistant.vicsufer.xyz
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: home-assistant-tls
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Home Assistant"
+    gethomepage.dev/description: "Automatizaciones de la casa"
+    gethomepage.dev/group: "Smart Home"
+    gethomepage.dev/widget.type: "homeassistant"
+    gethomepage.dev/widget.url: "http://home-assistant.home-assistant.svc:8080"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}"
+    gethomepage.dev/icon: "home-assistant.png"
+    gethomepage.dev/href: "https://home-assistant.vicsufer.xyz"
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: ListenerSet
+      name: home-assistant
+      sectionName: https
+  hostnames:
+    - home-assistant.vicsufer.xyz
+  rules:
+    - backendRefs:
+        - name: home-assistant
+          port: 8080

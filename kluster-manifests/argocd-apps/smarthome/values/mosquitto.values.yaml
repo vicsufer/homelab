@@ -4,26 +4,6 @@ image:
   pullPolicy: IfNotPresent
   tag: "2.0.22-openssl@sha256:199ea8ef2e35ec2b1b37e59cfd1dbae538ed4dfa4a2251a121a52215a6248a21"
 
-ingress:
-  enabled: true
-  className: traefik
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Mosquitto"
-    gethomepage.dev/description: "MQTT broker"
-    gethomepage.dev/group: "Smart Home"
-    gethomepage.dev/icon: "mqtt.png"
-  hosts:
-    - host: mqtt.vicsufer.xyz
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls:
-    - secretName: mqtt-tls-secret
-      hosts:
-        - mqtt.vicsufer.xyz
 deployment:
   volumes:
     - name: certificates

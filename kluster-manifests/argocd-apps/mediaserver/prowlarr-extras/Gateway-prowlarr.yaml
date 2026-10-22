@@ -1,0 +1,54 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: prowlarr
+  namespace: mediaserver
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: internal
+    namespace: kgateway-system
+  listeners:
+    - name: https
+      hostname: prowlarr.vicsufer.xyz
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: prowlarr-general-tls
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prowlarr
+  namespace: mediaserver
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Prowlarr"
+    gethomepage.dev/description: "Rastreador torrent"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/widget.type: "prowlarr"
+    gethomepage.dev/widget.url: "http://prowlarr.mediaserver.svc:9696"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+    gethomepage.dev/icon: "prowlarr.png"
+    gethomepage.dev/href: "https://prowlarr.vicsufer.xyz"
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: ListenerSet
+      name: prowlarr
+      sectionName: https
+  hostnames:
+    - prowlarr.vicsufer.xyz
+  rules:
+    - backendRefs:
+        - name: prowlarr
+          port: 9696

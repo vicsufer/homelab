@@ -31,3 +31,6 @@ spec:
       path: kluster-manifests/argocd-apps/smarthome/values
       targetRevision: HEAD
       ref: values
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/smarthome/zigbee2mqtt-extras

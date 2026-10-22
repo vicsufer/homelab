@@ -1,0 +1,53 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name: overseerr
+  namespace: mediaserver
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: internal
+    namespace: kgateway-system
+  listeners:
+    - name: https
+      hostname: overseerr.vicsufer.xyz
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: overseerr-general-tls
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: overseerr
+  namespace: mediaserver
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Overseerr"
+    gethomepage.dev/description: "Peticiones mediaserver"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/widget.type: "Overseerr"
+    gethomepage.dev/widget.url: "https://overseerr.vicsufer.xyz"
+    gethomepage.dev/icon: "overseerr.png"
+    gethomepage.dev/href: "https://overseerr.vicsufer.xyz"
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: ListenerSet
+      name: overseerr
+      sectionName: https
+  hostnames:
+    - overseerr.vicsufer.xyz
+  rules:
+    - backendRefs:
+        - name: overseerr
+          port: 5055
