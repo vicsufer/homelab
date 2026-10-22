@@ -43,11 +43,17 @@ dex:
 server:
   ingress:
     # -- Enable an ingress resource for the Argo CD server
+    enabled: false
+  listenerset:
     enabled: true
-    ingressClassName: "traefik"
+    parentRef:
+      name: internal
+      namespace: kgateway-system
     annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  httproute:
+    enabled: true
+    annotations:
       gethomepage.dev/enabled: "true"
       gethomepage.dev/name: "ArgoCD"
       gethomepage.dev/description: "GitOps Management"
@@ -57,7 +63,6 @@ server:
       gethomepage.dev/widget.type: "argocd"
       gethomepage.dev/widget.url: "http://argocd-server.argocd.svc:80"
       # gethomepage.dev/widget.key: "{{ HOMEPAGE_VAR_ARGOCD_KEY }}"
-    tls: true
   # certificate:
   #   enabled: true
   resources:
