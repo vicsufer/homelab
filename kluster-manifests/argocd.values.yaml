@@ -1,5 +1,5 @@
 ---
-#helm upgrade argocd argo/argo-cd -f argocd.values.yaml --install --namespace argocd --create-namespace
+#helm upgrade argocd argo/argo-cd --version 10.10.5 -f argocd.values.yaml --install --namespace argocd --create-namespace
 global:
   domain: argocd.vicsufer.xyz
 
@@ -14,7 +14,6 @@ configs:
     admin.enabled: "true"
     application.instanceLabelKey: argocd.argoproj.io/instance
     exec.enabled: "false"
-    server.rbac.log.enforce.enable: "false"
     statusbadge.enabled: "true"
     timeout.hard.reconciliation: 0s
     timeout.reconciliation: 180s

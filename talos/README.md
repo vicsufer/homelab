@@ -56,6 +56,8 @@ Needs a `talosctl` matching `TALOS_VERSION` (v1.14 configs are multi-document; o
   address never finishes; use `--wait=false` and watch the new one.
 - Kubernetes: `talosctl upgrade-k8s --to <version>` (one minor at a time), then bump `K8S_VERSION` in `render.sh`.
   It resets the `coredns` ConfigMap; ArgoCD (`kluster-manifests/.../infrastructure/coredns`) puts the custom one back.
+  Take `talosctl etcd snapshot` first, and check ArgoCD supports the target version: ArgoCD only knows the API schema
+  it was built with (v2.14 could no longer diff Deployments on 1.35). ArgoCD is upgraded by hand, see `kluster-manifests/readme.md`.
 - After a version bump, set `TALOS_VERSION` / installer tags in git and `./apply.sh <node> --dry-run` to confirm no drift.
 
 New node: add `nodes/<role>/<name>.yaml`, run `./render.sh`, then `./apply.sh <name> --insecure` while the node is in maintenance mode.
