@@ -7,7 +7,6 @@ sources:
   - gateway-httproute
 
 extraArgs:
-  - --pihole-api-version=6
   - --pihole-tls-skip-verify
 
 env:
