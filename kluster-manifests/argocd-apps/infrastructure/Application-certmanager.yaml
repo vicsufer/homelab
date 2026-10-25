@@ -24,7 +24,7 @@ spec:
         maxDuration: 5m
   sources:
     - repoURL: https://charts.jetstack.io
-      targetRevision: v1.21.2
+      targetRevision: v1.21.3
       chart: cert-manager
       helm:
         releaseName: cert-manager
