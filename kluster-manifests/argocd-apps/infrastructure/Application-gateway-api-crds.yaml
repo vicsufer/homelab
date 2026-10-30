@@ -20,4 +20,4 @@ spec:
   source:
     repoURL: https://github.com/kubernetes-sigs/gateway-api
     path: config/crd/experimental
-    targetRevision: v1.6.3
+    targetRevision: v1.7.0
