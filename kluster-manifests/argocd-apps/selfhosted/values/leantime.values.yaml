@@ -1,7 +1,7 @@
 ---
 image:
   repository: leantime/leantime
-  tag: 3.5.12@sha256:9fba9c119d5a8f4c53e05fba822ed2d066f7ecfec29d13f218a42aab302a445b
+  tag: 3.13.2@sha256:57ceab3bf418e3314195037bd3733e521b6481e6407f7af0256093c3a340b99f
 leantime:
   sitename: "Leantime"
   language: "es-ES"
