@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: equity-tracker
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: equity-tracker
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
+  sources:
+    - repoURL: git@github.com:vicsufer/equity-tracker.git
+      targetRevision: main
+      path: deploy/helm/equity-tracker
+      helm:
+        releaseName: equity-tracker
+        valueFiles:
+          - $values/kluster-manifests/argocd-apps/selfhosted/values/equity-tracker.values.yaml
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/selfhosted/values
+      ref: values
+    - repoURL: https://github.com/vicsufer/homelab
+      targetRevision: HEAD
+      path: kluster-manifests/argocd-apps/selfhosted/equity-tracker-extras

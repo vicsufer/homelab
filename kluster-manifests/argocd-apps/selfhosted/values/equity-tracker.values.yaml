@@ -1,0 +1,13 @@
+image:
+  tag: "0.1.0"
+
+imagePullSecrets:
+  - name: ghcr-pull
+
+persistence:
+  storageClass: iscsi-retain
+  size: 1Gi
+
+gateway:
+  enabled: true
+  hostname: patrimonio.vicsufer.xyz
