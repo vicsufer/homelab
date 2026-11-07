@@ -27,7 +27,7 @@ spec:
   sources:
     - repoURL: cr.kgateway.dev/kgateway-dev/charts
       chart: kgateway-crds
-      targetRevision: v2.4.7
+      targetRevision: v2.5.1
       helm:
         releaseName: kgateway-crds
     - repoURL: cr.kgateway.dev/kgateway-dev/charts
