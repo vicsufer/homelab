@@ -19,7 +19,7 @@ spec:
   sources:
     - chart: cloudflare-tunnel-ingress-controller
       repoURL: https://helm.strrl.dev
-      targetRevision: 0.0.24
+      targetRevision: 0.1.0
       helm:
         valueFiles:
           - $values/kluster-manifests/argocd-apps/infrastructure/values/cloudflared.values.yaml
