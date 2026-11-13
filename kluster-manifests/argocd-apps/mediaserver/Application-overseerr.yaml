@@ -25,7 +25,7 @@ spec:
   sources:
     - repoURL: https://charts.pree.dev
       chart: overseerr
-      targetRevision: 1.1.1
+      targetRevision: 1.2.0
       helm:
         releaseName: overseerr
         valueFiles:
