@@ -32,7 +32,7 @@ spec:
         releaseName: kgateway-crds
     - repoURL: cr.kgateway.dev/kgateway-dev/charts
       chart: kgateway
-      targetRevision: v2.4.7
+      targetRevision: v2.4.8
       helm:
         releaseName: kgateway
     - repoURL: https://github.com/vicsufer/homelab
