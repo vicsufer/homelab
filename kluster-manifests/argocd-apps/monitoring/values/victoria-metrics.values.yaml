@@ -87,9 +87,11 @@ server:
           static_configs:
             - targets: ["speedtest-exporter.monitoring.svc:9798"]
 
-        # Total WAN throughput from the ISP router (UPnP IGD). Counters are 32-bit, so scrape often.
+        # Total WAN throughput from the ISP router (UPnP IGD). Counters are 32-bit (wrap at 4 GiB);
+        # 30s is safe below ~1.1 Gbps. The router answers slowly (~2s per call), hence the long timeout.
         - job_name: router-upnp
-          scrape_interval: 15s
+          scrape_interval: 30s
+          scrape_timeout: 25s
           static_configs:
             - targets: ["upnp-exporter.monitoring.svc:9890"]
               labels: {name: router}

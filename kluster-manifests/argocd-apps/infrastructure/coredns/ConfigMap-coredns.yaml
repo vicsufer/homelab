@@ -21,6 +21,13 @@ data:
             pods insecure
             ttl 30
         }
+        # gRPC clients (e.g. ArgoCD -> argocd-repo-server) look up _grpclb SRV records for
+        # short names; answer them here instead of forwarding junk queries to Pi-hole.
+        template IN SRV . {
+            match "^_grpclb\._tcp\.[^.]+\.$"
+            rcode NXDOMAIN
+            fallthrough
+        }
         forward . /etc/resolv.conf {
            max_concurrent 1000
         }

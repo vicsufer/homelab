@@ -509,7 +509,7 @@ data:
       {
        "type": "timeseries",
        "title": "WAN status",
-       "description": "A drop to ~0 in uptime = the router reconnected (ISP drop).",
+       "description": "A drop to ~0 in uptime = the router reconnected (ISP drop). Rising UPnP response time = busy router CPU.",
        "datasource": {
         "type": "prometheus",
         "uid": "victoriametrics"
@@ -563,6 +563,15 @@ data:
          "expr": "router_upnp_up",
          "legendFormat": "exporter up",
          "refId": "B"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "router_upnp_response_seconds",
+         "legendFormat": "router UPnP response (s)",
+         "refId": "C"
         }
        ]
       },

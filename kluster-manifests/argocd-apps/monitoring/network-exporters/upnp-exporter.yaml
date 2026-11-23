@@ -8,7 +8,7 @@ metadata:
   name: upnp-exporter
 data:
   exporter.py: |
-    import os, re, socket, urllib.request
+    import os, re, socket, time, urllib.request
     from http.server import BaseHTTPRequestHandler, HTTPServer
     from urllib.parse import urljoin
 
@@ -51,8 +51,11 @@ data:
         try:
             if not controls:
                 controls = discover()
-            rx = soap(CIC, "GetTotalBytesReceived")["TotalBytesReceived"]
-            tx = soap(CIC, "GetTotalBytesSent")["TotalBytesSent"]
+            # miniupnpd is single-threaded and takes ~2s per request, so calls stay sequential.
+            start = time.monotonic()
+            rx = soap(CIC, "GetTotalBytesReceived")
+            rx_t = time.monotonic() - start
+            tx = soap(CIC, "GetTotalBytesSent")
             link = soap(CIC, "GetCommonLinkProperties")
             status = soap(IPC, "GetStatusInfo")
         except Exception as e:
@@ -61,10 +64,12 @@ data:
             return "router_upnp_up 0\n"
         return "\n".join([
             "router_upnp_up 1",
+            # Router responsiveness: a proxy for how busy its CPU is.
+            f"router_upnp_response_seconds {rx_t:.3f}",
             "# TYPE router_wan_bytes_received_total counter",
-            f"router_wan_bytes_received_total {rx}",
+            f"router_wan_bytes_received_total {rx['TotalBytesReceived']}",
             "# TYPE router_wan_bytes_sent_total counter",
-            f"router_wan_bytes_sent_total {tx}",
+            f"router_wan_bytes_sent_total {tx['TotalBytesSent']}",
             f"router_wan_link_up {int(link.get('PhysicalLinkStatus') == 'Up')}",
             f"router_wan_connected {int(status.get('ConnectionStatus') == 'Connected')}",
             f"router_wan_uptime_seconds {status.get('Uptime', 0)}",
@@ -96,6 +101,8 @@ spec:
     metadata:
       labels:
         app: upnp-exporter
+      annotations:
+        exporter-version: "2"  # bump when exporter.py changes to restart the pod
     spec:
       hostNetwork: true
       nodeSelector:
