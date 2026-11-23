@@ -1,0 +1,42 @@
+---
+# Runs a full Ookla speedtest on every scrape (scrape interval set in victoria-metrics values).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedtest-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: speedtest-exporter
+  template:
+    metadata:
+      labels:
+        app: speedtest-exporter
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: exporter
+          image: ghcr.io/miguelndecarvalho/speedtest-exporter:v3.5.4
+          ports:
+            - name: metrics
+              containerPort: 9798
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: speedtest-exporter
+spec:
+  selector:
+    app: speedtest-exporter
+  ports:
+    - name: metrics
+      port: 9798
+      targetPort: metrics

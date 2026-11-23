@@ -32,3 +32,18 @@ Everything below `.100` is assigned by hand and never handed out by DHCP.
 | `.50`   | `traefik`   | MetalLB                               | ingress; `*.vicsufer.xyz` records point here |
 
 Kubernetes nodes carry a `homelab/hardware` label (`rpi-4b`, `nuc`, `bmax-b1`) instead of encoding hardware in the hostname.
+
+## Monitoring
+
+Network health is recorded continuously by VictoriaMetrics (`monitoring/vmsingle`, 12 months retention)
+and shown in the Grafana dashboard **Network health** (`grafana.vicsufer.xyz`).
+Scrape targets live in `kluster-manifests/argocd-apps/monitoring/values/victoria-metrics.values.yaml`.
+
+| Source              | What it answers                                   | Notes |
+|---------------------|---------------------------------------------------|-------|
+| blackbox (ICMP/DNS/HTTP) | Latency/loss to router, NAS, internet; DNS and HTTP timings | Runs on a wired amd64 node |
+| speedtest-exporter  | Available bandwidth, hourly                       | Uses real bandwidth per run |
+| upnp-exporter       | Total WAN throughput and reconnects from the router | UPnP IGD; counters are 32-bit, scraped every 15s |
+| pihole-exporter     | DNS volume, top clients                           | Needs `pihole-exporter` SealedSecret (key `password`) |
+| snmp-exporter       | NAS interface throughput                          | Needs SNMP v2c (`public`) enabled in DSM |
+| node-exporter       | k8s node NIC throughput, errors, TCP retransmits  | From kube-prometheus-stack |

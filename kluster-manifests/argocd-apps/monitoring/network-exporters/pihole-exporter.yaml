@@ -1,0 +1,56 @@
+---
+# Pi-hole v6 on the NAS (admin/API on :8080). The API needs auth: create the
+# `pihole-exporter` SealedSecret (key `password`, a Pi-hole app password) in this folder.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole-exporter
+  template:
+    metadata:
+      labels:
+        app: pihole-exporter
+    spec:
+      containers:
+        - name: exporter
+          image: ekofr/pihole-exporter:v1.4.0
+          env:
+            - name: PIHOLE_PROTOCOL
+              value: http
+            - name: PIHOLE_HOSTNAME
+              value: "192.168.1.20"
+            - name: PIHOLE_PORT
+              value: "8080"
+            - name: PORT
+              value: "9617"
+            - name: PIHOLE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pihole-exporter
+                  key: password
+                  optional: true
+          ports:
+            - name: metrics
+              containerPort: 9617
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-exporter
+spec:
+  selector:
+    app: pihole-exporter
+  ports:
+    - name: metrics
+      port: 9617
+      targetPort: metrics

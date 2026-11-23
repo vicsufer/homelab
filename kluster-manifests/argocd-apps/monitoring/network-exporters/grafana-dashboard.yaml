@@ -1,0 +1,818 @@
+---
+# Generated from a dashboard JSON; edit in Grafana, export, and paste back.
+apiVersion: v1
+data:
+  network-health.json: |-
+    {
+     "uid": "network-health",
+     "title": "Network health",
+     "tags": [
+      "network"
+     ],
+     "timezone": "browser",
+     "time": {
+      "from": "now-24h",
+      "to": "now"
+     },
+     "refresh": "1m",
+     "schemaVersion": 39,
+     "panels": [
+      {
+       "type": "row",
+       "title": "Internet",
+       "collapsed": false,
+       "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+       },
+       "panels": []
+      },
+      {
+       "type": "timeseries",
+       "title": "Bufferbloat check: internet latency vs WAN traffic",
+       "description": "If latency spikes line up with download/upload peaks, the link is saturated (bufferbloat). If latency spikes while traffic is low, suspect the ISP.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 1
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "ms",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": [
+         {
+          "matcher": {
+           "id": "byName",
+           "options": "WAN download"
+          },
+          "properties": [
+           {
+            "id": "custom.axisPlacement",
+            "value": "right"
+           },
+           {
+            "id": "unit",
+            "value": "Mbits"
+           }
+          ]
+         },
+         {
+          "matcher": {
+           "id": "byName",
+           "options": "WAN upload"
+          },
+          "properties": [
+           {
+            "id": "custom.axisPlacement",
+            "value": "right"
+           },
+           {
+            "id": "unit",
+            "value": "Mbits"
+           }
+          ]
+         }
+        ]
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "probe_icmp_duration_seconds{job=\"blackbox-icmp\",phase=\"rtt\",name=\"cloudflare\"} * 1000",
+         "legendFormat": "latency to 1.1.1.1 (ms)",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(router_wan_bytes_received_total[1m]) * 8 / 1e6",
+         "legendFormat": "WAN download",
+         "refId": "B"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(router_wan_bytes_sent_total[1m]) * 8 / 1e6",
+         "legendFormat": "WAN upload",
+         "refId": "C"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "Ping RTT",
+       "description": "router/nas = LAN, cloudflare/google-dns = internet. Measured from a wired k8s node.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 11
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "ms",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "probe_icmp_duration_seconds{job=\"blackbox-icmp\",phase=\"rtt\"} * 1000",
+         "legendFormat": "{{name}}",
+         "refId": "A"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "Packet loss (5m)",
+       "description": "",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 11
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "percent",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "100 * (1 - avg_over_time(probe_success{job=\"blackbox-icmp\"}[5m]))",
+         "legendFormat": "{{name}}",
+         "refId": "A"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "WAN throughput (router counters)",
+       "description": "Total household internet traffic. Shows how much of the line is in use at each time of day.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 19
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "Mbits",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(router_wan_bytes_received_total[1m]) * 8 / 1e6",
+         "legendFormat": "download",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(router_wan_bytes_sent_total[1m]) * 8 / 1e6",
+         "legendFormat": "upload",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "Speedtest (hourly)",
+       "description": "Capacity left over at test time; drops here plus high WAN throughput = local congestion.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 19
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "Mbits",
+         "custom": {
+          "showPoints": "always",
+          "spanNulls": true,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "speedtest_download_bits_per_second / 1e6",
+         "legendFormat": "download",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "speedtest_upload_bits_per_second / 1e6",
+         "legendFormat": "upload",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "HTTP total request time",
+       "description": "",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 27
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "ms",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "sum by (name) (probe_http_duration_seconds{job=\"blackbox-http\"}) * 1000",
+         "legendFormat": "{{name}}",
+         "refId": "A"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "HTTP phases (avg of all sites)",
+       "description": "",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 27
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "ms",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "avg by (phase) (probe_http_duration_seconds{job=\"blackbox-http\"}) * 1000",
+         "legendFormat": "{{phase}}",
+         "refId": "A"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "DNS query time",
+       "description": "Pi-hole vs router vs Cloudflare resolving google.com.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 35
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "ms",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "probe_duration_seconds{job=\"blackbox-dns\"} * 1000",
+         "legendFormat": "{{name}}",
+         "refId": "A"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "WAN status",
+       "description": "A drop to ~0 in uptime = the router reconnected (ISP drop).",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 35
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "none",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "router_wan_uptime_seconds / 3600",
+         "legendFormat": "WAN uptime (h)",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "router_upnp_up",
+         "legendFormat": "exporter up",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "row",
+       "title": "LAN",
+       "collapsed": false,
+       "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 43
+       },
+       "panels": []
+      },
+      {
+       "type": "timeseries",
+       "title": "k8s node NIC throughput",
+       "description": "",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 44
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "Mbits",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "sum by (node) (rate(node_network_receive_bytes_total{device=~\"en.*|eth.*\"}[2m])) * 8 / 1e6",
+         "legendFormat": "{{node}} rx",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "sum by (node) (rate(node_network_transmit_bytes_total{device=~\"en.*|eth.*\"}[2m])) * 8 / 1e6",
+         "legendFormat": "{{node}} tx",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "k8s node NIC errors/drops + TCP retransmits",
+       "description": "",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 44
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "short",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "sum by (node) (rate(node_network_receive_errs_total[5m]) + rate(node_network_transmit_errs_total[5m]) + rate(node_network_receive_drop_total{device=~\"en.*|eth.*\"}[5m]))",
+         "legendFormat": "{{node}} errs+drops/s",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(node_netstat_Tcp_RetransSegs[5m]) / rate(node_netstat_Tcp_OutSegs[5m]) * 100",
+         "legendFormat": "{{node}} TCP retrans %",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "NAS interface throughput (SNMP)",
+       "description": "Requires SNMP enabled in DSM. Torrents/Plex on the NAS show up here.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 52
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "Mbits",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(ifHCInOctets{job=\"snmp-nas\",ifOperStatus!=\"2\"}[2m]) * 8 / 1e6 > 0.01",
+         "legendFormat": "{{ifName}} in",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "rate(ifHCOutOctets{job=\"snmp-nas\"}[2m]) * 8 / 1e6 > 0.01",
+         "legendFormat": "{{ifName}} out",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "Pi-hole top clients (queries today)",
+       "description": "Which devices are most active. Requires the pihole-exporter secret.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 52
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "short",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "topk(10, pihole_top_sources)",
+         "legendFormat": "{{source}}",
+         "refId": "A"
+        }
+       ]
+      }
+     ]
+    }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-network-health
+  labels:
+    grafana_dashboard: "1"

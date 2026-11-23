@@ -1,0 +1,139 @@
+---
+# Exposes the ISP router's WAN counters (UPnP IGD / miniupnpd) as Prometheus metrics.
+# hostNetwork is needed so SSDP multicast discovery reaches the LAN: miniupnpd picks a
+# random HTTP port on every router reboot, so the control URL is rediscovered on failure.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: upnp-exporter
+data:
+  exporter.py: |
+    import os, re, socket, urllib.request
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    from urllib.parse import urljoin
+
+    PORT = int(os.environ.get("PORT", "9890"))
+    ROUTER = os.environ.get("ROUTER_IP", "192.168.1.1")
+    CIC = "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1"
+    IPC = "urn:schemas-upnp-org:service:WANIPConnection:1"
+    controls = {}
+
+    def discover():
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.settimeout(3)
+        s.sendto(("M-SEARCH * HTTP/1.1\r\nHOST: 239.255.255.250:1900\r\nMAN: \"ssdp:discover\"\r\n"
+                  "MX: 2\r\nST: urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n\r\n").encode(),
+                 ("239.255.255.250", 1900))
+        while True:  # raises socket.timeout if the router never answers
+            data, addr = s.recvfrom(4096)
+            if addr[0] != ROUTER:
+                continue
+            loc = re.search(r"(?im)^location:\s*(\S+)", data.decode(errors="ignore")).group(1)
+            desc = urllib.request.urlopen(loc, timeout=5).read().decode()
+            found = {}
+            for svc in re.findall(r"<service>(.*?)</service>", desc, re.S):
+                st = re.search(r"<serviceType>(.*?)</serviceType>", svc).group(1)
+                found[st] = urljoin(loc, re.search(r"<controlURL>(.*?)</controlURL>", svc).group(1))
+            if CIC in found and IPC in found:
+                return found
+
+    def soap(service, action):
+        body = (f'<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" '
+                f's:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>'
+                f'<u:{action} xmlns:u="{service}"></u:{action}></s:Body></s:Envelope>')
+        req = urllib.request.Request(controls[service], body.encode(), {
+            "Content-Type": 'text/xml; charset="utf-8"', "SOAPAction": f'"{service}#{action}"'})
+        xml = urllib.request.urlopen(req, timeout=5).read().decode()
+        return dict(re.findall(r"<New(\w+)>([^<]*)</New\w+>", xml))
+
+    def collect():
+        global controls
+        try:
+            if not controls:
+                controls = discover()
+            rx = soap(CIC, "GetTotalBytesReceived")["TotalBytesReceived"]
+            tx = soap(CIC, "GetTotalBytesSent")["TotalBytesSent"]
+            link = soap(CIC, "GetCommonLinkProperties")
+            status = soap(IPC, "GetStatusInfo")
+        except Exception as e:
+            print(f"scrape failed: {e!r}", flush=True)
+            controls = {}
+            return "router_upnp_up 0\n"
+        return "\n".join([
+            "router_upnp_up 1",
+            "# TYPE router_wan_bytes_received_total counter",
+            f"router_wan_bytes_received_total {rx}",
+            "# TYPE router_wan_bytes_sent_total counter",
+            f"router_wan_bytes_sent_total {tx}",
+            f"router_wan_link_up {int(link.get('PhysicalLinkStatus') == 'Up')}",
+            f"router_wan_connected {int(status.get('ConnectionStatus') == 'Connected')}",
+            f"router_wan_uptime_seconds {status.get('Uptime', 0)}",
+        ]) + "\n"
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            out = collect().encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; version=0.0.4")
+            self.end_headers()
+            self.wfile.write(out)
+
+        def log_message(self, *args):
+            pass
+
+    HTTPServer(("0.0.0.0", PORT), Handler).serve_forever()
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upnp-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: upnp-exporter
+  template:
+    metadata:
+      labels:
+        app: upnp-exporter
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: exporter
+          image: python:3.13.13-alpine3.23
+          command: ["python", "-u", "/app/exporter.py"]
+          env:
+            - name: PORT
+              value: "9890"
+            - name: ROUTER_IP
+              value: "192.168.1.1"
+          ports:
+            - name: metrics
+              containerPort: 9890
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+      volumes:
+        - name: app
+          configMap:
+            name: upnp-exporter
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: upnp-exporter
+spec:
+  selector:
+    app: upnp-exporter
+  ports:
+    - name: metrics
+      port: 9890
+      targetPort: metrics

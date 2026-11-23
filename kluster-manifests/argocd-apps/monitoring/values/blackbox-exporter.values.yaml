@@ -1,0 +1,40 @@
+---
+fullnameOverride: blackbox-exporter
+
+# ICMP needs a raw socket: run as root with only NET_RAW added.
+securityContext:
+  runAsUser: 0
+  runAsGroup: 0
+  runAsNonRoot: false
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+    add: ["NET_RAW"]
+
+# Probe from a wired x86 node, not the Raspberry Pi control plane.
+nodeSelector:
+  kubernetes.io/arch: amd64
+
+config:
+  modules:
+    icmp:
+      prober: icmp
+      timeout: 5s
+      icmp:
+        preferred_ip_protocol: ip4
+    dns:
+      prober: dns
+      timeout: 5s
+      dns:
+        query_name: google.com
+        query_type: A
+        transport_protocol: udp
+        preferred_ip_protocol: ip4
+    http_2xx:
+      prober: http
+      timeout: 10s
+      http:
+        preferred_ip_protocol: ip4
+        follow_redirects: true
+        valid_status_codes: []  # defaults to 2xx

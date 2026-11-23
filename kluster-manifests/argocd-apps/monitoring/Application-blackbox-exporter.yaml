@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: blackbox-exporter
+  namespace: argocd
+spec:
+  project: homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+  sources:
+    - chart: prometheus-blackbox-exporter
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 11.22.0
+      helm:
+        releaseName: blackbox-exporter
+        valueFiles:
+          - $values/kluster-manifests/argocd-apps/monitoring/values/blackbox-exporter.values.yaml
+    - repoURL: https://github.com/vicsufer/homelab
+      path: kluster-manifests/argocd-apps/monitoring/values
+      targetRevision: HEAD
+      ref: values

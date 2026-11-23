@@ -1,0 +1,18 @@
+---
+# Picked up by the kube-prometheus-stack Grafana datasource sidecar.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasource-victoriametrics
+  labels:
+    grafana_datasource: "1"
+data:
+  victoriametrics.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: VictoriaMetrics
+        uid: victoriametrics
+        type: prometheus
+        access: proxy
+        url: http://vmsingle.monitoring.svc:8428
+        isDefault: false

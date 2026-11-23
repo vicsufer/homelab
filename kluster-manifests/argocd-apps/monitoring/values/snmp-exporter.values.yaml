@@ -1,0 +1,5 @@
+---
+# Uses the snmp.yml bundled in the image (if_mib module, public_v2 auth).
+fullnameOverride: snmp-exporter
+nodeSelector:
+  kubernetes.io/arch: amd64

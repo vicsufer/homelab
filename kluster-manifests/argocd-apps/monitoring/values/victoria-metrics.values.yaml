@@ -1,0 +1,136 @@
+---
+# VictoriaMetrics single node: long-term store + scraper for network observability.
+# Add new sources by appending to scrape_configs below.
+server:
+  fullnameOverride: vmsingle
+  retentionPeriod: 12  # months
+  persistentVolume:
+    enabled: true
+    size: 10Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+  nodeSelector:
+    kubernetes.io/arch: amd64
+
+  scrape:
+    enabled: true
+    config:
+      global:
+        scrape_interval: 30s
+
+      scrape_configs:
+        - job_name: victoriametrics
+          static_configs:
+            - targets: ["localhost:8428"]
+
+        # Latency + loss from a wired node. Router vs internet shows whether delay is LAN or ISP side.
+        - job_name: blackbox-icmp
+          scrape_interval: 15s
+          metrics_path: /probe
+          params:
+            module: [icmp]
+          static_configs:
+            - targets: ["192.168.1.1"]
+              labels: {name: router, scope: lan}
+            - targets: ["192.168.1.20"]
+              labels: {name: nas, scope: lan}
+            - targets: ["1.1.1.1"]
+              labels: {name: cloudflare, scope: internet}
+            - targets: ["8.8.8.8"]
+              labels: {name: google-dns, scope: internet}
+          relabel_configs: &blackbox_relabel
+            - source_labels: [__address__]
+              target_label: __param_target
+            - source_labels: [__param_target]
+              target_label: instance
+            - target_label: __address__
+              replacement: blackbox-exporter.monitoring.svc:9115
+
+        - job_name: blackbox-dns
+          scrape_interval: 30s
+          metrics_path: /probe
+          params:
+            module: [dns]
+          static_configs:
+            - targets: ["192.168.1.20:53"]
+              labels: {name: pihole}
+            - targets: ["192.168.1.1:53"]
+              labels: {name: router}
+            - targets: ["1.1.1.1:53"]
+              labels: {name: cloudflare}
+          relabel_configs: *blackbox_relabel
+
+        - job_name: blackbox-http
+          scrape_interval: 60s
+          metrics_path: /probe
+          params:
+            module: [http_2xx]
+          static_configs:
+            - targets: ["https://www.google.com"]
+              labels: {name: google}
+            - targets: ["https://www.cloudflare.com/cdn-cgi/trace"]
+              labels: {name: cloudflare}
+            - targets: ["https://github.com"]
+              labels: {name: github}
+            - targets: ["https://www.youtube.com"]
+              labels: {name: youtube}
+          relabel_configs: *blackbox_relabel
+
+        # Full Ookla speedtest. Each run uses real bandwidth, so keep it hourly.
+        - job_name: speedtest
+          scrape_interval: 1h
+          scrape_timeout: 2m
+          static_configs:
+            - targets: ["speedtest-exporter.monitoring.svc:9798"]
+
+        # Total WAN throughput from the ISP router (UPnP IGD). Counters are 32-bit, so scrape often.
+        - job_name: router-upnp
+          scrape_interval: 15s
+          static_configs:
+            - targets: ["upnp-exporter.monitoring.svc:9890"]
+              labels: {name: router}
+
+        - job_name: pihole
+          scrape_interval: 60s
+          static_configs:
+            - targets: ["pihole-exporter.monitoring.svc:9617"]
+              labels: {name: pihole}
+
+        # NAS interface traffic. Requires SNMP v2c (community "public") enabled in DSM.
+        - job_name: snmp-nas
+          scrape_interval: 30s
+          metrics_path: /snmp
+          params:
+            module: [if_mib]
+            auth: [public_v2]
+          static_configs:
+            - targets: ["192.168.1.20"]
+              labels: {name: nas}
+          relabel_configs:
+            - source_labels: [__address__]
+              target_label: __param_target
+            - source_labels: [__param_target]
+              target_label: instance
+            - target_label: __address__
+              replacement: snmp-exporter.monitoring.svc:9116
+
+        # Per-node NIC traffic/errors from the existing kube-prometheus-stack node-exporter.
+        - job_name: node-network
+          kubernetes_sd_configs:
+            - role: endpoints
+              namespaces:
+                names: [monitoring]
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_service_name]
+              regex: prometheus-stack-prometheus-node-exporter
+              action: keep
+            - source_labels: [__meta_kubernetes_pod_node_name]
+              target_label: node
+          metric_relabel_configs:
+            - source_labels: [__name__]
+              regex: node_network_(receive|transmit)_(bytes|errs|drop)_total|node_network_speed_bytes|node_netstat_Tcp_(RetransSegs|OutSegs)
+              action: keep
