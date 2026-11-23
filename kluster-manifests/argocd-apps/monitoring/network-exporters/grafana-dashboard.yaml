@@ -576,6 +576,117 @@ data:
        ]
       },
       {
+       "type": "timeseries",
+       "title": "Cluster DNS upstream failures (CoreDNS)",
+       "description": "CoreDNS -> Talos host DNS -> Pi-hole. Compare with the Pi-hole line in 'DNS query time' and with WAN traffic.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 43
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "short",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "sum(rate(coredns_dns_responses_total{job=\"coredns\",rcode=\"SERVFAIL\"}[5m])) * 60",
+         "legendFormat": "SERVFAIL/min (upstream timeouts)",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "histogram_quantile(0.99, sum by (le) (rate(coredns_proxy_request_duration_seconds_bucket{job=\"coredns\"}[5m]))) * 1000",
+         "legendFormat": "upstream p99 (ms)",
+         "refId": "B"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "Pi-hole probe failures",
+       "description": "",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 43
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "percent",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": []
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "100 * (1 - avg_over_time(probe_success{job=\"blackbox-dns\"}[10m]))",
+         "legendFormat": "{{name}} % failed",
+         "refId": "A"
+        }
+       ]
+      },
+      {
        "type": "row",
        "title": "LAN",
        "collapsed": false,
@@ -583,7 +694,7 @@ data:
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 51
        },
        "panels": []
       },
@@ -599,7 +710,7 @@ data:
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 44
+        "y": 52
        },
        "fieldConfig": {
         "defaults": {
@@ -659,7 +770,7 @@ data:
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 44
+        "y": 52
        },
        "fieldConfig": {
         "defaults": {
@@ -719,7 +830,7 @@ data:
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 52
+        "y": 60
        },
        "fieldConfig": {
         "defaults": {
@@ -779,7 +890,7 @@ data:
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 52
+        "y": 60
        },
        "fieldConfig": {
         "defaults": {
@@ -815,6 +926,92 @@ data:
          "expr": "topk(10, pihole_top_sources)",
          "legendFormat": "{{source}}",
          "refId": "A"
+        }
+       ]
+      },
+      {
+       "type": "timeseries",
+       "title": "NAS CPU vs Pi-hole response time",
+       "description": "Pi-hole runs on the NAS. If Pi-hole slows down when the NAS is busy (Plex/Deluge/backups), every device's browsing feels slow.",
+       "datasource": {
+        "type": "prometheus",
+        "uid": "victoriametrics"
+       },
+       "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 68
+       },
+       "fieldConfig": {
+        "defaults": {
+         "unit": "short",
+         "custom": {
+          "showPoints": "never",
+          "spanNulls": false,
+          "lineWidth": 1,
+          "fillOpacity": 10
+         }
+        },
+        "overrides": [
+         {
+          "matcher": {
+           "id": "byName",
+           "options": "Pi-hole response (ms)"
+          },
+          "properties": [
+           {
+            "id": "custom.axisPlacement",
+            "value": "right"
+           },
+           {
+            "id": "unit",
+            "value": "ms"
+           }
+          ]
+         }
+        ]
+       },
+       "options": {
+        "legend": {
+         "displayMode": "table",
+         "placement": "bottom",
+         "calcs": [
+          "mean",
+          "max"
+         ]
+        },
+        "tooltip": {
+         "mode": "multi"
+        }
+       },
+       "targets": [
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "cpuUtilization{job=\"snmp-nas\"}",
+         "legendFormat": "NAS CPU %",
+         "refId": "A"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "laLoadFloat{job=\"snmp-nas\",laNames=\"Load-1\"}",
+         "legendFormat": "NAS load 1m",
+         "refId": "B"
+        },
+        {
+         "datasource": {
+          "type": "prometheus",
+          "uid": "victoriametrics"
+         },
+         "expr": "probe_duration_seconds{job=\"blackbox-dns\",name=\"pihole\"} * 1000",
+         "legendFormat": "Pi-hole response (ms)",
+         "refId": "C"
         }
        ]
       }

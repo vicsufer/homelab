@@ -102,12 +102,14 @@ server:
             - targets: ["pihole-exporter.monitoring.svc:9617"]
               labels: {name: pihole}
 
-        # NAS interface traffic. Requires SNMP v2c (community "public") enabled in DSM.
+        # NAS interface traffic, CPU and load (Pi-hole runs on the NAS, so a busy NAS = slow DNS).
+        # Requires SNMP v2c (community "public") enabled in DSM.
         - job_name: snmp-nas
           scrape_interval: 30s
+          scrape_timeout: 20s
           metrics_path: /snmp
           params:
-            module: [if_mib]
+            module: ["if_mib,synology,ucd_la_table"]
             auth: [public_v2]
           static_configs:
             - targets: ["192.168.1.20"]
@@ -119,6 +121,23 @@ server:
               target_label: instance
             - target_label: __address__
               replacement: snmp-exporter.monitoring.svc:9116
+
+        # Cluster DNS: SERVFAILs here are upstream timeouts (CoreDNS -> Talos host DNS -> Pi-hole).
+        - job_name: coredns
+          kubernetes_sd_configs:
+            - role: endpoints
+              namespaces:
+                names: [kube-system]
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+              regex: kube-dns;metrics
+              action: keep
+            - source_labels: [__meta_kubernetes_pod_name]
+              target_label: pod
+          metric_relabel_configs:
+            - source_labels: [__name__]
+              regex: coredns_(dns_responses_total|dns_requests_total|proxy_request_duration_seconds_(bucket|count|sum)|template_matches_total|cache_(hits|misses)_total)
+              action: keep
 
         # Per-node NIC traffic/errors from the existing kube-prometheus-stack node-exporter.
         - job_name: node-network
